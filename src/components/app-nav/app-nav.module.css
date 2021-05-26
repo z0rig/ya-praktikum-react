@@ -1,0 +1,5 @@
+.list {
+  composes: list-reset from global;
+
+  display: flex;
+}

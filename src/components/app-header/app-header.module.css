@@ -1,0 +1,17 @@
+.app-header {
+  background-color: #1C1C21;
+}
+
+.logo {
+  margin-left: 9%;
+  margin-right: 9%;
+}
+
+.login {
+  margin-left: auto;
+}
+
+.app-header > .container {
+  display: flex;
+  align-items: center;
+}

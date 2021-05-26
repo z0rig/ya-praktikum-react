@@ -1,0 +1,21 @@
+.nav-link {
+  display: flex;
+  align-items: center;
+  color:#8585AD;
+}
+
+.nav-link:hover {
+  color: #F2F2F3;
+}
+
+.active {
+  color: #F2F2F3;
+}
+
+.nav-link svg {
+  margin-right: 8px;
+}
+
+.nav-link:hover svg {
+  fill: #F2F2F3;
+}
