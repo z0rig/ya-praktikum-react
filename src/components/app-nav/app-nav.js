@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import NavLink from '../nav-link'
+import NavLink from '../nav-link/nav-link'
 
 import styles from './app-nav.module.css';
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import ScrolledContainer from '../scrolled-container';
+import ScrolledContainer from '../scrolled-container/scrolled-container';
 
 import styles from './burger-constructor.module.css';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -17,3 +18,9 @@ const IngridientCard = ({ name, price, image }) => {
 };
 
 export default IngridientCard;
+
+IngridientCard.propTypes = {
+  name: PropTypes.string,
+  price: PropTypes.number,
+  image: PropTypes.string,
+}

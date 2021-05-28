@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -21,3 +22,8 @@ const TabsList = ({ activeTab ,onClick }) => {
 }
 
 export default TabsList;
+
+TabsList.propTypes = {
+  activeTab: PropTypes.string,
+  onClick: PropTypes.func
+}
