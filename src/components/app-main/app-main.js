@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ConstructorPage from '../../pages/constructor-page'
+import ConstructorPage from '../constructor-page/constructor-page'
 
 const AppMain = () => (
   <main className='pt-10'>
