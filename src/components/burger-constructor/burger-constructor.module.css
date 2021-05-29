@@ -1,0 +1,60 @@
+.section {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ingredients {
+  margin-right: -11px;
+}
+
+.list {
+  composes: list-reset from global;
+
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.item > svg {
+  margin-right: 8px;
+}
+
+.helper {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.price > svg {
+  width: 33px;
+  height: 33px;
+}
+
+
+/* normalize for lib. components */
+.section :global(.constructor-element) {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+}
+
+.section :global(.constructor-element_pos_top),
+.section :global(.constructor-element_pos_bottom) {
+  display: block;
+  max-width: calc(100% - 51px);
+  margin-left: 32px;
+}
+
+.section :global(.constructor-element_pos_bottom) {
+  margin-top: 16px;
+}
+
+.section :global(.constructor-element__price) {
+  margin-left: auto;
+}

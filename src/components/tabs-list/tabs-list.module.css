@@ -1,0 +1,9 @@
+.list {
+  composes: list-reset from global;
+
+  display: flex;
+}
+
+.item {
+  flex-grow: 1;
+}

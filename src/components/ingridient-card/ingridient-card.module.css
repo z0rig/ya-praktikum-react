@@ -1,0 +1,14 @@
+.card {
+  min-height: 100%;
+  text-align: center;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price svg {
+  margin-left: 8px;
+}

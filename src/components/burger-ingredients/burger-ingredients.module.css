@@ -1,0 +1,26 @@
+.section {
+  width: 600px;
+}
+
+.list {
+  composes: list-reset from global;
+
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  composes: mr-6 from global, mb-8 from global;
+
+  position: relative;
+  width: 272px;
+  min-height: 208px;
+}
+
+.item:nth-child(even) {
+  margin-right: 0;
+}
+
+.item:nth-last-child(-n + 2) {
+  margin-bottom: 0;
+}
