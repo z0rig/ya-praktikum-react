@@ -1,23 +1,23 @@
-const getAdaptedIngredientsData = (ingredients) => {
-  const ingredientSectionsData = {
-    bun: {
-      title: 'Булки',
-      items: []
-    },
-    sauce: {
-      title: 'Соусы',
-      items: []
-    },
-    main: {
-      title: 'Начинки',
-      items: []
-    }
-  };
+const ingredientSectionsData = {
+  bun: {
+    title: 'Булки',
+    items: []
+  },
+  sauce: {
+    title: 'Соусы',
+    items: []
+  },
+  main: {
+    title: 'Начинки',
+    items: []
+  }
+};
 
-  ingredients.forEach((ingredient) => {
+const getAdaptedIngredientsData = ( ingredients ) => {
+  ingredients.forEach( ( ingredient ) => {
     ingredientSectionsData[ingredient.type].items
-      .push(ingredient);
-  })
+      .push( ingredient );
+  } )
 
   return ingredientSectionsData;
 }
