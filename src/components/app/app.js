@@ -22,13 +22,13 @@ const App = () => {
           ingredients: ingredients.data
         } );
       } )
-      .catch(
+      .catch( () => {
         setstate( {
           isLoading: false,
           hasError: true,
           ingredients: []
         } )
-      );
+      } );
   }, [] )
 
   const { ingredients, isLoading, hasError } = state;
@@ -37,7 +37,7 @@ const App = () => {
       <AppHeader />
       { isLoading && 'Загрузка...' }
       { hasError && 'Ошибка!' }
-      { ingredients.length && <AppMain ingredients={ state.ingredients } /> }
+      { ingredients.length ? <AppMain ingredients={ state.ingredients } /> : null }
     </>
   );
 }
