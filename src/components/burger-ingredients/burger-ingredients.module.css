@@ -3,7 +3,7 @@
 }
 
 .list {
-  composes: list-reset from global;
+  composes: list-reset pl-4 pr-1 from global;
 
   display: flex;
   flex-wrap: wrap;

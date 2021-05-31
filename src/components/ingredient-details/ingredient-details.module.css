@@ -25,10 +25,6 @@
   text-align: center;
 }
 
-.evergy {
-
-}
-
 .evergy tr {
   display: flex;
 
@@ -39,11 +35,12 @@
   composes: text_type_main-default from global;
 }
 
-.td {
-  composes: text_type_digits-default from global;
-}
 .td,
 .th {
   width: 120px;
   text-align: center;
+}
+
+.td {
+  composes: text_type_digits-default from global;
 }

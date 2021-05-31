@@ -3,3 +3,7 @@
 
   display: flex;
 }
+
+.item {
+  composes: mr-2 from global;
+}

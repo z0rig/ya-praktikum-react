@@ -9,7 +9,7 @@ import styles from './app-nav.module.css';
 const AppNav = () => (
   <nav>
     <ul className={ styles.list }>
-      <li className='mr-2'>
+      <li className={ styles.item }>
         <NavLink url='#' isActive={ true }>
           <BurgerIcon />
           Конструктор

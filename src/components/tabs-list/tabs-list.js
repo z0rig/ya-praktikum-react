@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './tabs-list.module.css';
+import { TABS } from '../../constants';
 
-const TABS = ['Булки', 'Соусы', 'Начинки'];
+import styles from './tabs-list.module.css';
 
 const TabsList = ( { activeTab, onClick } ) => {
   const listItems = TABS.map( ( tabContent, idx ) => (

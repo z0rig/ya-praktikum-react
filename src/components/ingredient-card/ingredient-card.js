@@ -33,7 +33,7 @@ const IngredientCard = ( { ingredient } ) => {
         <picture>
           <img src={ image } alt={ name } className='mb-2' />
         </picture>
-        <p className={ `${ styles.price } text_type_digits-default text mb-2` }>{ price } <CurrencyIcon type="primary" /></p>
+        <p className={ styles.price }>{ price } <CurrencyIcon type="primary" /></p>
         <h4 className='text_type_main-default text'>{ name }</h4>
       </article>
     </>

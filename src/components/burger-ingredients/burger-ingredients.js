@@ -31,7 +31,7 @@ function BurgerIngredients ( { ingredients } ) {
               <section key={ title } className='pt-10'>
                 <h3 className='text text_type_main-medium mb-6'>{ title }</h3>
 
-                <ul className={ `${ styles.list } pl-4 pr-1` }>
+                <ul className={ styles.list }>
                   { items.map( ( ingredient ) => (
                     <li className={ styles.item } key={ ingredient._id }>
                       <Counter count={ 1 } size="default" />

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ConstructorPage from '../constructor-page/constructor-page'
+import ConstructorPage from '../constructor-page/constructor-page';
 
 const AppMain = ( { ingredients } ) => (
   <main className='pt-10'>
