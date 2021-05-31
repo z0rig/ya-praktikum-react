@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,19 +6,12 @@ import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktiku
 import ScrolledContainer from '../scrolled-container/scrolled-container';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import { useToggle } from '../../utils/customHoocs';
 
 import styles from './burger-constructor.module.css';
 
 const BurgerConstructor = ( { ingredients } ) => {
-  const [isModalOpen, setIsModalOpen] = useState( false );
-
-  const closeModal = () => {
-    setIsModalOpen( false )
-  };
-
-  const openModal = () => {
-    setIsModalOpen( true )
-  };
+  const [isModalOpen, toggleModalActive] = useToggle( false );
 
   const bun = ingredients[0];
   const filteredData = ingredients.filter( ( ingredient ) => ( ingredient.type !== 'bun' ) );
@@ -27,7 +20,7 @@ const BurgerConstructor = ( { ingredients } ) => {
     <>
       {
         isModalOpen &&
-        <Modal closeModal={ closeModal } >
+        <Modal closeModal={ toggleModalActive } >
           <OrderDetails />
         </Modal>
       }
@@ -68,7 +61,7 @@ const BurgerConstructor = ( { ingredients } ) => {
         <div className={ styles.helper }>
           <p className={ `${ styles.price } mr-10 text text_type_digits-medium` }>610 <CurrencyIcon type="primary" /></p>
 
-          <Button type="primary" size="large" onClick={ openModal }>
+          <Button type="primary" size="large" onClick={ toggleModalActive }>
             Оформить заказ
           </Button>
         </div>

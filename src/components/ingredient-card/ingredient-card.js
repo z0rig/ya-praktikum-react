@@ -1,30 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import Modal from '../modal/modal';
 import IngredientsDetail from '../ingredient-details/ingredient-details';
+import { useToggle } from '../../utils/customHoocs';
 
 import styles from './ingridient-card.module.css';
 
 const IngredientCard = ( { ingredient } ) => {
   const { name, price, image, image_large, calories, proteins, fat, carbohydrates } = ingredient;
-  const [isModalActive, setIsModalActive] = useState( false );
-
-  const openModal = () => {
-    setIsModalActive( true );
-  };
-
-  const closeModal = () => {
-    setIsModalActive( false );
-  };
+  const [isModalOpen, toggleModalOpen] = useToggle( false );
 
   return (
     <>
       {
-        isModalActive &&
-        <Modal title='Детали ингридиента' closeModal={ closeModal }>
+        isModalOpen &&
+        <Modal title='Детали ингридиента' closeModal={ toggleModalOpen }>
           <IngredientsDetail
             name={ name }
             price={ price }
@@ -36,7 +29,7 @@ const IngredientCard = ( { ingredient } ) => {
           />
         </Modal>
       }
-      <article onClick={ openModal } className={ styles.card }>
+      <article onClick={ toggleModalOpen } className={ styles.card }>
         <picture>
           <img src={ image } alt={ name } className='mb-2' />
         </picture>
