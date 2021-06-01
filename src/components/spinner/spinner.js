@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './spinner.module.css';
 
-const Spinner = ( { width = '232px', height = '232px' } ) => {
+const Spinner = ( { width = '232', height = '232' } ) => {
   return (
     <svg
       viewBox='0 0 100 100'

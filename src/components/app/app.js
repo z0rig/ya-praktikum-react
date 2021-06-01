@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import AppMain from '../app-main/app-main';
 import AppHeader from '../app-header/app-header';
 import Spinner from '../spinner/spinner';
+import Error from '../error/error';
 
 import { INGREDIENTS_ULR } from '../../constants';
 
@@ -37,7 +38,7 @@ const App = () => {
     <>
       <AppHeader />
       { isLoading && <Spinner /> }
-      { hasError && 'Ошибка!' }
+      { hasError && <Error /> }
       { ingredients.length ? <AppMain ingredients={ state.ingredients } /> : null }
     </>
   );
