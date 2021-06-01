@@ -13,12 +13,13 @@
 }
 
 .status {
+  composes: text text_type_main-default mb-2 from global;
+
   padding-top: 180px;
 
   background-image: url("../../images/icon-order-details.svg");
   background-repeat: no-repeat;
   background-position: center top;
-  composes: text text_type_main-default mb-2 from global;
 }
 
 .note {

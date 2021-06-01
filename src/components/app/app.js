@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import AppMain from '../app-main/app-main';
 import AppHeader from '../app-header/app-header';
+import Spinner from '../spinner/spinner';
 
 import { INGREDIENTS_ULR } from '../../constants';
 
@@ -35,7 +36,7 @@ const App = () => {
   return (
     <>
       <AppHeader />
-      { isLoading && 'Загрузка...' }
+      { isLoading && <Spinner /> }
       { hasError && 'Ошибка!' }
       { ingredients.length ? <AppMain ingredients={ state.ingredients } /> : null }
     </>
