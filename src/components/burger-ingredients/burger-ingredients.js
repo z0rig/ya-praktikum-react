@@ -18,10 +18,6 @@ function BurgerIngredients ( { ingredients } ) {
     setActiveTab( activeTab );
   };
 
-  const adaptedIngredientsData = useMemo(
-    () => getAdaptedIngredientsData( ingredients ), [ingredients]
-  );
-
   return (
     <section className={ styles.section }>
       <h2 className="visually-hidden">Ингредиенты</h2>
@@ -30,7 +26,7 @@ function BurgerIngredients ( { ingredients } ) {
 
       <ScrolledContainer maxHeight={ '716px' }>
         {
-          Object.values( adaptedIngredientsData )
+          Object.values( getAdaptedIngredientsData( ingredients ) )
             .map( ( { title, items } ) => (
               <section key={ title } className='pt-10'>
                 <h3 className='text text_type_main-medium mb-6'>{ title }</h3>

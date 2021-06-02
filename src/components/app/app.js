@@ -16,7 +16,13 @@ const App = () => {
 
   useEffect( () => {
     fetch( INGREDIENTS_ULR )
-      .then( ( res ) => res.json() )
+      .then( ( res ) => {
+        if ( res.ok ) {
+          return res.json()
+        }
+
+        Promise.reject( res.status )
+      } )
       .then( ( ingredients ) => {
         setstate( {
           isLoading: false,
