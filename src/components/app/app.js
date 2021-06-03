@@ -15,28 +15,31 @@ const App = () => {
   } );
 
   useEffect( () => {
-    fetch( INGREDIENTS_ULR )
-      .then( ( res ) => {
+    const fetchIngredients = async () => {
+      try {
+        const res = await fetch( INGREDIENTS_ULR );
         if ( res.ok ) {
-          return res.json()
-        }
+          const ingredients = await res.json();
 
-        Promise.reject( res.status )
-      } )
-      .then( ( ingredients ) => {
-        setstate( {
-          isLoading: false,
-          hasError: false,
-          ingredients: ingredients.data
-        } );
-      } )
-      .catch( () => {
+          setstate( {
+            isLoading: false,
+            hasError: false,
+            ingredients: ingredients.data
+          } );
+        } else {
+          throw new Error( 'Something went wrong ...' );
+        }
+      } catch ( err ) {
         setstate( {
           isLoading: false,
           hasError: true,
           ingredients: []
         } )
-      } );
+      }
+
+    }
+
+    fetchIngredients();
   }, [] )
 
   const { ingredients, isLoading, hasError } = state;

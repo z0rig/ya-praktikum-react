@@ -25,14 +25,14 @@ const BurgerConstructor = ( { ingredients } ) => {
         </Modal>
       }
       <section className={ styles.section }>
-        <h2 className="visually-hidden">Конструктор бургера</h2>
+        <h2 className='visually-hidden'>Конструктор бургера</h2>
 
         <div className={ styles.ingredients }>
           <ConstructorElement
             price={ bun.price }
             thumbnail={ bun.image }
             text={ `${ bun.name } (верх)` }
-            type="top"
+            type='top'
             isLocked={ true }
           />
           <ScrolledContainer maxHeight='471px'>
@@ -43,7 +43,7 @@ const BurgerConstructor = ( { ingredients } ) => {
                     key={ ingredient._id }
                     className={ `${ styles.item } ${ ( idx === filteredData.length - 1 ) ? '' : styles['item_mb-4'] }` }
                   >
-                    <DragIcon type="primary" />
+                    <DragIcon type='primary' />
                     <ConstructorElement thumbnail={ ingredient.image } text={ ingredient.name } price={ ingredient.price } />
                   </li>
                 )
@@ -54,14 +54,14 @@ const BurgerConstructor = ( { ingredients } ) => {
             price={ bun.price }
             thumbnail={ bun.image }
             text={ `${ bun.name } (низ)` }
-            type="bottom"
+            type='bottom'
             isLocked={ true }
           />
         </div>
         <div className={ styles.helper }>
-          <p className={ styles.price }>610 <CurrencyIcon type="primary" /></p>
+          <p className={ styles.price }>610 <CurrencyIcon type='primary' /></p>
 
-          <Button type="primary" size="large" onClick={ toggleModalActive }>
+          <Button type='primary' size='large' onClick={ toggleModalActive }>
             Оформить заказ
           </Button>
         </div>

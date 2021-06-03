@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -20,7 +20,7 @@ function BurgerIngredients ( { ingredients } ) {
 
   return (
     <section className={ styles.section }>
-      <h2 className="visually-hidden">Ингредиенты</h2>
+      <h2 className='visually-hidden'>Ингредиенты</h2>
 
       <TabsList activeTab={ activeTab } onClick={ toggleActiveTab } />
 
@@ -34,7 +34,7 @@ function BurgerIngredients ( { ingredients } ) {
                 <ul className={ styles.list }>
                   { items.map( ( ingredient, idx ) => (
                     <li className={ styles.item } key={ idx }>
-                      <Counter count={ 1 } size="default" />
+                      <Counter count={ 1 } size='default' />
                       <IngredientCard ingredient={ ingredient } />
                     </li>
                   ) ) }

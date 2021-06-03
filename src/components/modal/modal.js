@@ -30,7 +30,7 @@ const Modal = ( { children, title, closeModal } ) => {
         <header className={ styles.header }>
           <h2 className={ styles.title }>{ title }</h2>
           <button onClick={ closeModal } className={ styles['close-btn'] } aria-label='Закрыть модальое окно'>
-            <CloseIcon type="primary" />
+            <CloseIcon type='primary' />
           </button>
         </header>
         { children }
