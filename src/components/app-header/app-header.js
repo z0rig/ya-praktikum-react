@@ -8,13 +8,13 @@ import NavLink from '../nav-link/nav-link'
 import styles from './app-header.module.css';
 
 const AppHeader = () => (
-  <header className={`${styles['app-header']} pt-3 pb-3` }>
-    <div className={`container ${styles.container}`}>
+  <header className={ styles['app-header'] }>
+    <div className={ `container ${ styles.container }` }>
       <AppNav />
-      <div className={styles.logo}>
+      <div className={ styles.logo }>
         <Logo />
       </div>
-      <div className={styles.login}>
+      <div className={ styles.login }>
         <NavLink url='/'>
           <ProfileIcon type='secondary' />
           Личный кабинет

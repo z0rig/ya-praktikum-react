@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import IngridientCard from '../ingridient-card/ingridient-card'
+import IngredientCard from '../ingredient-card/ingredient-card'
 import TabsList from '../tabs-list/tabs-list';
 import ScrolledContainer from '../scrolled-container/scrolled-container';
 
@@ -11,36 +11,36 @@ import styles from './burger-ingredients.module.css';
 
 import getAdaptedIngredientsData from './utils'
 
-function BurgerIngredients({ ingredients }) {
-  const [activeTab, setActiveTab] = useState('Булки');
+function BurgerIngredients ( { ingredients } ) {
+  const [activeTab, setActiveTab] = useState( 'Булки' );
 
-  const toggleActiveTab = (activeTab) => {
-    setActiveTab(activeTab);
-  }
+  const toggleActiveTab = ( activeTab ) => {
+    setActiveTab( activeTab );
+  };
 
   return (
     <section className={ styles.section }>
-      <h2 className="visually-hidden">Ингредиенты</h2>
+      <h2 className='visually-hidden'>Ингредиенты</h2>
 
-      <TabsList activeTab={ activeTab } onClick={toggleActiveTab} />
+      <TabsList activeTab={ activeTab } onClick={ toggleActiveTab } />
 
       <ScrolledContainer maxHeight={ '716px' }>
         {
-          Object.values(getAdaptedIngredientsData(ingredients))
-            .map(({ title, items }) => (
+          Object.values( getAdaptedIngredientsData( ingredients ) )
+            .map( ( { title, items } ) => (
               <section key={ title } className='pt-10'>
-                <h3 className='text text_type_main-medium mb-6'>{title}</h3>
+                <h3 className='text text_type_main-medium mb-6'>{ title }</h3>
 
-                <ul className={ `${ styles.list } pl-4 pr-1` }>
-                  {items.map((ingridient) => (
-                    <li className={ styles.item } key={ingridient._id}>
-                      <Counter count={1} size="default" />
-                      <IngridientCard {...ingridient} />
+                <ul className={ styles.list }>
+                  { items.map( ( ingredient, idx ) => (
+                    <li className={ styles.item } key={ idx }>
+                      <Counter count={ 1 } size='default' />
+                      <IngredientCard ingredient={ ingredient } />
                     </li>
-                  ))}
+                  ) ) }
                 </ul>
               </section>
-          ))
+            ) )
         }
       </ScrolledContainer>
     </section>
@@ -50,9 +50,9 @@ function BurgerIngredients({ ingredients }) {
 export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape({
+  ingredients: PropTypes.arrayOf( PropTypes.shape( {
     title: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.shape({
+    items: PropTypes.arrayOf( PropTypes.shape( {
       _id: PropTypes.string,
       name: PropTypes.string,
       type: PropTypes.string,
@@ -65,6 +65,6 @@ BurgerIngredients.propTypes = {
       image_mobile: PropTypes.string,
       image_large: PropTypes.string,
       __v: PropTypes.number,
-    }))
-  }))
+    } ) )
+  } ) )
 };

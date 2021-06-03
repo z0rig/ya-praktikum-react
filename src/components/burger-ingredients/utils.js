@@ -1,4 +1,4 @@
-const getAdaptedIngredientsData = (ingredients) => {
+const getAdaptedIngredientsData = ( ingredients ) => {
   const ingredientSectionsData = {
     bun: {
       title: 'Булки',
@@ -14,10 +14,10 @@ const getAdaptedIngredientsData = (ingredients) => {
     }
   };
 
-  ingredients.forEach((ingredient) => {
+  ingredients.forEach( ( ingredient ) => {
     ingredientSectionsData[ingredient.type].items
-      .push(ingredient);
-  })
+      .push( ingredient );
+  } )
 
   return ingredientSectionsData;
 }

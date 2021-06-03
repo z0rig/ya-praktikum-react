@@ -1,4 +1,6 @@
 .nav-link {
+  composes: p-5 text_type_main-default from global;
+
   display: flex;
   align-items: center;
   color:#8585AD;

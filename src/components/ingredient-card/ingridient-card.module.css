@@ -4,6 +4,8 @@
 }
 
 .price {
+  composes: text_type_digits-default text mb-2 from global;
+
   display: flex;
   align-items: center;
   justify-content: center;
