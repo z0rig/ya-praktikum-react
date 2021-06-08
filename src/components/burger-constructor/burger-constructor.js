@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -16,12 +16,20 @@ const BurgerConstructor = ( { ingredients, activeBun } ) => {
   const [isModalOpen, toggleModalActive] = useToggle( false );
   const [bun] = useState( activeBun );
 
+  const totalPrice = useMemo( () => {
+    return bun.price + ingredients.reduce( ( acc, ingredient ) => acc + ingredient.price, 0 );
+  }, [bun, ingredients] );
+
+  const ingredientsIds = useMemo( () => {
+    return [...ingredients.map( ( ingredient ) => ingredient._id ), bun._id];
+  }, [bun, ingredients] );
+
   return (
     <>
       {
         isModalOpen &&
         <Modal closeModal={ toggleModalActive } >
-          <OrderDetails />
+          <OrderDetails ingredientsIds={ ingredientsIds } />
         </Modal>
       }
       <section className={ styles.section }>
@@ -47,7 +55,7 @@ const BurgerConstructor = ( { ingredients, activeBun } ) => {
           </ActiveBun>
         </div>
         <div className={ styles.helper }>
-          <p className={ styles.price }>610 <CurrencyIcon type='primary' /></p>
+          <p className={ styles.price }>{ totalPrice } <CurrencyIcon type='primary' /></p>
 
           <Button type='primary' size='large' onClick={ toggleModalActive }>
             Оформить заказ
@@ -77,5 +85,22 @@ BurgerConstructor.propTypes = {
       image_large: PropTypes.string,
       __v: PropTypes.number,
     } ) )
-  } ) )
+  } ) ),
+  activeBun: PropTypes.shape( {
+    title: PropTypes.string,
+    items: PropTypes.arrayOf( PropTypes.shape( {
+      _id: PropTypes.string,
+      name: PropTypes.string,
+      type: PropTypes.string,
+      proteins: PropTypes.number,
+      fat: PropTypes.number,
+      carbohydrates: PropTypes.number,
+      calories: PropTypes.number,
+      price: PropTypes.number,
+      image: PropTypes.string,
+      image_mobile: PropTypes.string,
+      image_large: PropTypes.string,
+      __v: PropTypes.number,
+    } ) )
+  } )
 };
