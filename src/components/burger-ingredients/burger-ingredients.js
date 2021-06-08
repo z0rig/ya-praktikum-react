@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import IngredientCard from '../ingredient-card/ingredient-card'
+import IngredientCard from '../ingredient-card/ingredient-card';
 import TabsList from '../tabs-list/tabs-list';
 import ScrolledContainer from '../scrolled-container/scrolled-container';
 
 import styles from './burger-ingredients.module.css';
 
-import getAdaptedIngredientsData from './utils'
+import getAdaptedIngredientsData from './utils';
 
 function BurgerIngredients ( { ingredients } ) {
   const [activeTab, setActiveTab] = useState( 'Булки' );

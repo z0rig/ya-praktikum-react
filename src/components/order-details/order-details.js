@@ -10,7 +10,7 @@ const OrderDetails = () => {
       <p className={ styles.status }>Ваш заказ начали готовить</p>
       <p className={ styles.note }>Дождитесь готовности на орбитальной станции</p>
     </div>
-  )
-}
+  );
+};
 
 export default OrderDetails;

@@ -17,4 +17,4 @@ export default NavLink;
 NavLink.propTypes = {
   url: PropTypes.string,
   isActive: PropTypes.bool,
-}
+};

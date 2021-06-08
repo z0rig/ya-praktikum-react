@@ -21,7 +21,7 @@ const Modal = ( { children, title, closeModal } ) => {
     window.addEventListener( 'keydown', onDocumentKeyDown );
     return () => {
       window.removeEventListener( 'keydown', onDocumentKeyDown );
-    }
+    };
   }, [closeModal] );
 
   return ( createPortal(
@@ -36,7 +36,7 @@ const Modal = ( { children, title, closeModal } ) => {
         { children }
       </div>
     </ModalOverlay>,
-    modalRoot ) )
+    modalRoot ) );
 };
 
 export default Modal;
@@ -44,4 +44,4 @@ export default Modal;
 Modal.propTypes = {
   title: PropTypes.string,
   closeModal: PropTypes.func
-}
+};

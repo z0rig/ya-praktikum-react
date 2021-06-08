@@ -36,13 +36,13 @@ const App = () => {
           isLoading: false,
           hasError: true,
           ingredients: []
-        } )
+        } );
       }
 
-    }
+    };
 
     fetchIngredients();
-  }, [] )
+  }, [] );
 
   const { ingredients, isLoading, hasError } = state;
   return (
@@ -59,6 +59,6 @@ const App = () => {
       }
     </>
   );
-}
+};
 
 export default App;

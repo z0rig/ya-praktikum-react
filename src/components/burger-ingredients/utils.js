@@ -17,9 +17,9 @@ const getAdaptedIngredientsData = ( ingredients ) => {
   ingredients.forEach( ( ingredient ) => {
     ingredientSectionsData[ingredient.type].items
       .push( ingredient );
-  } )
+  } );
 
   return ingredientSectionsData;
-}
+};
 
 export default getAdaptedIngredientsData;

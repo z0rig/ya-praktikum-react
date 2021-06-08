@@ -13,7 +13,7 @@
 }
 
 .list {
-  composes: list-reset pt-4 pr-2 from global;
+  composes: list-reset pr-2 from global;
 
   display: flex;
   flex-wrap: wrap;
@@ -61,6 +61,10 @@
   display: block;
   max-width: calc(100% - 51px);
   margin-left: 32px;
+}
+
+.section :global(.constructor-element_pos_top) {
+  margin-bottom: 16px;
 }
 
 .section :global(.constructor-element_pos_bottom) {

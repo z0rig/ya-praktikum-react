@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,15 +6,15 @@ import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktiku
 import ScrolledContainer from '../scrolled-container/scrolled-container';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import ActiveBun from '../active-bun/active-bun';
+
 import { useToggle } from '../../utils/customHoocs';
 
 import styles from './burger-constructor.module.css';
 
-const BurgerConstructor = ( { ingredients } ) => {
+const BurgerConstructor = ( { ingredients, activeBun } ) => {
   const [isModalOpen, toggleModalActive] = useToggle( false );
-
-  const bun = ingredients[0];
-  const filteredData = ingredients.filter( ( ingredient ) => ( ingredient.type !== 'bun' ) );
+  const [bun] = useState( activeBun );
 
   return (
     <>
@@ -28,35 +28,23 @@ const BurgerConstructor = ( { ingredients } ) => {
         <h2 className='visually-hidden'>Конструктор бургера</h2>
 
         <div className={ styles.ingredients }>
-          <ConstructorElement
-            price={ bun.price }
-            thumbnail={ bun.image }
-            text={ `${ bun.name } (верх)` }
-            type='top'
-            isLocked={ true }
-          />
-          <ScrolledContainer maxHeight='471px'>
-            <ul className={ styles.list }>
-              { filteredData.map( ( ingredient, idx ) => {
-                return (
-                  <li
-                    key={ ingredient._id }
-                    className={ `${ styles.item } ${ ( idx === filteredData.length - 1 ) ? '' : styles['item_mb-4'] }` }
-                  >
-                    <DragIcon type='primary' />
-                    <ConstructorElement thumbnail={ ingredient.image } text={ ingredient.name } price={ ingredient.price } />
-                  </li>
-                )
-              } ) }
-            </ul>
-          </ScrolledContainer>
-          <ConstructorElement
-            price={ bun.price }
-            thumbnail={ bun.image }
-            text={ `${ bun.name } (низ)` }
-            type='bottom'
-            isLocked={ true }
-          />
+          <ActiveBun bun={ bun }>
+            <ScrolledContainer maxHeight='455px'>
+              <ul className={ styles.list }>
+                { ingredients.map( ( ingredient, idx ) => {
+                  return (
+                    <li
+                      key={ ingredient._id }
+                      className={ `${ styles.item } ${ ( idx === ingredients.length - 1 ) ? '' : styles['item_mb-4'] }` }
+                    >
+                      <DragIcon type='primary' />
+                      <ConstructorElement thumbnail={ ingredient.image } text={ ingredient.name } price={ ingredient.price } />
+                    </li>
+                  );
+                } ) }
+              </ul>
+            </ScrolledContainer>
+          </ActiveBun>
         </div>
         <div className={ styles.helper }>
           <p className={ styles.price }>610 <CurrencyIcon type='primary' /></p>
@@ -67,7 +55,7 @@ const BurgerConstructor = ( { ingredients } ) => {
         </div>
       </section>
     </>
-  )
+  );
 };
 
 export default BurgerConstructor;
@@ -90,4 +78,4 @@ BurgerConstructor.propTypes = {
       __v: PropTypes.number,
     } ) )
   } ) )
-}
+};

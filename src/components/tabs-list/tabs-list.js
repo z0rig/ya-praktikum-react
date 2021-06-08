@@ -18,12 +18,12 @@ const TabsList = ( { activeTab, onClick } ) => {
     </li>
   ) );
 
-  return <ul className={ styles.list }>{ listItems }</ul>
-}
+  return <ul className={ styles.list }>{ listItems }</ul>;
+};
 
 export default TabsList;
 
 TabsList.propTypes = {
   activeTab: PropTypes.string,
   onClick: PropTypes.func
-}
+};

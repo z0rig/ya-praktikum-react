@@ -37,7 +37,7 @@ const IngredientCard = ( { ingredient } ) => {
         <h4 className='text_type_main-default text'>{ name }</h4>
       </article>
     </>
-  )
+  );
 };
 
 export default IngredientCard;
@@ -60,4 +60,4 @@ IngredientCard.propTypes = {
       __v: PropTypes.number,
     } ) )
   } ) )
-}
+};

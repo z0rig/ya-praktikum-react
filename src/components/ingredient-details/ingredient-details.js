@@ -41,8 +41,8 @@ const IngredientDetails = ( {
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
 export default IngredientDetails;
 
@@ -53,4 +53,4 @@ IngredientDetails.propTypes = {
   proteins: PropTypes.number,
   fat: PropTypes.number,
   carbohydrates: PropTypes.number
-}
+};
