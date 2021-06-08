@@ -7,6 +7,8 @@ import Error from '../error/error';
 
 import { INGREDIENTS_ULR } from '../../constants';
 
+import { IngredientsContext } from '../../services/ingredients-context';
+
 const App = () => {
   const [state, setstate] = useState( {
     isLoading: true,
@@ -48,7 +50,13 @@ const App = () => {
       <AppHeader />
       { isLoading && <Spinner /> }
       { hasError && <Error /> }
-      { ingredients.length ? <AppMain ingredients={ state.ingredients } /> : null }
+      {
+        ingredients.length ?
+          <IngredientsContext.Provider value={ { ingredients } }>
+            <AppMain />
+          </IngredientsContext.Provider> :
+          null
+      }
     </>
   );
 }
