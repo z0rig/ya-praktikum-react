@@ -10,7 +10,7 @@ import styles from './modal.module.css';
 
 const modalRoot = document.getElementById( 'modal' );
 
-const Modal = ( { children, title, closeModal } ) => {
+const Modal = ( { children, title, isOpen, closeModal } ) => {
   useEffect( () => {
     const onDocumentKeyDown = ( { code } ) => {
       if ( code === 'Escape' ) {
@@ -22,7 +22,7 @@ const Modal = ( { children, title, closeModal } ) => {
     return () => {
       window.removeEventListener( 'keydown', onDocumentKeyDown );
     };
-  }, [closeModal] );
+  }, [closeModal, isOpen] );
 
   return ( createPortal(
     <ModalOverlay onClick={ closeModal }>

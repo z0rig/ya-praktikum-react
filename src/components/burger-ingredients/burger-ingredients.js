@@ -14,15 +14,11 @@ import getAdaptedIngredientsData from './utils';
 function BurgerIngredients ( { ingredients } ) {
   const [activeTab, setActiveTab] = useState( 'Булки' );
 
-  const toggleActiveTab = ( activeTab ) => {
-    setActiveTab( activeTab );
-  };
-
   return (
     <section className={ styles.section }>
       <h2 className='visually-hidden'>Ингредиенты</h2>
 
-      <TabsList activeTab={ activeTab } onClick={ toggleActiveTab } />
+      <TabsList activeTab={ activeTab } onClick={ setActiveTab } />
 
       <ScrolledContainer maxHeight={ '716px' }>
         {

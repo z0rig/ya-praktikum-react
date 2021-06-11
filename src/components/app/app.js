@@ -5,7 +5,7 @@ import AppHeader from '../app-header/app-header';
 import Spinner from '../spinner/spinner';
 import Error from '../error/error';
 
-import { INGREDIENTS_ULR } from '../../constants';
+import { INGREDIENTS_ULR } from '../../utils/constants';
 
 import { IngredientsContext } from '../../services/ingredients-context';
 
@@ -48,13 +48,13 @@ const App = () => {
   return (
     <>
       <AppHeader />
-      { isLoading && <Spinner /> }
-      { hasError && <Error /> }
+      { isLoading && (<Spinner />) }
+      { hasError && (<Error />) }
       {
         ingredients.length ?
-          <IngredientsContext.Provider value={ { ingredients } }>
+          (<IngredientsContext.Provider value={ { ingredients } }>
             <AppMain />
-          </IngredientsContext.Provider> :
+          </IngredientsContext.Provider>) :
           null
       }
     </>

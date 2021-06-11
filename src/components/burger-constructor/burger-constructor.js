@@ -8,7 +8,7 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import ActiveBun from '../active-bun/active-bun';
 
-import { useToggle } from '../../utils/customHoocs';
+import { useToggle } from '../../hooks/customHoocs';
 
 import styles from './burger-constructor.module.css';
 
@@ -28,9 +28,9 @@ const BurgerConstructor = ( { ingredients, activeBun } ) => {
     <>
       {
         isModalOpen &&
-        <Modal closeModal={ toggleModalActive } >
+        (<Modal isOpen={ isModalOpen } closeModal={ toggleModalActive } >
           <OrderDetails ingredientsIds={ ingredientsIds } />
-        </Modal>
+        </Modal>)
       }
       <section className={ styles.section }>
         <h2 className='visually-hidden'>Конструктор бургера</h2>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { TABS } from '../../constants';
+import { TABS } from '../../utils/constants';
 
 import styles from './tabs-list.module.css';
 

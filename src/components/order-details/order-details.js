@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Spinner from '../spinner/spinner';
 import Error from '../error/error';
 
-import { ORDERS_URL } from '../../constants';
+import { ORDERS_URL } from '../../utils/constants';
 
 import styles from './order-details.module.css';
 
@@ -53,15 +53,15 @@ const OrderDetails = ( { ingredientsIds } ) => {
   const { orderData, isLoading, hasError } = state;
   return (
     <>
-      { isLoading && <Spinner /> }
-      { hasError && <Error /> }
+      { isLoading && (<Spinner />) }
+      { hasError && (<Error />) }
       {
-        orderData ? <div className={ styles.details }>
+        orderData ? (<div className={ styles.details }>
           <p className={ styles.id }>{ orderData.order.number }</p>
           <h3 className={ styles.title }>идентификатор заказа</h3>
           <p className={ styles.status }>Ваш заказ начали готовить</p>
           <p className={ styles.note }>Дождитесь готовности на орбитальной станции</p>
-        </div> : null
+        </div>) : null
       }
     </>
   );

@@ -15,7 +15,7 @@ const AppHeader = () => (
         <Logo />
       </div>
       <div className={ styles.login }>
-        <NavLink url='/'>
+        <NavLink url='#'>
           <ProfileIcon type='secondary' />
           Личный кабинет
         </NavLink>
