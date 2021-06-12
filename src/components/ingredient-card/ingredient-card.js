@@ -5,7 +5,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 
 import Modal from '../modal/modal';
 import IngredientsDetail from '../ingredient-details/ingredient-details';
-import { useToggle } from '../../utils/customHoocs';
+import { useToggle } from '../../hooks/customHoocs';
 
 import styles from './ingridient-card.module.css';
 
@@ -17,7 +17,7 @@ const IngredientCard = ( { ingredient } ) => {
     <>
       {
         isModalOpen &&
-        <Modal title='Детали ингридиента' closeModal={ toggleModalOpen }>
+        (<Modal isOpen={ isModalOpen } title='Детали ингридиента' closeModal={ toggleModalOpen }>
           <IngredientsDetail
             name={ name }
             price={ price }
@@ -27,7 +27,7 @@ const IngredientCard = ( { ingredient } ) => {
             fat={ fat }
             carbohydrates={ carbohydrates }
           />
-        </Modal>
+        </Modal>)
       }
       <article onClick={ toggleModalOpen } className={ styles.card }>
         <picture>
@@ -37,7 +37,7 @@ const IngredientCard = ( { ingredient } ) => {
         <h4 className='text_type_main-default text'>{ name }</h4>
       </article>
     </>
-  )
+  );
 };
 
 export default IngredientCard;
@@ -60,4 +60,4 @@ IngredientCard.propTypes = {
       __v: PropTypes.number,
     } ) )
   } ) )
-}
+};

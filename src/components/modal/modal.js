@@ -10,7 +10,7 @@ import styles from './modal.module.css';
 
 const modalRoot = document.getElementById( 'modal' );
 
-const Modal = ( { children, title, closeModal } ) => {
+const Modal = ( { children, title, isOpen, closeModal } ) => {
   useEffect( () => {
     const onDocumentKeyDown = ( { code } ) => {
       if ( code === 'Escape' ) {
@@ -21,8 +21,8 @@ const Modal = ( { children, title, closeModal } ) => {
     window.addEventListener( 'keydown', onDocumentKeyDown );
     return () => {
       window.removeEventListener( 'keydown', onDocumentKeyDown );
-    }
-  }, [closeModal] );
+    };
+  }, [closeModal, isOpen] );
 
   return ( createPortal(
     <ModalOverlay onClick={ closeModal }>
@@ -36,7 +36,7 @@ const Modal = ( { children, title, closeModal } ) => {
         { children }
       </div>
     </ModalOverlay>,
-    modalRoot ) )
+    modalRoot ) );
 };
 
 export default Modal;
@@ -44,4 +44,4 @@ export default Modal;
 Modal.propTypes = {
   title: PropTypes.string,
   closeModal: PropTypes.func
-}
+};

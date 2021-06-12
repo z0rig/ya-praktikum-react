@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import AppNav from '../app-nav/app-nav'
-import NavLink from '../nav-link/nav-link'
+import AppNav from '../app-nav/app-nav';
+import NavLink from '../nav-link/nav-link';
 
 import styles from './app-header.module.css';
 
@@ -15,7 +15,7 @@ const AppHeader = () => (
         <Logo />
       </div>
       <div className={ styles.login }>
-        <NavLink url='/'>
+        <NavLink url='#'>
           <ProfileIcon type='secondary' />
           Личный кабинет
         </NavLink>

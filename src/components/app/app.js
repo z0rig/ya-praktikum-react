@@ -5,7 +5,9 @@ import AppHeader from '../app-header/app-header';
 import Spinner from '../spinner/spinner';
 import Error from '../error/error';
 
-import { INGREDIENTS_ULR } from '../../constants';
+import { INGREDIENTS_ULR } from '../../utils/constants';
+
+import { IngredientsContext } from '../../services/ingredients-context';
 
 const App = () => {
   const [state, setstate] = useState( {
@@ -34,23 +36,29 @@ const App = () => {
           isLoading: false,
           hasError: true,
           ingredients: []
-        } )
+        } );
       }
 
-    }
+    };
 
     fetchIngredients();
-  }, [] )
+  }, [] );
 
   const { ingredients, isLoading, hasError } = state;
   return (
     <>
       <AppHeader />
-      { isLoading && <Spinner /> }
-      { hasError && <Error /> }
-      { ingredients.length ? <AppMain ingredients={ state.ingredients } /> : null }
+      { isLoading && (<Spinner />) }
+      { hasError && (<Error />) }
+      {
+        ingredients.length ?
+          (<IngredientsContext.Provider value={ { ingredients } }>
+            <AppMain />
+          </IngredientsContext.Provider>) :
+          null
+      }
     </>
   );
-}
+};
 
 export default App;

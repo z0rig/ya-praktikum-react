@@ -22,12 +22,12 @@ const Error = ( { width = '232', height = '232' } ) => {
       </svg>
       <p className={ styles.text }>При загрузке данных произошла ошибка</p>
     </div>
-  )
-}
+  );
+};
 
 Error.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
-}
+};
 
-export default Error
+export default Error;

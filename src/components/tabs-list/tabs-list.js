@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { TABS } from '../../constants';
+import { TABS } from '../../utils/constants';
 
 import styles from './tabs-list.module.css';
 
@@ -18,12 +18,12 @@ const TabsList = ( { activeTab, onClick } ) => {
     </li>
   ) );
 
-  return <ul className={ styles.list }>{ listItems }</ul>
-}
+  return <ul className={ styles.list }>{ listItems }</ul>;
+};
 
 export default TabsList;
 
 TabsList.propTypes = {
   activeTab: PropTypes.string,
   onClick: PropTypes.func
-}
+};

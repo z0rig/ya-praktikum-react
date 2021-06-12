@@ -29,6 +29,7 @@
       "react-app/jest"
     ],
     "rules": {
+      "semi": [2, "always"],
       "jsx-quotes": ["error", "prefer-single"],
       "quotes": ["error", "single"]
     }
