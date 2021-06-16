@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -11,8 +11,27 @@ import styles from './burger-ingredients.module.css';
 
 import getAdaptedIngredientsData from './utils';
 
-function BurgerIngredients ( { ingredients } ) {
+function BurgerIngredients () {
+  const ingredientsData = useSelector( state => state.burgerIngredients.items );
   const [activeTab, setActiveTab] = useState( 'Булки' );
+
+  const ingredientsSections = useMemo( () => {
+    return Object.values( getAdaptedIngredientsData( ingredientsData ) )
+      .map( ( { title, items } ) => (
+        <section key={ title } className='pt-10'>
+          <h3 className='text text_type_main-medium mb-6'>{ title }</h3>
+
+          <ul className={ styles.list }>
+            { items.map( ( ingredient, idx ) => (
+              <li className={ styles.item } key={ idx }>
+                <Counter count={ 1 } size='default' />
+                <IngredientCard ingredient={ ingredient } />
+              </li>
+            ) ) }
+          </ul>
+        </section>
+      ) );
+  }, [ingredientsData] );
 
   return (
     <section className={ styles.section }>
@@ -21,46 +40,10 @@ function BurgerIngredients ( { ingredients } ) {
       <TabsList activeTab={ activeTab } onClick={ setActiveTab } />
 
       <ScrolledContainer maxHeight={ '716px' }>
-        {
-          Object.values( getAdaptedIngredientsData( ingredients ) )
-            .map( ( { title, items } ) => (
-              <section key={ title } className='pt-10'>
-                <h3 className='text text_type_main-medium mb-6'>{ title }</h3>
-
-                <ul className={ styles.list }>
-                  { items.map( ( ingredient, idx ) => (
-                    <li className={ styles.item } key={ idx }>
-                      <Counter count={ 1 } size='default' />
-                      <IngredientCard ingredient={ ingredient } />
-                    </li>
-                  ) ) }
-                </ul>
-              </section>
-            ) )
-        }
+        { ingredientsSections }
       </ScrolledContainer>
     </section>
   );
 };
 
 export default BurgerIngredients;
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf( PropTypes.shape( {
-    title: PropTypes.string,
-    items: PropTypes.arrayOf( PropTypes.shape( {
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    } ) )
-  } ) )
-};

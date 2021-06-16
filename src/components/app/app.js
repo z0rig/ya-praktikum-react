@@ -1,60 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchIngredients } from '../../store/slices/burger-ingredients';
 
-import AppMain from '../app-main/app-main';
+import ConstructorPage from '../constructor-page/constructor-page';
 import AppHeader from '../app-header/app-header';
 import Spinner from '../spinner/spinner';
 import Error from '../error/error';
 
-import { INGREDIENTS_ULR } from '../../utils/constants';
-
-import { IngredientsContext } from '../../services/ingredients-context';
-
 const App = () => {
-  const [state, setstate] = useState( {
-    isLoading: true,
-    hasError: false,
-    ingredients: []
-  } );
+  const dispatch = useDispatch();
 
   useEffect( () => {
-    const fetchIngredients = async () => {
-      try {
-        const res = await fetch( INGREDIENTS_ULR );
-        if ( res.ok ) {
-          const ingredients = await res.json();
+    dispatch( fetchIngredients() );
+  }, [dispatch] );
 
-          setstate( {
-            isLoading: false,
-            hasError: false,
-            ingredients: ingredients.data
-          } );
-        } else {
-          throw new Error( 'Something went wrong ...' );
-        }
-      } catch ( err ) {
-        setstate( {
-          isLoading: false,
-          hasError: true,
-          ingredients: []
-        } );
-      }
-
-    };
-
-    fetchIngredients();
-  }, [] );
-
-  const { ingredients, isLoading, hasError } = state;
+  const ingredients = useSelector( state => state.burgerIngredients );
+  const { loading, error, items } = ingredients;
   return (
     <>
       <AppHeader />
-      { isLoading && (<Spinner />) }
-      { hasError && (<Error />) }
+      { loading && ( <Spinner /> ) }
+      { error && ( <Error /> ) }
       {
-        ingredients.length ?
-          (<IngredientsContext.Provider value={ { ingredients } }>
-            <AppMain />
-          </IngredientsContext.Provider>) :
+        items.length ?
+          (
+            <main className='pt-10'>
+              <ConstructorPage />
+            </main>
+          ) :
           null
       }
     </>

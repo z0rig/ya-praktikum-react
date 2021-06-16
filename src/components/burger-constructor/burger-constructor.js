@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -12,95 +12,91 @@ import { useToggle } from '../../hooks/customHoocs';
 
 import styles from './burger-constructor.module.css';
 
-const BurgerConstructor = ( { ingredients, activeBun } ) => {
+const BurgerConstructor = () => {
+  const { bun, items } = useSelector( state => state.burgerConstructor );
   const [isModalOpen, toggleModalActive] = useToggle( false );
-  const [bun] = useState( activeBun );
 
   const totalPrice = useMemo( () => {
-    return bun.price + ingredients.reduce( ( acc, ingredient ) => acc + ingredient.price, 0 );
-  }, [bun, ingredients] );
+    if ( !bun || !items.length ) {
+      return 0;
+    }
+
+    return bun.price + items.reduce( ( acc, ingredient ) => acc + ingredient.price, 0 );
+  }, [bun, items] );
 
   const ingredientsIds = useMemo( () => {
-    return [...ingredients.map( ( ingredient ) => ingredient._id ), bun._id];
-  }, [bun, ingredients] );
+    if ( !bun || !items.length ) {
+      return [];
+    }
+
+    return [...items.map( ( ingredient ) => ingredient._id ), bun._id];
+  }, [bun, items] );
+
+  const ingredients = useMemo( () => {
+    if ( !items.length ) {
+      return (
+        <li
+          className={ styles.item }
+        >
+          Тут пусто(( Перетащите сюда желаемые ингредиенты!
+        </li>
+      );
+    }
+
+    return items.map( ( ingredient, idx ) => {
+      return (
+        <li
+          key={ ingredient._id }
+          className={ `${ styles.item } ${ ( idx === items.length - 1 ) ? '' : styles['item_mb-4'] }` }
+        >
+          <DragIcon type='primary' />
+          <ConstructorElement thumbnail={ ingredient.image } text={ ingredient.name } price={ ingredient.price } />
+        </li>
+      );
+    } );
+  }, [items] );
+
+  const constructor = useMemo( () => {
+    return (
+      <>
+        <div className={ styles.ingredientsData }>
+          <ActiveBun >
+            <ScrolledContainer maxHeight='455px'>
+              <ul className={ styles.list }>
+                { ingredients }
+              </ul>
+            </ScrolledContainer>
+          </ActiveBun>
+        </div>
+        {
+          bun &&
+          !!items.length &&
+          ( <div className={ styles.helper }>
+            <p className={ styles.price }>{ totalPrice } <CurrencyIcon type='primary' /></p>
+
+            <Button type='primary' size='large' onClick={ toggleModalActive }>
+              Оформить заказ
+            </Button>
+          </div> )
+        }
+      </>
+    );
+  }, [ingredients, bun, items, totalPrice, toggleModalActive] );
 
   return (
     <>
       {
         isModalOpen &&
-        (<Modal isOpen={ isModalOpen } closeModal={ toggleModalActive } >
+        ( <Modal isOpen={ isModalOpen } closeModal={ toggleModalActive } >
           <OrderDetails ingredientsIds={ ingredientsIds } />
-        </Modal>)
+        </Modal> )
       }
       <section className={ styles.section }>
         <h2 className='visually-hidden'>Конструктор бургера</h2>
-
-        <div className={ styles.ingredients }>
-          <ActiveBun bun={ bun }>
-            <ScrolledContainer maxHeight='455px'>
-              <ul className={ styles.list }>
-                { ingredients.map( ( ingredient, idx ) => {
-                  return (
-                    <li
-                      key={ ingredient._id }
-                      className={ `${ styles.item } ${ ( idx === ingredients.length - 1 ) ? '' : styles['item_mb-4'] }` }
-                    >
-                      <DragIcon type='primary' />
-                      <ConstructorElement thumbnail={ ingredient.image } text={ ingredient.name } price={ ingredient.price } />
-                    </li>
-                  );
-                } ) }
-              </ul>
-            </ScrolledContainer>
-          </ActiveBun>
-        </div>
-        <div className={ styles.helper }>
-          <p className={ styles.price }>{ totalPrice } <CurrencyIcon type='primary' /></p>
-
-          <Button type='primary' size='large' onClick={ toggleModalActive }>
-            Оформить заказ
-          </Button>
-        </div>
+        { constructor }
       </section>
     </>
   );
 };
 
 export default BurgerConstructor;
-
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf( PropTypes.shape( {
-    title: PropTypes.string,
-    items: PropTypes.arrayOf( PropTypes.shape( {
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    } ) )
-  } ) ),
-  activeBun: PropTypes.shape( {
-    title: PropTypes.string,
-    items: PropTypes.arrayOf( PropTypes.shape( {
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    } ) )
-  } )
-};
