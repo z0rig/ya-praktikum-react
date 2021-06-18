@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,33 +13,74 @@ import getAdaptedIngredientsData from './utils';
 
 function BurgerIngredients () {
   const ingredientsData = useSelector( state => state.burgerIngredients.items );
-  const [activeTab, setActiveTab] = useState( 'Булки' );
+  const [activeTab, setActiveTab] = useState( 'bun' );
+
+  const bunIngredientsRef = useRef( null );
+  const sauceIngredientsRef = useRef( null );
+  const mainIngredientsRef = useRef( null );
+
+  const tabListRef = useRef( null );
+
+  const adaptedIngredientsData = useMemo( () => {
+    return getAdaptedIngredientsData( ingredientsData, {
+      bun: bunIngredientsRef,
+      sauce: sauceIngredientsRef,
+      main: mainIngredientsRef,
+    } );
+  }, [ingredientsData] );
 
   const ingredientsSections = useMemo( () => {
-    return Object.values( getAdaptedIngredientsData( ingredientsData ) )
-      .map( ( { title, items } ) => (
-        <section key={ title } className='pt-10'>
-          <h3 className='text text_type_main-medium mb-6'>{ title }</h3>
+    return Object.values( adaptedIngredientsData )
+      .map( ( { name, title, items, ref } ) => {
+        return (
+          <section data-name={ name } ref={ ref } key={ title } className='pt-10'>
+            <h3 className='text text_type_main-medium mb-6'>{ title }</h3>
 
-          <ul className={ styles.list }>
-            { items.map( ( ingredient, idx ) => (
-              <li className={ styles.item } key={ idx }>
-                <Counter count={ 1 } size='default' />
-                <IngredientCard ingredient={ ingredient } />
-              </li>
-            ) ) }
-          </ul>
-        </section>
-      ) );
-  }, [ingredientsData] );
+            <ul className={ styles.list }>
+              { items.map( ( ingredient, idx ) => (
+                <li className={ styles.item } key={ idx }>
+                  <Counter count={ 1 } size='default' />
+                  <IngredientCard ingredient={ ingredient } />
+                </li>
+              ) ) }
+            </ul>
+          </section>
+        );
+      } );
+  }, [adaptedIngredientsData] );
+
+  const onTabClick = useCallback(
+    ( value ) => {
+      setActiveTab( value );
+      adaptedIngredientsData[value]
+        .ref.current.scrollIntoView( {
+          behavior: 'smooth'
+        } );
+    },
+    [adaptedIngredientsData, setActiveTab],
+  );
+
+  const setActiveTabOnScroll = useCallback(
+    () => {
+      const name = Object.values( adaptedIngredientsData )
+        .find( ( { ref } ) => {
+          return (
+            ref.current.getBoundingClientRect().top -
+            tabListRef.current.getBoundingClientRect().bottom +
+            ( ref.current.getBoundingClientRect().height / 1.3 ) ) > 0;
+        } ).name;
+      setActiveTab( name );
+    },
+    [adaptedIngredientsData],
+  );
 
   return (
     <section className={ styles.section }>
       <h2 className='visually-hidden'>Ингредиенты</h2>
 
-      <TabsList activeTab={ activeTab } onClick={ setActiveTab } />
+      <TabsList tabListRef={ tabListRef } tabsData={ adaptedIngredientsData } activeTab={ activeTab } onClick={ onTabClick } />
 
-      <ScrolledContainer maxHeight={ '716px' }>
+      <ScrolledContainer maxHeight={ '716px' } onScroll={ setActiveTabOnScroll }>
         { ingredientsSections }
       </ScrolledContainer>
     </section>

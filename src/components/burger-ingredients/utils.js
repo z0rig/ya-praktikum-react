@@ -1,16 +1,22 @@
-const getAdaptedIngredientsData = ( ingredientsData ) => {
+const getAdaptedIngredientsData = ( ingredientsData, refs ) => {
   const ingredientSectionsData = {
     bun: {
       title: 'Булки',
-      items: []
+      ref: refs['bun'],
+      items: [],
+      name: 'bun'
     },
     sauce: {
       title: 'Соусы',
-      items: []
+      ref: refs['sauce'],
+      items: [],
+      name: 'sauce'
     },
     main: {
       title: 'Начинки',
-      items: []
+      ref: refs['main'],
+      items: [],
+      name: 'main'
     }
   };
 
