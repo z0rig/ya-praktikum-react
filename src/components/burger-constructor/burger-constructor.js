@@ -1,8 +1,12 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItem, addBun } from '../../store/slices/burger-constructor';
 
-import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDrop } from 'react-dnd';
 
+import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import ConstructorItem from '../constructior-item/constructor-item';
 import ScrolledContainer from '../scrolled-container/scrolled-container';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -13,8 +17,24 @@ import { useToggle } from '../../hooks/customHoocs';
 import styles from './burger-constructor.module.css';
 
 const BurgerConstructor = () => {
+  const dispatch = useDispatch();
   const { bun, items } = useSelector( state => state.burgerConstructor );
   const [isModalOpen, toggleModalActive] = useToggle( false );
+
+  const [{ isOver, canDrop }, dropTarget] = useDrop( {
+    accept: 'ingredients',
+    drop ( item ) {
+      if ( item.type === 'bun' ) {
+        dispatch( addBun( { bun: item, activeBun: bun } ) );
+      } else {
+        dispatch( addItem( item ) );
+      }
+    },
+    collect: ( monitor ) => ( {
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    } ),
+  } );
 
   const totalPrice = useMemo( () => {
     if ( !bun || !items.length ) {
@@ -36,30 +56,35 @@ const BurgerConstructor = () => {
     if ( !items.length ) {
       return (
         <li
-          className={ styles.item }
+          className={ styles.placeholder }
         >
-          Тут пусто(( Перетащите сюда желаемые ингредиенты!
+          <p className={ styles['placeholder-text'] }>Тут пусто(( <br /> Тащи сюда  ингредиенты!</p>
         </li>
       );
     }
 
-    return items.map( ( ingredient, idx ) => {
+    return items.map( ( item, idx ) => {
       return (
-        <li
-          key={ ingredient._id }
-          className={ `${ styles.item } ${ ( idx === items.length - 1 ) ? '' : styles['item_mb-4'] }` }
-        >
-          <DragIcon type='primary' />
-          <ConstructorElement thumbnail={ ingredient.image } text={ ingredient.name } price={ ingredient.price } />
+        <li key={ item.constructorId } className={ `${ styles.item } ${ ( idx === items.length - 1 ) ? '' : styles['item_mb-4'] }` } >
+          <ConstructorItem ingredient={ item } idx={ idx } />
         </li>
       );
     } );
   }, [items] );
 
   const constructor = useMemo( () => {
+    const isActive = isOver && canDrop;
+    let backgroundColor = '';
+    if ( isActive ) {
+      backgroundColor = 'darkgreen';
+    }
+    else if ( canDrop ) {
+      backgroundColor = 'darkkhaki';
+    }
+
     return (
       <>
-        <div className={ styles.ingredientsData }>
+        <div style={ { backgroundColor } } ref={ dropTarget } className={ styles.ingredientsData }>
           <ActiveBun >
             <ScrolledContainer maxHeight='455px'>
               <ul className={ styles.list }>
@@ -81,7 +106,7 @@ const BurgerConstructor = () => {
         }
       </>
     );
-  }, [ingredients, bun, items, totalPrice, toggleModalActive] );
+  }, [ingredients, bun, items, totalPrice, toggleModalActive, dropTarget, isOver, canDrop] );
 
   return (
     <>

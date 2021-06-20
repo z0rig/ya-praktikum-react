@@ -10,10 +10,14 @@ import IngredientsDetail from '../ingredient-details/ingredient-details';
 import { useToggle } from '../../hooks/customHoocs';
 
 import styles from './ingridient-card.module.css';
+import { useDrag } from 'react-dnd';
 
 const IngredientCard = ( { ingredient } ) => {
   const { name, price, image } = ingredient;
-
+  const [, dragRef] = useDrag( {
+    type: 'ingredients',
+    item: ingredient
+  } );
   const dispatch = useDispatch();
   const [isModalOpen, toggleModalOpen] = useToggle( false );
   const onCardClick = useCallback(
@@ -40,7 +44,7 @@ const IngredientCard = ( { ingredient } ) => {
           <IngredientsDetail />
         </Modal> )
       }
-      <article onClick={ onCardClick } className={ styles.card }>
+      <article ref={ dragRef } onClick={ onCardClick } className={ styles.card }>
         <picture className='mb-2'>
           <img src={ image } alt={ name } />
         </picture>

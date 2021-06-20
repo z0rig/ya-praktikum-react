@@ -1,48 +1,36 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import getId from '../../utils/getId';
+
 const initialState = {
-  items: [{
-    calories: 420,
-    carbohydrates: 53,
-    fat: 24,
-    image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-    image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-    name: 'Краторная булка N-200i',
-    price: 1255,
-    proteins: 80,
-    type: 'bun',
-    __v: 0,
-    _id: '60c9dcba45f4920027090275',
-  }],
-  bun: {
-    calories: 420,
-    carbohydrates: 53,
-    fat: 24,
-    image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-    image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-    name: 'Краторная булка N-200i',
-    price: 1255,
-    proteins: 80,
-    type: 'bun',
-    __v: 0,
-    _id: '60c9dcba45f4920027090275',
-  }
+  items: [],
+  bun: null
 };
 
 const burgerConstructorSlice = createSlice( {
   name: 'burgerConstructor',
   initialState,
   reducers: {
-    addItem: ( { items }, { payload } ) => {
-      items.push( payload );
+    addItem: ( state, { payload } ) => {
+      state.items.push( { ...payload, constructorId: getId() } );
     },
-    addBun: ( { bun }, { payload } ) => {
-      bun = payload;
-    }
+    removeItem: ( state, { payload } ) => {
+      const itemIndex = state.items.findIndex( ( item ) => item._id === payload );
+      state.items.splice( itemIndex, 1 );
+    },
+    swapItems: ( { items }, { payload: { from, to } } ) => {
+      [items[from], items[to]] = [items[to], items[from]];
+    },
+    addBun: ( state, { payload: { bun } } ) => {
+      if (
+        ( state.bun === null ) ||
+        ( state.bun && state.bun._id !== bun._id )
+      ) {
+        state.bun = bun;
+      }
+    },
   },
 } );
 
 export default burgerConstructorSlice.reducer;
-export const { addItem, addBun } = burgerConstructorSlice.actions;
+export const { addItem, removeItem, addBun, swapItems } = burgerConstructorSlice.actions;

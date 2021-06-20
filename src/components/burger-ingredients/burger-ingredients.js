@@ -39,7 +39,7 @@ function BurgerIngredients () {
             <ul className={ styles.list }>
               { items.map( ( ingredient, idx ) => (
                 <li className={ styles.item } key={ idx }>
-                  <Counter count={ 1 } size='default' />
+                  { !!ingredient.quantity && <Counter count={ ingredient.quantity } size='default' /> }
                   <IngredientCard ingredient={ ingredient } />
                 </li>
               ) ) }

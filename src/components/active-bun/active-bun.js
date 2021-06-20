@@ -3,14 +3,18 @@ import { useSelector } from 'react-redux';
 
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import styles from './active-bun.module.css';
+
 const ActiveBun = ( { children } ) => {
   const { bun } = useSelector( state => state.burgerConstructor );
 
   if ( !bun ) {
-    return ( <>
-      Булка не выбрана((
-      { children }
-    </> );
+    return (
+      <div className={ styles.placeholder }>
+        <p className={ styles.text }>Булка не выбрана(( <br /> Тащи её сюда!</p>
+        { children }
+      </div>
+    );
   }
   return (
     <>
