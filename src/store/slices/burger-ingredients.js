@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { addItem, removeItem, addBun } from './burger-constructor';
+import { postOrder } from './order-details';
 
 const initialState = {
   items: [],
@@ -57,7 +58,13 @@ const burgerIngredientsSlice = createSlice( {
 
         const currentBun = state.items.find( ( item ) => item._id === bun._id );
         currentBun.quantity = 1;
-      } );
+      } )
+      .addCase(postOrder.fulfilled, ( state ) => {
+        state.items.forEach( ( ingredient ) => {
+          if ( ingredient.quantity ) {
+          ingredient.quantity = 0;
+        }});
+      });
   },
 } );
 

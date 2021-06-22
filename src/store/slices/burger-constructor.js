@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { postOrder } from './order-details';
+
 import getId from '../../utils/getId';
 
 const initialState = {
@@ -30,6 +32,10 @@ const burgerConstructorSlice = createSlice( {
       }
     },
   },
+  extraReducers: ( builder ) => {
+    builder
+      .addCase( postOrder.fulfilled, ( ) => initialState);
+    }
 } );
 
 export default burgerConstructorSlice.reducer;

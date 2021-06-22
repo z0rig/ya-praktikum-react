@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchIngredients } from '../../store/slices/burger-ingredients';
 
@@ -14,15 +14,15 @@ const App = () => {
     dispatch( fetchIngredients() );
   }, [dispatch] );
 
-  const ingredients = useSelector( state => state.burgerIngredients );
-  const { loading, error, items } = ingredients;
-  return (
-    <>
-      <AppHeader />
-      { loading && ( <Spinner /> ) }
-      { error && ( <Error /> ) }
-      {
-        items.length ?
+  const { loading, error } = useSelector( state => state.burgerIngredients );
+
+  const mainContent = useMemo( () => {
+    return (
+      <>
+        { loading && ( <Spinner /> ) }
+        { error && ( <Error /> ) }
+        {
+          (!loading && !error) ?
           (
             <main className='pt-10'>
               <ConstructorPage />
@@ -30,6 +30,14 @@ const App = () => {
           ) :
           null
       }
+      </>
+    );
+  }, [loading, error]);
+
+  return (
+    <>
+      <AppHeader />
+      { mainContent }
     </>
   );
 };

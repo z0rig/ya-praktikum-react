@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,16 +6,16 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './tabs-list.module.css';
 
 const TabsList = ( { tabsData, activeTab, onClick, tabListRef } ) => {
-  const listItems = Object.keys( tabsData )
+  const listItems = useMemo( () => (Object.keys( tabsData )
     .map( ( key, idx ) => (
       <li key={ idx } className={ styles.item }>
         <Tab
           value={ key }
           active={ key === activeTab }
           onClick={ onClick }
-        >{ tabsData[key].title }</Tab>
+        >{ tabsData[ key ].title }</Tab>
       </li>
-    ) );
+    ) )), [tabsData, activeTab, onClick] );
 
   return <ul ref={ tabListRef } className={ styles.list }>{ listItems }</ul>;
 };

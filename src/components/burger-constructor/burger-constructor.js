@@ -44,14 +44,6 @@ const BurgerConstructor = () => {
     return bun.price + items.reduce( ( acc, ingredient ) => acc + ingredient.price, 0 );
   }, [bun, items] );
 
-  const ingredientsIds = useMemo( () => {
-    if ( !bun || !items.length ) {
-      return [];
-    }
-
-    return [...items.map( ( ingredient ) => ingredient._id ), bun._id];
-  }, [bun, items] );
-
   const ingredients = useMemo( () => {
     if ( !items.length ) {
       return (
@@ -71,6 +63,20 @@ const BurgerConstructor = () => {
       );
     } );
   }, [items] );
+
+  const constructorFooter = useMemo( () => {
+    if ( bun && !!items.length ) {
+      return (
+        <div className={ styles.helper }>
+          <p className={ styles.price }>{ totalPrice } <CurrencyIcon type='primary' /></p>
+
+          <Button type='primary' size='large' onClick={ toggleModalActive }>
+            Оформить заказ
+          </Button>
+        </div>
+      );
+    }
+  }, [bun, items, toggleModalActive, totalPrice]);
 
   const constructor = useMemo( () => {
     const isActive = isOver && canDrop;
@@ -93,32 +99,22 @@ const BurgerConstructor = () => {
             </ScrolledContainer>
           </ActiveBun>
         </div>
-        {
-          bun &&
-          !!items.length &&
-          ( <div className={ styles.helper }>
-            <p className={ styles.price }>{ totalPrice } <CurrencyIcon type='primary' /></p>
-
-            <Button type='primary' size='large' onClick={ toggleModalActive }>
-              Оформить заказ
-            </Button>
-          </div> )
-        }
       </>
     );
-  }, [ingredients, bun, items, totalPrice, toggleModalActive, dropTarget, isOver, canDrop] );
+  }, [ingredients, dropTarget, isOver, canDrop] );
 
   return (
     <>
       {
         isModalOpen &&
         ( <Modal isOpen={ isModalOpen } closeModal={ toggleModalActive } >
-          <OrderDetails ingredientsIds={ ingredientsIds } />
+          <OrderDetails />
         </Modal> )
       }
       <section className={ styles.section }>
         <h2 className='visually-hidden'>Конструктор бургера</h2>
         { constructor }
+        { constructorFooter }
       </section>
     </>
   );

@@ -30,8 +30,8 @@ const IngredientCard = ( { ingredient } ) => {
 
   const closeModal = useCallback(
     () => {
-      dispatch( resetIngredient( ingredient ) );
       toggleModalOpen();
+      dispatch( resetIngredient( ingredient ) );
     },
     [dispatch, toggleModalOpen, ingredient],
   );

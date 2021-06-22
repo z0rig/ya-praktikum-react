@@ -21,13 +21,15 @@ function BurgerIngredients () {
 
   const tabListRef = useRef( null );
 
+  const refsMap = useMemo( () => ( {
+    bun: bunIngredientsRef,
+    sauce: sauceIngredientsRef,
+    main: mainIngredientsRef,
+  } ), [bunIngredientsRef, sauceIngredientsRef, mainIngredientsRef] );
+
   const adaptedIngredientsData = useMemo( () => {
-    return getAdaptedIngredientsData( ingredientsData, {
-      bun: bunIngredientsRef,
-      sauce: sauceIngredientsRef,
-      main: mainIngredientsRef,
-    } );
-  }, [ingredientsData] );
+    return getAdaptedIngredientsData( ingredientsData, refsMap);
+  }, [ingredientsData, refsMap] );
 
   const ingredientsSections = useMemo( () => {
     return Object.values( adaptedIngredientsData )
