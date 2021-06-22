@@ -27,9 +27,10 @@ function BurgerIngredients () {
     main: mainIngredientsRef,
   } ), [bunIngredientsRef, sauceIngredientsRef, mainIngredientsRef] );
 
-  const adaptedIngredientsData = useMemo( () => {
-    return getAdaptedIngredientsData( ingredientsData, refsMap);
-  }, [ingredientsData, refsMap] );
+  const adaptedIngredientsData = useMemo(
+    () => getAdaptedIngredientsData( ingredientsData, refsMap ),
+    [ingredientsData, refsMap]
+  );
 
   const ingredientsSections = useMemo( () => {
     return Object.values( adaptedIngredientsData )
@@ -41,7 +42,10 @@ function BurgerIngredients () {
             <ul className={ styles.list }>
               { items.map( ( ingredient, idx ) => (
                 <li className={ styles.item } key={ idx }>
-                  { !!ingredient.quantity && <Counter count={ ingredient.quantity } size='default' /> }
+                  {
+                    !!ingredient.quantity &&
+                    <Counter count={ ingredient.quantity } size='default' />
+                  }
                   <IngredientCard ingredient={ ingredient } />
                 </li>
               ) ) }

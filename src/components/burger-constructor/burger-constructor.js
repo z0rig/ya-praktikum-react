@@ -18,7 +18,7 @@ import styles from './burger-constructor.module.css';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const { bun, items } = useSelector( state => state.burgerConstructor );
+  const { bun, items } = useSelector( (state) => state.burgerConstructor );
   const [isModalOpen, toggleModalActive] = useToggle( false );
 
   const [{ isOver, canDrop }, dropTarget] = useDrop( {
@@ -41,7 +41,8 @@ const BurgerConstructor = () => {
       return 0;
     }
 
-    return bun.price + items.reduce( ( acc, ingredient ) => acc + ingredient.price, 0 );
+    return bun.price + items
+      .reduce( ( acc, ingredient ) => acc + ingredient.price, 0 );
   }, [bun, items] );
 
   const ingredients = useMemo( () => {
@@ -64,6 +65,34 @@ const BurgerConstructor = () => {
     } );
   }, [items] );
 
+  const constructor = useMemo( () => {
+    let droppedZoneClassName = `${styles.ingredientsData}`;
+
+    const ingredientInflight = isOver && canDrop;
+    if ( ingredientInflight ) {
+      droppedZoneClassName =
+        `${ styles.ingredientsData } ${ styles.ingredientInflight }`;
+    }
+    else if ( canDrop ) {
+      droppedZoneClassName =
+        `${ styles.ingredientsData } ${ styles.canDrop }`;
+    }
+
+    return (
+      <>
+        <div ref={ dropTarget } className={ droppedZoneClassName }>
+          <ActiveBun >
+            <ScrolledContainer maxHeight='455px'>
+              <ul className={ styles.list }>
+                { ingredients }
+              </ul>
+            </ScrolledContainer>
+          </ActiveBun>
+        </div>
+      </>
+    );
+  }, [ ingredients, dropTarget, isOver, canDrop ] );
+
   const constructorFooter = useMemo( () => {
     if ( bun && !!items.length ) {
       return (
@@ -77,31 +106,6 @@ const BurgerConstructor = () => {
       );
     }
   }, [bun, items, toggleModalActive, totalPrice]);
-
-  const constructor = useMemo( () => {
-    const isActive = isOver && canDrop;
-    let backgroundColor = '';
-    if ( isActive ) {
-      backgroundColor = 'darkgreen';
-    }
-    else if ( canDrop ) {
-      backgroundColor = 'darkkhaki';
-    }
-
-    return (
-      <>
-        <div style={ { backgroundColor } } ref={ dropTarget } className={ styles.ingredientsData }>
-          <ActiveBun >
-            <ScrolledContainer maxHeight='455px'>
-              <ul className={ styles.list }>
-                { ingredients }
-              </ul>
-            </ScrolledContainer>
-          </ActiveBun>
-        </div>
-      </>
-    );
-  }, [ingredients, dropTarget, isOver, canDrop] );
 
   return (
     <>
