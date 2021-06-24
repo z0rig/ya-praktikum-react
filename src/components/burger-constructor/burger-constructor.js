@@ -1,8 +1,12 @@
-import React, { useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItem, addBun } from '../../store/slices/burger-constructor';
 
-import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDrop } from 'react-dnd';
 
+import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import ConstructorItem from '../constructior-item/constructor-item';
 import ScrolledContainer from '../scrolled-container/scrolled-container';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -12,48 +16,86 @@ import { useToggle } from '../../hooks/customHoocs';
 
 import styles from './burger-constructor.module.css';
 
-const BurgerConstructor = ( { ingredients, activeBun } ) => {
+const BurgerConstructor = () => {
+  const dispatch = useDispatch();
+  const { bun, items } = useSelector( (state) => state.burgerConstructor );
   const [isModalOpen, toggleModalActive] = useToggle( false );
-  const [bun] = useState( activeBun );
+
+  const [{ isOver, canDrop }, dropTarget] = useDrop( {
+    accept: 'ingredients',
+    drop ( item ) {
+      if ( item.type === 'bun' ) {
+        dispatch( addBun( { bun: item, activeBun: bun } ) );
+      } else {
+        dispatch( addItem( item ) );
+      }
+    },
+    collect: ( monitor ) => ( {
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    } ),
+  } );
 
   const totalPrice = useMemo( () => {
-    return bun.price + ingredients.reduce( ( acc, ingredient ) => acc + ingredient.price, 0 );
-  }, [bun, ingredients] );
+    if ( !bun || !items.length ) {
+      return 0;
+    }
 
-  const ingredientsIds = useMemo( () => {
-    return [...ingredients.map( ( ingredient ) => ingredient._id ), bun._id];
-  }, [bun, ingredients] );
+    return bun.price + items
+      .reduce( ( acc, ingredient ) => acc + ingredient.price, 0 );
+  }, [bun, items] );
 
-  return (
-    <>
-      {
-        isModalOpen &&
-        (<Modal isOpen={ isModalOpen } closeModal={ toggleModalActive } >
-          <OrderDetails ingredientsIds={ ingredientsIds } />
-        </Modal>)
-      }
-      <section className={ styles.section }>
-        <h2 className='visually-hidden'>Конструктор бургера</h2>
+  const ingredients = useMemo( () => {
+    if ( !items.length ) {
+      return (
+        <li
+          className={ styles.placeholder }
+        >
+          <p className={ styles['placeholder-text'] }>Тут пусто(( <br /> Тащи сюда  ингредиенты!</p>
+        </li>
+      );
+    }
 
-        <div className={ styles.ingredients }>
-          <ActiveBun bun={ bun }>
+    return items.map( ( item, idx ) => {
+      return (
+        <li key={ item.constructorId } className={ `${ styles.item } ${ ( idx === items.length - 1 ) ? '' : styles['item_mb-4'] }` } >
+          <ConstructorItem ingredient={ item } idx={ idx } />
+        </li>
+      );
+    } );
+  }, [items] );
+
+  const constructor = useMemo( () => {
+    let droppedZoneClassName = `${styles.ingredientsData}`;
+
+    const ingredientInflight = isOver && canDrop;
+    if ( ingredientInflight ) {
+      droppedZoneClassName =
+        `${ styles.ingredientsData } ${ styles.ingredientInflight }`;
+    }
+    else if ( canDrop ) {
+      droppedZoneClassName =
+        `${ styles.ingredientsData } ${ styles.canDrop }`;
+    }
+
+    return (
+      <>
+        <div ref={ dropTarget } className={ droppedZoneClassName }>
+          <ActiveBun >
             <ScrolledContainer maxHeight='455px'>
               <ul className={ styles.list }>
-                { ingredients.map( ( ingredient, idx ) => {
-                  return (
-                    <li
-                      key={ ingredient._id }
-                      className={ `${ styles.item } ${ ( idx === ingredients.length - 1 ) ? '' : styles['item_mb-4'] }` }
-                    >
-                      <DragIcon type='primary' />
-                      <ConstructorElement thumbnail={ ingredient.image } text={ ingredient.name } price={ ingredient.price } />
-                    </li>
-                  );
-                } ) }
+                { ingredients }
               </ul>
             </ScrolledContainer>
           </ActiveBun>
         </div>
+      </>
+    );
+  }, [ ingredients, dropTarget, isOver, canDrop ] );
+
+  const constructorFooter = useMemo( () => {
+    if ( bun && !!items.length ) {
+      return (
         <div className={ styles.helper }>
           <p className={ styles.price }>{ totalPrice } <CurrencyIcon type='primary' /></p>
 
@@ -61,46 +103,25 @@ const BurgerConstructor = ( { ingredients, activeBun } ) => {
             Оформить заказ
           </Button>
         </div>
+      );
+    }
+  }, [bun, items, toggleModalActive, totalPrice]);
+
+  return (
+    <>
+      {
+        isModalOpen &&
+        ( <Modal isOpen={ isModalOpen } closeModal={ toggleModalActive } >
+          <OrderDetails />
+        </Modal> )
+      }
+      <section className={ styles.section }>
+        <h2 className='visually-hidden'>Конструктор бургера</h2>
+        { constructor }
+        { constructorFooter }
       </section>
     </>
   );
 };
 
 export default BurgerConstructor;
-
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf( PropTypes.shape( {
-    title: PropTypes.string,
-    items: PropTypes.arrayOf( PropTypes.shape( {
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    } ) )
-  } ) ),
-  activeBun: PropTypes.shape( {
-    title: PropTypes.string,
-    items: PropTypes.arrayOf( PropTypes.shape( {
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    } ) )
-  } )
-};

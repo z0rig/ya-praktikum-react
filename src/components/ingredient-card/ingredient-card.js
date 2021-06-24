@@ -1,37 +1,34 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { setIngredient } from '../../store/slices/ingredient-details';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import Modal from '../modal/modal';
-import IngredientsDetail from '../ingredient-details/ingredient-details';
-import { useToggle } from '../../hooks/customHoocs';
-
 import styles from './ingridient-card.module.css';
+import { useDrag } from 'react-dnd';
 
-const IngredientCard = ( { ingredient } ) => {
-  const { name, price, image, image_large, calories, proteins, fat, carbohydrates } = ingredient;
-  const [isModalOpen, toggleModalOpen] = useToggle( false );
+const IngredientCard = ( { ingredient, toggleModalOpen } ) => {
+  const { name, price, image } = ingredient;
+  const [, dragRef] = useDrag( {
+    type: 'ingredients',
+    item: ingredient
+  } );
+  const dispatch = useDispatch();
+
+  const onCardClick = useCallback(
+    () => {
+      dispatch( setIngredient( ingredient ) );
+      toggleModalOpen();
+    },
+    [dispatch, toggleModalOpen, ingredient],
+  );
 
   return (
     <>
-      {
-        isModalOpen &&
-        (<Modal isOpen={ isModalOpen } title='Детали ингридиента' closeModal={ toggleModalOpen }>
-          <IngredientsDetail
-            name={ name }
-            price={ price }
-            src={ image_large }
-            calories={ calories }
-            proteins={ proteins }
-            fat={ fat }
-            carbohydrates={ carbohydrates }
-          />
-        </Modal>)
-      }
-      <article onClick={ toggleModalOpen } className={ styles.card }>
-        <picture>
-          <img src={ image } alt={ name } className='mb-2' />
+      <article ref={ dragRef } onClick={ onCardClick } className={ styles.card }>
+        <picture className='mb-2'>
+          <img src={ image } alt={ name } />
         </picture>
         <p className={ styles.price }>{ price } <CurrencyIcon type='primary' /></p>
         <h4 className='text_type_main-default text'>{ name }</h4>
@@ -43,21 +40,9 @@ const IngredientCard = ( { ingredient } ) => {
 export default IngredientCard;
 
 IngredientCard.propTypes = {
-  ingredients: PropTypes.arrayOf( PropTypes.shape( {
-    title: PropTypes.string,
-    items: PropTypes.arrayOf( PropTypes.shape( {
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    } ) )
-  } ) )
+  ingredient: PropTypes.shape( {
+    name: PropTypes.string,
+    price: PropTypes.number,
+    image: PropTypes.string,
+  } )
 };

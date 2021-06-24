@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -7,7 +7,7 @@ import NavLink from '../nav-link/nav-link';
 
 import styles from './app-header.module.css';
 
-const AppHeader = () => (
+const AppHeader = memo(() => (
   <header className={ styles['app-header'] }>
     <div className={ `container ${ styles.container }` }>
       <AppNav />
@@ -22,6 +22,6 @@ const AppHeader = () => (
       </div>
     </div>
   </header>
-);
+));
 
 export default AppHeader;

@@ -1,0 +1,19 @@
+.text {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  composes: text text_type_main-default p-4 mb-4 from global;
+
+  min-height: 130px;
+
+  border: 2px dashed var(--colors-interface-accent);
+  border-top-right-radius: 150px;
+  border-top-left-radius: 150px;
+  border-bottom-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+
+  text-align: center;
+}

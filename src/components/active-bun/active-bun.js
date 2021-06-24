@@ -1,9 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const ActiveBun = ( { children, bun } ) => {
+import styles from './active-bun.module.css';
+
+const ActiveBun = ( { children } ) => {
+  const { bun } = useSelector( state => state.burgerConstructor );
+
+  if ( !bun ) {
+    return (
+      <div className={ styles.placeholder }>
+        <p className={ styles.text }>Булка не выбрана(( <br /> Тащи её сюда!</p>
+        { children }
+      </div>
+    );
+  }
   return (
     <>
       <ConstructorElement
@@ -27,20 +39,3 @@ const ActiveBun = ( { children, bun } ) => {
 
 
 export default ActiveBun;
-
-ActiveBun.propTypes = {
-  bun: PropTypes.shape( {
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number,
-  } ).isRequired
-};

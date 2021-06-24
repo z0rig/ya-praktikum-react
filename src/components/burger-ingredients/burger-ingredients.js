@@ -1,66 +1,118 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useMemo, useRef, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { resetIngredient } from '../../store/slices/ingredient-details';
+import { useToggle } from '../../hooks/customHoocs';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import IngredientCard from '../ingredient-card/ingredient-card';
 import TabsList from '../tabs-list/tabs-list';
 import ScrolledContainer from '../scrolled-container/scrolled-container';
+import Modal from '../modal/modal';
+import IngredientsDetail from '../ingredient-details/ingredient-details';
 
 import styles from './burger-ingredients.module.css';
 
 import getAdaptedIngredientsData from './utils';
 
-function BurgerIngredients ( { ingredients } ) {
-  const [activeTab, setActiveTab] = useState( 'Булки' );
+function BurgerIngredients () {
+  const dispatch = useDispatch();
+  const ingredientsData = useSelector( state => state.burgerIngredients.items );
+  const [ activeTab, setActiveTab ] = useState( 'bun' );
+  const [isModalOpen, toggleModalOpen] = useToggle( false );
+
+  const bunIngredientsRef = useRef( null );
+  const sauceIngredientsRef = useRef( null );
+  const mainIngredientsRef = useRef( null );
+
+  const tabListRef = useRef( null );
+
+  const refsMap = useMemo( () => ( {
+    bun: bunIngredientsRef,
+    sauce: sauceIngredientsRef,
+    main: mainIngredientsRef,
+  } ), [bunIngredientsRef, sauceIngredientsRef, mainIngredientsRef] );
+
+  const adaptedIngredientsData = useMemo(
+    () => getAdaptedIngredientsData( ingredientsData, refsMap ),
+    [ingredientsData, refsMap]
+  );
+
+  const ingredientsSections = useMemo( () => {
+    return Object.values( adaptedIngredientsData )
+      .map( ( { name, title, items, ref } ) => {
+        return (
+          <section data-name={ name } ref={ ref } key={ title } className='pt-10'>
+            <h3 className='text text_type_main-medium mb-6'>{ title }</h3>
+
+            <ul className={ styles.list }>
+              { items.map( ( ingredient, idx ) => (
+                <li className={ styles.item } key={ idx }>
+                  {
+                    !!ingredient.quantity &&
+                    <Counter count={ ingredient.quantity } size='default' />
+                  }
+                  <IngredientCard ingredient={ ingredient } toggleModalOpen={ toggleModalOpen } />
+                </li>
+              ) ) }
+            </ul>
+          </section>
+        );
+      } );
+  }, [adaptedIngredientsData, toggleModalOpen] );
+
+  const onTabClick = useCallback(
+    ( value ) => {
+      setActiveTab( value );
+      adaptedIngredientsData[value]
+        .ref.current.scrollIntoView( {
+          behavior: 'smooth'
+        } );
+    },
+    [adaptedIngredientsData, setActiveTab],
+  );
+
+  const setActiveTabOnScroll = useCallback(
+    () => {
+      const name = Object.values( adaptedIngredientsData )
+        .find( ( { ref } ) => {
+          return (
+            ref.current.getBoundingClientRect().top -
+            tabListRef.current.getBoundingClientRect().bottom +
+            ( ref.current.getBoundingClientRect().height / 1.3 ) ) > 0;
+        } ).name;
+      setActiveTab( name );
+    },
+    [adaptedIngredientsData],
+  );
+
+  const closeModal = useCallback(
+    () => {
+      toggleModalOpen();
+      dispatch( resetIngredient() );
+    },
+    [dispatch, toggleModalOpen],
+  );
 
   return (
-    <section className={ styles.section }>
-      <h2 className='visually-hidden'>Ингредиенты</h2>
+    <>
+      {
+        isModalOpen &&
+        ( <Modal isOpen={ isModalOpen } title='Детали ингридиента' closeModal={ closeModal }>
+          <IngredientsDetail />
+        </Modal> )
+      }
+      <section className={ styles.section }>
+        <h2 className='visually-hidden'>Ингредиенты</h2>
 
-      <TabsList activeTab={ activeTab } onClick={ setActiveTab } />
+        <TabsList tabListRef={ tabListRef } tabsData={ adaptedIngredientsData } activeTab={ activeTab } onClick={ onTabClick } />
 
-      <ScrolledContainer maxHeight={ '716px' }>
-        {
-          Object.values( getAdaptedIngredientsData( ingredients ) )
-            .map( ( { title, items } ) => (
-              <section key={ title } className='pt-10'>
-                <h3 className='text text_type_main-medium mb-6'>{ title }</h3>
-
-                <ul className={ styles.list }>
-                  { items.map( ( ingredient, idx ) => (
-                    <li className={ styles.item } key={ idx }>
-                      <Counter count={ 1 } size='default' />
-                      <IngredientCard ingredient={ ingredient } />
-                    </li>
-                  ) ) }
-                </ul>
-              </section>
-            ) )
-        }
-      </ScrolledContainer>
-    </section>
+        <ScrolledContainer maxHeight={ '716px' } onScroll={ setActiveTabOnScroll }>
+          { ingredientsSections }
+        </ScrolledContainer>
+      </section>
+    </>
   );
 };
 
 export default BurgerIngredients;
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf( PropTypes.shape( {
-    title: PropTypes.string,
-    items: PropTypes.arrayOf( PropTypes.shape( {
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    } ) )
-  } ) )
-};

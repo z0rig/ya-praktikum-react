@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+
 import './index.css';
 import App from './components/app/app';
 
-// Привет проверяющий! Просьба отнестись к проверке как можно жОще, чем труднее будет, тем я запомню! Желательно относиться так, как наставник из этой статьи: https://pikabu.ru/story/pro_prepodavanie_8019550?utm_source=andlinkshare&utm_medium=sharing
-// Заранее благодарю!
+import store from './store/index';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={ store }>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById( 'root' )
 );
