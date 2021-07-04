@@ -3,7 +3,7 @@
 
   display: flex;
   align-items: center;
-  color:#8585AD;
+  color:var(--text-inactive-color);
 }
 
 .nav-link:hover {

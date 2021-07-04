@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
@@ -10,11 +11,19 @@ import styles from './modal.module.css';
 
 const modalRoot = document.getElementById( 'modal' );
 
-const Modal = ( { children, title, isOpen, closeModal } ) => {
+const Modal = ( { children, title, isOpen } ) => {
+  const history = useHistory();
+
+  const closeModal = useCallback( ( evt ) => {
+    evt.preventDefault();
+
+    history.goBack();
+  }, [ history ] );
+
   useEffect( () => {
-    const onDocumentKeyDown = ( { code } ) => {
-      if ( code === 'Escape' ) {
-        closeModal();
+    const onDocumentKeyDown = ( evt ) => {
+      if ( evt.code === 'Escape' ) {
+        closeModal( evt );
       }
     };
 
@@ -29,7 +38,7 @@ const Modal = ( { children, title, isOpen, closeModal } ) => {
       <div className={ styles.modal }>
         <header className={ styles.header }>
           <h2 className={ styles.title }>{ title }</h2>
-          <button onClick={ closeModal } className={ styles['close-btn'] } aria-label='Закрыть модальое окно'>
+          <button onClick={ closeModal } className={ styles['close-btn'] } aria-label='Закрыть модальое окно' type='button'>
             <CloseIcon type='primary' />
           </button>
         </header>
@@ -43,5 +52,5 @@ export default Modal;
 
 Modal.propTypes = {
   title: PropTypes.string,
-  closeModal: PropTypes.func
+  isOpen: PropTypes.bool
 };

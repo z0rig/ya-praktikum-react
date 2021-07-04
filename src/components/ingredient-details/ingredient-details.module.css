@@ -29,7 +29,7 @@
 .evergy tr {
   display: flex;
 
-  color: #8585AD;
+  color: var(--text-inactive-color);
 }
 
 .td,

@@ -34,7 +34,7 @@ const burgerConstructorSlice = createSlice( {
   },
   extraReducers: ( builder ) => {
     builder
-      .addCase( postOrder.fulfilled, ( ) => initialState);
+      .addCase( postOrder.fulfilled, () => initialState );
     }
 } );
 

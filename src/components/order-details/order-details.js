@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { postOrder } from '../../store/slices/order-details';
@@ -20,26 +21,37 @@ const OrderDetails = () => {
     return [...items.map( ( ingredient ) => ingredient._id ), bun._id];
   }, [bun, items] );
 
-  useEffect( () => {
-    dispatch( postOrder( ingredientsIds ) );
-    // eslint-disable-next-line
-  }, [] );
+  const isUserLogin = useSelector( state => state.profile.user.isLogin );
 
   const {
     orderDetails,
     loading,
     error } = useSelector( state => state.orderDetails );
+
+  useEffect( () => {
+    if( isUserLogin ){
+      dispatch( postOrder( ingredientsIds ) );
+    }
+    // eslint-disable-next-line
+  }, [] );
+
+  if ( !isUserLogin ) {
+    return <Redirect to='/login'/>;
+  }
+
   return (
     <>
       { loading && ( <Spinner /> ) }
       { error && ( <Error /> ) }
       {
-        orderDetails && !loading ? ( <div className={ styles.details }>
-          <p className={ styles.id }>{ orderDetails.order.number }</p>
-          <h3 className={ styles.title }>идентификатор заказа</h3>
-          <p className={ styles.status }>Ваш заказ начали готовить</p>
-          <p className={ styles.note }>Дождитесь готовности на орбитальной станции</p>
-        </div> ) : null
+        orderDetails && !loading ? (
+          <div className={ styles.details }>
+            <p className={ styles.id }>{ orderDetails.order.number }</p>
+            <h3 className={ styles.title }>идентификатор заказа</h3>
+            <p className={ styles.status }>Ваш заказ начали готовить</p>
+            <p className={ styles.note }>Дождитесь готовности на орбитальной станции</p>
+          </div>
+        ) : null
       }
     </>
   );

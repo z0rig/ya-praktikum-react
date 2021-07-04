@@ -18,7 +18,7 @@ import styles from './burger-constructor.module.css';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const { bun, items } = useSelector( (state) => state.burgerConstructor );
+  const { bun, items } = useSelector( ( state ) => state.burgerConstructor );
   const [isModalOpen, toggleModalActive] = useToggle( false );
 
   const [{ isOver, canDrop }, dropTarget] = useDrop( {
@@ -66,7 +66,7 @@ const BurgerConstructor = () => {
   }, [items] );
 
   const constructor = useMemo( () => {
-    let droppedZoneClassName = `${styles.ingredientsData}`;
+    let droppedZoneClassName = `${ styles.ingredientsData }`;
 
     const ingredientInflight = isOver && canDrop;
     if ( ingredientInflight ) {
@@ -105,15 +105,17 @@ const BurgerConstructor = () => {
         </div>
       );
     }
-  }, [bun, items, toggleModalActive, totalPrice]);
+  }, [bun, items, toggleModalActive, totalPrice] );
 
   return (
     <>
       {
         isModalOpen &&
-        ( <Modal isOpen={ isModalOpen } closeModal={ toggleModalActive } >
-          <OrderDetails />
-        </Modal> )
+        (
+          <Modal isOpen={ isModalOpen } closeModal={ toggleModalActive } >
+            <OrderDetails />
+          </Modal>
+        )
       }
       <section className={ styles.section }>
         <h2 className='visually-hidden'>Конструктор бургера</h2>

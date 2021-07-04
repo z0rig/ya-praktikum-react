@@ -1,25 +1,19 @@
 import React, { useState, useMemo, useRef, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { resetIngredient } from '../../store/slices/ingredient-details';
-import { useToggle } from '../../hooks/customHoocs';
+import { useSelector } from 'react-redux';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import IngredientCard from '../ingredient-card/ingredient-card';
 import TabsList from '../tabs-list/tabs-list';
 import ScrolledContainer from '../scrolled-container/scrolled-container';
-import Modal from '../modal/modal';
-import IngredientsDetail from '../ingredient-details/ingredient-details';
 
 import styles from './burger-ingredients.module.css';
 
 import getAdaptedIngredientsData from './utils';
 
 function BurgerIngredients () {
-  const dispatch = useDispatch();
   const ingredientsData = useSelector( state => state.burgerIngredients.items );
   const [ activeTab, setActiveTab ] = useState( 'bun' );
-  const [isModalOpen, toggleModalOpen] = useToggle( false );
 
   const bunIngredientsRef = useRef( null );
   const sauceIngredientsRef = useRef( null );
@@ -52,14 +46,14 @@ function BurgerIngredients () {
                     !!ingredient.quantity &&
                     <Counter count={ ingredient.quantity } size='default' />
                   }
-                  <IngredientCard ingredient={ ingredient } toggleModalOpen={ toggleModalOpen } />
+                  <IngredientCard ingredient={ ingredient } />
                 </li>
               ) ) }
             </ul>
           </section>
         );
       } );
-  }, [adaptedIngredientsData, toggleModalOpen] );
+  }, [adaptedIngredientsData] );
 
   const onTabClick = useCallback(
     ( value ) => {
@@ -86,32 +80,16 @@ function BurgerIngredients () {
     [adaptedIngredientsData],
   );
 
-  const closeModal = useCallback(
-    () => {
-      toggleModalOpen();
-      dispatch( resetIngredient() );
-    },
-    [dispatch, toggleModalOpen],
-  );
-
   return (
-    <>
-      {
-        isModalOpen &&
-        ( <Modal isOpen={ isModalOpen } title='Детали ингридиента' closeModal={ closeModal }>
-          <IngredientsDetail />
-        </Modal> )
-      }
-      <section className={ styles.section }>
-        <h2 className='visually-hidden'>Ингредиенты</h2>
+    <section className={ styles.section }>
+      <h2 className='visually-hidden'>Ингредиенты</h2>
 
-        <TabsList tabListRef={ tabListRef } tabsData={ adaptedIngredientsData } activeTab={ activeTab } onClick={ onTabClick } />
+      <TabsList tabListRef={ tabListRef } tabsData={ adaptedIngredientsData } activeTab={ activeTab } onClick={ onTabClick } />
 
-        <ScrolledContainer maxHeight={ '716px' } onScroll={ setActiveTabOnScroll }>
-          { ingredientsSections }
-        </ScrolledContainer>
-      </section>
-    </>
+      <ScrolledContainer maxHeight={ '716px' } onScroll={ setActiveTabOnScroll }>
+        { ingredientsSections }
+      </ScrolledContainer>
+    </section>
   );
 };
 

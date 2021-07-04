@@ -6,7 +6,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './tabs-list.module.css';
 
 const TabsList = ( { tabsData, activeTab, onClick, tabListRef } ) => {
-  const listItems = useMemo( () => (Object.keys( tabsData )
+  const listItems = useMemo( () => ( Object.keys( tabsData )
     .map( ( key, idx ) => (
       <li key={ idx } className={ styles.item }>
         <Tab
@@ -15,7 +15,7 @@ const TabsList = ( { tabsData, activeTab, onClick, tabListRef } ) => {
           onClick={ onClick }
         >{ tabsData[ key ].title }</Tab>
       </li>
-    ) )), [tabsData, activeTab, onClick] );
+    ) ) ), [tabsData, activeTab, onClick] );
 
   return <ul ref={ tabListRef } className={ styles.list }>{ listItems }</ul>;
 };

@@ -10,6 +10,37 @@ a {
   text-decoration: none;
 }
 
+.nav-link {
+  display: flex;
+
+  align-items: center;
+  padding: 20px;
+
+  font-family: 'Jet Brains Mono';
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: normal;
+
+  color:var(--text-inactive-color);
+}
+
+.nav-link:hover {
+  color: #F2F2F3;
+}
+
+.nav-link.active {
+  color: #F2F2F3;
+}
+
+.nav-link svg {
+  margin-right: 8px;
+}
+
+.nav-link:hover svg,
+.nav-link.active svg{
+  fill: #F2F2F3;
+}
+
 img,
 video {
   max-width: 100%;

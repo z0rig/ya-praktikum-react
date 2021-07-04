@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import styles from './nav-link.module.css';
 
 const NavLink = ( { url, isActive, children } ) => (
-  <a
+  <Link
     className={ `${ styles['nav-link'] } ${ isActive ? styles.active : '' }` }
-    href={ url }
+    to={ url }
   >
-    {children }
-  </a>
+    { children }
+  </Link>
 );
 
 export default NavLink;
