@@ -42,7 +42,7 @@ const OrderDetails = () => {
   return (
     <>
       { loading && ( <Spinner /> ) }
-      { error && ( <Error /> ) }
+      { error && ( <Error error={ error } /> ) }
       {
         orderDetails && !loading ? (
           <div className={ styles.details }>

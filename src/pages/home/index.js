@@ -9,7 +9,7 @@ import BurgerIngredients from '../../components/burger-ingredients/burger-ingred
 import styles from './home.module.css';
 
 const HomePage = () => (
-  <div className='container pl-5 pr-5'>
+  <>
     <h1 className='text text_type_main-large mb-5'>Соберите бургер</h1>
     <DndProvider backend={ HTML5Backend }>
       <div className={ styles.flex }>
@@ -17,7 +17,7 @@ const HomePage = () => (
         <BurgerConstructor />
       </div>
     </DndProvider>
-  </div>
+  </>
 );
 
 export default HomePage;

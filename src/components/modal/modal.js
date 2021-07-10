@@ -1,5 +1,4 @@
 import React, { useEffect, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
@@ -11,14 +10,12 @@ import styles from './modal.module.css';
 
 const modalRoot = document.getElementById( 'modal' );
 
-const Modal = ( { children, title, isOpen } ) => {
-  const history = useHistory();
-
+const Modal = ( { children, title, isOpen, onClose } ) => {
   const closeModal = useCallback( ( evt ) => {
     evt.preventDefault();
 
-    history.goBack();
-  }, [ history ] );
+    onClose();
+  }, [ onClose ] );
 
   useEffect( () => {
     const onDocumentKeyDown = ( evt ) => {
@@ -52,5 +49,7 @@ export default Modal;
 
 Modal.propTypes = {
   title: PropTypes.string,
-  isOpen: PropTypes.bool
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired
 };

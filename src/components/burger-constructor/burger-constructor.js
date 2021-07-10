@@ -4,13 +4,14 @@ import { addItem, addBun } from '../../store/slices/burger-constructor';
 
 import { useDrop } from 'react-dnd';
 
-import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ConstructorItem from '../constructior-item/constructor-item';
 import ScrolledContainer from '../scrolled-container/scrolled-container';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import ActiveBun from '../active-bun/active-bun';
+import Price from '../price/price';
 
 import { useToggle } from '../../hooks/customHoocs';
 
@@ -97,7 +98,7 @@ const BurgerConstructor = () => {
     if ( bun && !!items.length ) {
       return (
         <div className={ styles.helper }>
-          <p className={ styles.price }>{ totalPrice } <CurrencyIcon type='primary' /></p>
+          <Price>{ totalPrice }</Price>
 
           <Button type='primary' size='large' onClick={ toggleModalActive }>
             Оформить заказ
@@ -112,7 +113,7 @@ const BurgerConstructor = () => {
       {
         isModalOpen &&
         (
-          <Modal isOpen={ isModalOpen } closeModal={ toggleModalActive } >
+          <Modal isOpen={ isModalOpen } onClose={ toggleModalActive } >
             <OrderDetails />
           </Modal>
         )

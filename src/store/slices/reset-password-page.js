@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getCookie } from '../../utils/cookie';
 
 const initialState = {
   loading: false,
@@ -7,7 +6,7 @@ const initialState = {
 };
 
 const resetPassword = createAsyncThunk(
-  'loginPage/login',
+  'resetPasswordPage/reset',
   async ( userData, { extra } ) => {
     const response = await extra.resetPassword( userData );
 

@@ -9,11 +9,16 @@
 }
 
 .figure {
+  composes: mb-8 from global;
+
   margin-top: 0;
   margin-right: 0;
   margin-left: 0;
+}
 
-  composes: mb-8 from global;
+.figure > picture {
+  display: flex;
+  justify-content: center;
 }
 
 .image {

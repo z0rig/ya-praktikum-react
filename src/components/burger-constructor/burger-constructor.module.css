@@ -86,25 +86,16 @@
   composes: mb-4 from global;
 }
 
-.item > svg {
-  margin-right: 8px;
-}
-
 .helper {
   display: flex;
   align-items: center;
   margin-left: auto;
+  padding-right: 20px;
 }
 
-.price {
-  composes: mr-10 text text_type_digits-medium from global;
+.helper > p {
+  margin-right: 40px;
 }
-
-.price > svg {
-  width: 33px;
-  height: 33px;
-}
-
 
 /* normalize for lib. components */
 .section :global(.constructor-element) {

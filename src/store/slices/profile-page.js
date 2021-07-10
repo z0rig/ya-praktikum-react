@@ -61,9 +61,9 @@ const setUserData = createAsyncThunk(
   }
 );
 
-const isPendingAction = isPending( logout, getUserData ,setUserData );
+const isPendingAction = isPending( logout, getUserData, setUserData );
 const isRejectedAction = isRejected( logout, getUserData, setUserData );
-const isFulfilledAction = isFulfilled( register, login, getUserData );
+const isFulfilledAction = isFulfilled( register, login );
 
 const profilePageSlice = createSlice( {
   name: 'profilePage',
@@ -72,6 +72,18 @@ const profilePageSlice = createSlice( {
   extraReducers: ( builder ) => {
     builder
       .addCase( logout.fulfilled, () => initialState )
+      .addCase( getUserData.fulfilled, ( state, { payload: { user } } ) => {
+        state.user = user;
+        state.user.isLogin = true;
+        state.loading = false;
+        state.error = null;
+      } )
+      .addCase( setUserData.fulfilled, ( state, { payload: { user } } ) => {
+        state.user = user;
+        state.user.isLogin = true;
+        state.loading = false;
+        state.error = null;
+      } )
       .addMatcher(
         isFulfilledAction,
         ( state, { payload: { user } } ) => {
@@ -88,7 +100,11 @@ const profilePageSlice = createSlice( {
         ( state, action ) => {
           state.loading = false;
           state.error = action.error;
-          state.user.isLogin = false;
+          state.user = {
+            email: '',
+            name: '',
+            isLogin: !!getCookie( 'token' )
+          };
         }
       );
   }

@@ -40,7 +40,7 @@ const ResetPasswordPage = () => {
   }, [] );
 
   const { loading, error } = useSelector(
-    ( state ) => state.login
+    ( state ) => state.resetPassword
   );
 
   const isLogin = useSelector(

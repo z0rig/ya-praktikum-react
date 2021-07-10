@@ -2,6 +2,9 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import Spinner from '../spinner/spinner';
+import Error from '../error/error';
+
 import { getUserData, setUserData } from '../../store/slices/profile-page';
 
 import styles from './user-form.module.css';
@@ -9,17 +12,28 @@ import styles from './user-form.module.css';
 const UserForm = () => {
   const dispatch = useDispatch();
 
-  const currentUserData = useSelector( ( state ) => state.profile.user );
+  const profileData = useSelector( ( state ) => state.profile );
+  const userData = profileData.user;
+  const { loading, error } = profileData;
 
   const [ inputsData, setInputsData ] = useState( {
-    name: currentUserData.name,
-    email: currentUserData.email,
+    name: '',
+    email: '',
     password: ''
   } );
 
   useEffect( () => {
     dispatch( getUserData() );
   }, [dispatch] );
+
+  useEffect( () => {
+    const { name, email } = userData;
+    setInputsData( {
+      name,
+      email,
+      password: ''
+    } );
+  }, [userData] );
 
   const onInputChange = useCallback( ( evt ) => {
     const { name, value } = evt.target;
@@ -41,37 +55,43 @@ const UserForm = () => {
     evt.preventDefault();
 
     setInputsData( {
-      name: currentUserData.name,
-      email: currentUserData.email,
+      name: userData.name,
+      email: userData.email,
       password: ''
     } );
-  }, [currentUserData] );
+  }, [ userData ] );
 
   return (
-    <form onSubmit={ formSubmitHandler } className={ styles.form }>
-      <Input
-        onChange={ onInputChange }
-        value={ inputsData.name }
-        name='name'
-        type='text'
-        placeholder='Имя'
-        icon='EditIcon'
-      />
-      <EmailInput
-        onChange={ onInputChange }
-        value={ inputsData.email }
-        name='email'
-      />
-      <PasswordInput
-        onChange={ onInputChange }
-        value={ inputsData.password }
-        name='password'
-      />
-      <div className={ styles.flex }>
-        <Button size='medium' type='primary'>Сохранить</Button>
-        <Button onClick={ onCancelBtnClick } size='medium' type='secondary'>Отмена</Button>
-      </div>
-    </form>
+    <>
+      { loading && ( <Spinner /> ) }
+      { error && ( <Error error={ error } /> ) }
+      { !loading && !error && (
+        <form onSubmit={ formSubmitHandler } className={ styles.form }>
+          <Input
+            onChange={ onInputChange }
+            value={ inputsData.name }
+            name='name'
+            type='text'
+            placeholder='Имя'
+            icon='EditIcon'
+          />
+          <EmailInput
+            onChange={ onInputChange }
+            value={ inputsData.email }
+            name='email'
+          />
+          <PasswordInput
+            onChange={ onInputChange }
+            value={ inputsData.password }
+            name='password'
+          />
+          <div className={ styles.flex }>
+            <Button size='medium' type='primary'>Сохранить</Button>
+            <Button onClick={ onCancelBtnClick } size='medium' type='secondary'>Отмена</Button>
+          </div>
+        </form>
+      ) }
+    </>
   );
 };
 

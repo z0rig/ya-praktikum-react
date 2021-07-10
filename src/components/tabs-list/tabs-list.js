@@ -23,6 +23,10 @@ const TabsList = ( { tabsData, activeTab, onClick, tabListRef } ) => {
 export default TabsList;
 
 TabsList.propTypes = {
-  activeTab: PropTypes.string,
-  onClick: PropTypes.func
+  tabsData: PropTypes.objectOf( PropTypes.shape( {
+    title: PropTypes.string
+  } ) ).isRequired,
+  activeTab: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  tabListRef: PropTypes.shape( { current: PropTypes.instanceOf( HTMLUListElement ) } ).isRequired
 };

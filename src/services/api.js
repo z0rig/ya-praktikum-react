@@ -64,8 +64,7 @@ class Api {
     return await fetch( url, {
       'method': 'POST',
       'headers': {
-        'Content-Type': 'application/json',
-        'authorization': getCookie( 'token' )
+        'Content-Type': 'application/json'
       },
       'body': JSON.stringify( userData )
     } );
@@ -113,8 +112,7 @@ class Api {
     return await fetch( url, {
       'method': 'POST',
       'headers': {
-        'Content-Type': 'application/json',
-        'authorization': getCookie( 'refreshToken' )
+        'Content-Type': 'application/json'
       },
       'body': JSON.stringify( userData )
     } );

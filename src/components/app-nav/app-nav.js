@@ -3,8 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 import { BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-// import NavLink from '../nav-link/nav-link';
-
 import styles from './app-nav.module.css';
 
 const AppNav = () => (
@@ -18,7 +16,7 @@ const AppNav = () => (
       </li>
 
       <li>
-        <NavLink to='/404' className='nav-link'>
+        <NavLink to='/feed' className='nav-link'>
           <ListIcon type='secondary' />
           Лента заказов
         </NavLink>

@@ -5,6 +5,7 @@ import styles from './ingredient-page.module.css';
 
 const IngredientPage = () => (
   <div className={ styles.wrapper }>
+    <h2 className={ styles.title }>Детали ингредиента</h2>
     <IngredientDetails />
   </div>
 );
