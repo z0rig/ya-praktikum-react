@@ -1,17 +1,9 @@
 .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-height: 100%;
   text-align: center;
+  color:#F2F2F3;
   border: 1px solid transparent;
-}
-
-.price {
-  composes: text_type_digits-default text mb-2 from global;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.price svg {
-  margin-left: 8px;
 }

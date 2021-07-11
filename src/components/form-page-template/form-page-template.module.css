@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 140px;
+}
+
+.wrapper :global(.input) {
+  width: 480px;
+}
+
+.wrapper :global(.input__container) {
+  margin-bottom: 24px;
+}
+
+.title {
+  composes: text text_type_main-medium mb-6 from global;
+  color: #F2F2F3;
+}
+
+.error {
+  composes: text text_type_main-medium mb-6 from global;
+  color: var(--colors-interface-error);
+}
+
+.form {
+  composes: pb-20 from global;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

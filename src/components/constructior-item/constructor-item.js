@@ -1,4 +1,5 @@
 import React, { useCallback, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { removeItem, swapItems } from '../../store/slices/burger-constructor';
 
@@ -58,3 +59,13 @@ const ConstructorItem = ( { ingredient, idx } ) => {
 };
 
 export default ConstructorItem;
+
+ConstructorItem.propTypes = {
+  ingredient: PropTypes.shape( {
+    _id: PropTypes.string,
+    image: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number,
+  } ).isRequired,
+  idx: PropTypes.number.isRequired
+};

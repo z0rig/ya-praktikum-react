@@ -6,10 +6,10 @@
 	width: 12px;
 }
 .scroll::-webkit-scrollbar-track {
-	background: #2F2F37;
+	background: var(--background-element);
 }
 .scroll::-webkit-scrollbar-thumb {
-	background: #8585AD;
-	border: 3px solid #2F2F37;
+	background: var(--text-inactive-color);
+	border: 3px solid var(--background-element);
 	border-radius: 6px;
 }

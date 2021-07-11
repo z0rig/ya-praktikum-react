@@ -4,13 +4,14 @@ import { addItem, addBun } from '../../store/slices/burger-constructor';
 
 import { useDrop } from 'react-dnd';
 
-import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ConstructorItem from '../constructior-item/constructor-item';
 import ScrolledContainer from '../scrolled-container/scrolled-container';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import ActiveBun from '../active-bun/active-bun';
+import Price from '../price/price';
 
 import { useToggle } from '../../hooks/customHoocs';
 
@@ -18,7 +19,7 @@ import styles from './burger-constructor.module.css';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const { bun, items } = useSelector( (state) => state.burgerConstructor );
+  const { bun, items } = useSelector( ( state ) => state.burgerConstructor );
   const [isModalOpen, toggleModalActive] = useToggle( false );
 
   const [{ isOver, canDrop }, dropTarget] = useDrop( {
@@ -66,7 +67,7 @@ const BurgerConstructor = () => {
   }, [items] );
 
   const constructor = useMemo( () => {
-    let droppedZoneClassName = `${styles.ingredientsData}`;
+    let droppedZoneClassName = `${ styles.ingredientsData }`;
 
     const ingredientInflight = isOver && canDrop;
     if ( ingredientInflight ) {
@@ -97,7 +98,7 @@ const BurgerConstructor = () => {
     if ( bun && !!items.length ) {
       return (
         <div className={ styles.helper }>
-          <p className={ styles.price }>{ totalPrice } <CurrencyIcon type='primary' /></p>
+          <Price>{ totalPrice }</Price>
 
           <Button type='primary' size='large' onClick={ toggleModalActive }>
             Оформить заказ
@@ -105,15 +106,17 @@ const BurgerConstructor = () => {
         </div>
       );
     }
-  }, [bun, items, toggleModalActive, totalPrice]);
+  }, [bun, items, toggleModalActive, totalPrice] );
 
   return (
     <>
       {
         isModalOpen &&
-        ( <Modal isOpen={ isModalOpen } closeModal={ toggleModalActive } >
-          <OrderDetails />
-        </Modal> )
+        (
+          <Modal isOpen={ isModalOpen } onClose={ toggleModalActive } >
+            <OrderDetails />
+          </Modal>
+        )
       }
       <section className={ styles.section }>
         <h2 className='visually-hidden'>Конструктор бургера</h2>

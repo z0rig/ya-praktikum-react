@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -37,5 +38,8 @@ const ActiveBun = ( { children } ) => {
   );
 };
 
-
 export default ActiveBun;
+
+ActiveBun.propTypes = {
+  children: PropTypes.element
+};

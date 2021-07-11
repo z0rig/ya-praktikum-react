@@ -30,7 +30,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-image: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
+  background-image:
+    linear-gradient(63.18deg, #801ab3 0%, var(--colors-interface-accent) 100%);
   opacity: 0;
   border-radius: 80px;
   z-index: -100;
@@ -85,25 +86,16 @@
   composes: mb-4 from global;
 }
 
-.item > svg {
-  margin-right: 8px;
-}
-
 .helper {
   display: flex;
   align-items: center;
   margin-left: auto;
+  padding-right: 20px;
 }
 
-.price {
-  composes: mr-10 text text_type_digits-medium from global;
+.helper > p {
+  margin-right: 40px;
 }
-
-.price > svg {
-  width: 33px;
-  height: 33px;
-}
-
 
 /* normalize for lib. components */
 .section :global(.constructor-element) {

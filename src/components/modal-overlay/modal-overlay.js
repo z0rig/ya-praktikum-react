@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import styles from './modal-overlay.module.css';
 
 const ModalOverlay = ( { children, onClick } ) => {
-  const onOverlayClick = ( { target } ) => {
-    if ( target.classList.contains( 'js-overlay' ) ) {
-      onClick();
+  const onOverlayClick = ( evt ) => {
+    if ( evt.target.classList.contains( 'js-overlay' ) ) {
+      onClick( evt );
     }
   };
 
@@ -20,5 +20,6 @@ const ModalOverlay = ( { children, onClick } ) => {
 export default ModalOverlay;
 
 ModalOverlay.propTypes = {
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  children: PropTypes.element.isRequired
 };

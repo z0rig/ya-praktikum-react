@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './error.module.css';
 
-const Error = ( { width = '232', height = '232' } ) => {
+const Error = ( { width = '232', height = '232', error } ) => {
   return (
     <div className={ styles.error }>
       <svg width={ width } height={ height } viewBox='0 0 512 512'>
@@ -21,6 +21,7 @@ const Error = ( { width = '232', height = '232' } ) => {
         <path d='m416 424h16v16h-16z' />
       </svg>
       <p className={ styles.text }>При загрузке данных произошла ошибка</p>
+      { error && <p className={ styles.text }>{ error.message }</p> }
     </div>
   );
 };
@@ -28,6 +29,9 @@ const Error = ( { width = '232', height = '232' } ) => {
 Error.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
+  error: PropTypes.shape( {
+  message: PropTypes.string
+  } )
 };
 
 export default Error;

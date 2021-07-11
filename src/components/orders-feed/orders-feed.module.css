@@ -1,0 +1,15 @@
+.list {
+  composes: list-reset pr-2 from global;
+}
+
+.item {
+  composes: mb-4 from global;
+}
+
+.item:last-child {
+  margin-bottom: 0;
+}
+
+.link {
+  color: inherit;
+}

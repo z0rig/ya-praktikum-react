@@ -1,0 +1,12 @@
+.note {
+  composes: text text_type_main-default from global;
+  color: var(--text-inactive-color);
+}
+
+.note + .note {
+  margin-top: 16px;
+}
+
+.link {
+  color: var(--colors-interface-accent)
+}

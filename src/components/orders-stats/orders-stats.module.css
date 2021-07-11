@@ -1,0 +1,34 @@
+.table {
+  width: 580px;
+  color: #f2f2f3;
+}
+
+.table > thead > tr > th {
+  padding-bottom: 24px;
+}
+
+.table > tfoot > tr th {
+  padding-top: 60px;
+}
+
+.th {
+  composes: text_type_main-medium from global;
+
+  text-align: left;
+}
+
+.td {
+  composes: text_type_digits-default p-1 from global;
+}
+
+.td:first-child {
+  color: var(--colors-interface-success);
+}
+
+.td_large {
+  composes: text_type_digits-large from global;
+}
+
+.caption {
+  composes: visually-hidden from global;
+}

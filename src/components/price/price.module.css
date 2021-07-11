@@ -1,0 +1,9 @@
+.price {
+  display: flex;
+  align-items: center;
+  composes: text_type_digits-default text from global;
+}
+
+.price > svg {
+  margin-left: 9px;
+}

@@ -25,5 +25,5 @@
 .note {
   composes: text text_type_main-default from global;
 
-  color: #8585AD;
+  color: var(--text-inactive-color);
 }

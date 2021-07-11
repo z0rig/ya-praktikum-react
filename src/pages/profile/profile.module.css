@@ -1,0 +1,58 @@
+.wrapper {
+  display: flex;
+}
+
+.wrapper :global(.input) {
+  width: 480px;
+}
+
+.wrapper :global(.input__container) {
+  margin-bottom: 24px;
+}
+
+.side-bar {
+  composes: pt-20 from global;
+  width: 320px;
+  margin-right: 60px;
+}
+
+.nav {
+  composes: mb-20 from global;
+}
+
+.list {
+  composes: list-reset from global;
+}
+
+.link:global(.active){
+  color: #f2f2f3;
+}
+
+.link {
+  composes: text_type_main-medium pt-4 pb-4 from global;
+
+  display: inline-block;
+  width: 320px;
+  color: var(--text-inactive-color);
+  text-align: left;
+}
+
+.link:hover,
+.link:focus {
+  color: #f2f2f3;
+}
+
+.link:focus {
+  outline: 1px solid var(--colors-interface-accent);
+}
+
+.description {
+  composes: text text_type_main-default from global;
+
+  color: var(--text-inactive-color);
+  opacity: 0.4;
+}
+
+.main {
+  flex-grow: 1;
+}

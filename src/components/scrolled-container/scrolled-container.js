@@ -12,5 +12,9 @@ const ScrolledContainer = ( { maxHeight, children, onScroll } ) => (
 export default ScrolledContainer;
 
 ScrolledContainer.propTypes = {
-  maxHeight: PropTypes.string
+  maxHeight: PropTypes.string,
+  children: PropTypes.oneOfType(
+    [ PropTypes.element, PropTypes.array ]
+  ).isRequired,
+  onScroll: PropTypes.func
 };
