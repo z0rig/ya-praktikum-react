@@ -41,19 +41,24 @@ const ConstructorItem = ( { ingredient, idx } ) => {
     },
   } );
 
-
   const removeFromConstructor = useCallback( () => {
     dispatch( removeItem( ingredient._id ) );
   }, [ingredient._id, dispatch] );
 
   drag( drop( ref ) );
+
   return (
     <div
       className={ styles.item }
       ref={ ref }
     >
       <DragIcon type='primary' />
-      <ConstructorElement thumbnail={ ingredient.image } text={ ingredient.name } price={ ingredient.price } handleClose={ removeFromConstructor } />
+      <ConstructorElement
+        thumbnail={ ingredient.image }
+        text={ ingredient.name }
+        price={ ingredient.price }
+        handleClose={ removeFromConstructor }
+      />
     </div>
   );
 };

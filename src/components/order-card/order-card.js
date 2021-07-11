@@ -16,7 +16,7 @@ const OrderCard = ( { orderData } ) => {
         <span className={ styles.id }>#{ id }</span>
         <time dateTime={ datetime } className={ styles.time }>Сегодня, 16:20 i-GMT+3</time>
       </header>
-      <h3 className={ styles.title }>{ name }</h3>
+      <h2 className={ styles.title }>{ name }</h2>
       <p className={ styles.status }>{ status }</p>
       <div className={ styles.main }>
         <ul className={ styles.ingredients }>
@@ -53,8 +53,9 @@ const renderPreviews = ( ingredients ) => {
       more = ingredients.length - 5;
     }
 
+    const key = getId();
     previews.push(
-      <li key={ getId() } style={ { zIndex: ingredients.length - index } }>
+      <li key={ key } style={ { zIndex: ingredients.length - index } }>
         <IngredientPreview more={ more } ingredient={ ingredient } />
       </li>
     );

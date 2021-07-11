@@ -152,8 +152,10 @@ const mockData = [
 const OrdersFeed = ( { ordersData = mockData } ) => {
   let { url } = useRouteMatch();
   return (
-    <ul className={ styles.list }>
-      {
+    <>
+      <h1 className='visually-hidden'>История заказов</h1>
+      <ul className={ styles.list }>
+        {
         ordersData.map( ( orderData ) => (
           <li key={ orderData.id } className={ styles.item }>
             <Link to={ `${ url }/${ orderData.id }` } className={ styles.link }>
@@ -162,7 +164,8 @@ const OrdersFeed = ( { ordersData = mockData } ) => {
           </li>
         ) )
       }
-    </ul>
+      </ul>
+    </>
   );
 };
 

@@ -82,8 +82,8 @@
   width: 100%;
 }
 
-.item_mb-4 {
-  composes: mb-4 from global;
+.item + .item {
+  margin-top: 16px;
 }
 
 .helper {

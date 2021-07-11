@@ -10,7 +10,7 @@ import Error from '../error/error';
 import styles from './order-details.module.css';
 
 const OrderDetails = () => {
-  const { bun, items } = useSelector( state => state.burgerConstructor );
+  const { bun, items } = useSelector( ( state ) => state.burgerConstructor );
   const dispatch = useDispatch();
 
   const ingredientsIds = useMemo( () => {
@@ -21,12 +21,13 @@ const OrderDetails = () => {
     return [...items.map( ( ingredient ) => ingredient._id ), bun._id];
   }, [bun, items] );
 
-  const isUserLogin = useSelector( state => state.profile.user.isLogin );
+  const isUserLogin = useSelector( ( state ) => state.profile.user.isLogin );
 
   const {
     orderDetails,
     loading,
-    error } = useSelector( state => state.orderDetails );
+    error
+  } = useSelector( ( state ) => state.orderDetails );
 
   useEffect( () => {
     if( isUserLogin ){

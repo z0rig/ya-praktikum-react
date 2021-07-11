@@ -14,7 +14,7 @@ const OrdersStats = ( { ordersStat = mockData } ) => {
   const { complete, inWork, todaycomplete, allTimecomplete } = ordersStat;
   return (
     <table className={ styles.table }>
-      <caption className={ styles.caption }>Статистика заказов</caption>
+      <caption className='visually-hidden'>Статистика заказов</caption>
       <thead>
         <tr>
           <th className={ styles.th }>Готовы:</th>

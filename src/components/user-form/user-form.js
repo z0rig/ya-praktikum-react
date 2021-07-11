@@ -67,6 +67,7 @@ const UserForm = () => {
       { error && ( <Error error={ error } /> ) }
       { !loading && !error && (
         <form onSubmit={ formSubmitHandler } className={ styles.form }>
+          <h1 className='visually-hidden'>В этом разделе вы можете изменить свои персональные данные</h1>
           <Input
             onChange={ onInputChange }
             value={ inputsData.name }

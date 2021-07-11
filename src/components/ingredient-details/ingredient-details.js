@@ -23,13 +23,13 @@ const IngredientDetails = () => {
   } = ingredient;
 
   return (
-    <div className={ styles.details }>
+    <article className={ styles.details }>
       <figure className={ styles.figure }>
         <picture>
           <img className={ styles.image } src={ image_large } alt={ name } />
         </picture>
-        <figcaption className={ styles.name }>
-          { name }
+        <figcaption>
+          <h1 className={ styles.title }>{ name }</h1>
         </figcaption>
       </figure>
       <table className={ styles.evergy }>
@@ -51,7 +51,7 @@ const IngredientDetails = () => {
           </tr>
         </tbody>
       </table>
-    </div>
+    </article>
   );
 };
 

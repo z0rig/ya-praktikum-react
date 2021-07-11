@@ -9,7 +9,7 @@ import styles from './feed.module.css';
 const FeedPage = () => {
   return (
     <>
-      <h2 className={ styles.title }>Лента заказов</h2>
+      <h1 className={ styles.title }>Лента заказов</h1>
       <div className={ styles.flex }>
         <div className={ styles.column }>
           <ScrolledContainer maxHeight='100%'>

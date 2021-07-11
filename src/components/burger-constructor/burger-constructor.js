@@ -59,7 +59,7 @@ const BurgerConstructor = () => {
 
     return items.map( ( item, idx ) => {
       return (
-        <li key={ item.constructorId } className={ `${ styles.item } ${ ( idx === items.length - 1 ) ? '' : styles['item_mb-4'] }` } >
+        <li key={ item.constructorId } className={ styles.item } >
           <ConstructorItem ingredient={ item } idx={ idx } />
         </li>
       );

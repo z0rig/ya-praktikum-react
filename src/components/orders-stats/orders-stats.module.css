@@ -28,7 +28,3 @@
 .td_large {
   composes: text_type_digits-large from global;
 }
-
-.caption {
-  composes: visually-hidden from global;
-}

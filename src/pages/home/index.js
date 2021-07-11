@@ -10,7 +10,8 @@ import styles from './home.module.css';
 
 const HomePage = () => (
   <>
-    <h1 className='text text_type_main-large mb-5'>Соберите бургер</h1>
+    <h1 className='visually-hidden'>Бургерная 'Stellar burgers'</h1>
+    <p className='text text_type_main-large mb-5'>Соберите бургер</p>
     <DndProvider backend={ HTML5Backend }>
       <div className={ styles.flex }>
         <BurgerIngredients />

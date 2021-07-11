@@ -66,23 +66,23 @@ const OrderInfo = ( { orderData = mockData } ) => {
     <article className={ styles.card }>
       <header className={ styles.header }>
         <p className={ styles.id }>#{ id }</p>
-        <h2 className={ styles.title }>{ name }</h2>
+        <h1 className={ styles.title }>{ name }</h1>
         <p className={ styles.status }>{ status }</p>
       </header>
-      <h3 className={ styles['structure-title'] }>Состав:</h3>
+      <h2 className={ styles['structure-title'] }>Состав:</h2>
       <ScrolledContainer maxHeight='314px'>
         <ul className={ styles.list }>
           <li className={ styles.item }>
             <article className={ styles.ingredient }>
               <IngredientPreview ingredient={ ingredients[0] } />
-              <h4 className={ styles['ingredient-name'] }>имя ингредиента</h4>
+              <h3 className={ styles['ingredient-name'] }>имя ингредиента</h3>
               <Price>{ 2 } x { 20 }</Price>
             </article>
           </li>
           <li className={ styles.item }>
             <article className={ styles.ingredient }>
               <IngredientPreview ingredient={ ingredients[1] } />
-              <h4 className={ styles['ingredient-name'] }>имя ингредиента</h4>
+              <h3 className={ styles['ingredient-name'] }>имя ингредиента</h3>
               <Price>{ 2 } x { 20 }</Price>
             </article>
           </li>

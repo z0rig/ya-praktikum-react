@@ -8,8 +8,8 @@ import AppNav from '../app-nav/app-nav';
 import styles from './app-header.module.css';
 
 const AppHeader = memo( () => (
-  <header className={ styles['app-header'] }>
-    <div className={ `container ${ styles.container }` }>
+  <header className={ styles.header }>
+    <div className={ styles.container }>
       <AppNav />
       <div className={ styles.logo }>
         <Logo />
