@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import styles from './ingredient-preview.module.css';
 
-const IngredientPreview = ( { ingredient: { name, image }, more } ) => (
+const IngredientPreview = ( { ingredient: { name, image_mobile }, more } ) => (
   <div className={ styles.ingredient }>
     { more && <span className={ styles.more }>+{ more }</span> }
     <picture>
-      <img src={ image } alt={ name } />
+      <img src={ image_mobile } alt={ name } />
     </picture>
   </div>
 );

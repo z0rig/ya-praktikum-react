@@ -8,3 +8,11 @@
   justify-content: space-between;
   align-items: flex-start;
 }
+
+.column {
+  width: 48%;
+}
+
+.table-wrapper {
+ width: 47%;
+}

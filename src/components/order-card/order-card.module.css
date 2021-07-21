@@ -35,6 +35,10 @@
   composes: text text_type_main-default mb-6 from global;
 }
 
+.status_done {
+  color: var(--colors-interface-success);
+}
+
 .main {
   display: flex;
   justify-content: space-between;
