@@ -47,7 +47,7 @@ const FeedPage = () => {
     <>
       { !wsConnected && !error && <Spinner/> }
       { error && <Error /> }
-      { wsConnected && !error && (
+      { wsConnected && !error && total && (
         <>
           <h1 className={ styles.title }>Лента заказов</h1>
           <div className={ styles.flex }>

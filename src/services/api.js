@@ -27,11 +27,23 @@ class Api {
     return await fetch( url, {
       'method': 'POST',
       'headers': {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': getCookie( 'token' )
       },
       'body': JSON.stringify( { 'ingredients': ingredientsIds } )
     } );
   };
+
+  getOrderById = async ( id ) => {
+    const url = new URL( ORDERS_URL + '/' + id );
+
+    return await fetch( url, {
+      'method': 'GET',
+      'headers': {
+        'Content-Type': 'application/json'
+      }
+    } );
+  }
 
   getUserData = async () => {
     const url = new URL( USER_DATA_URL );

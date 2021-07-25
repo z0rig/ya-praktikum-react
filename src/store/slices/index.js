@@ -8,6 +8,7 @@ import resetPasswordPageReducer from './reset-password-page';
 import profilePageReducer from './profile-page';
 import allOrdersFeedReducer from './all-orders-feed';
 import userOrdersFeedReducer from './user-orders-feed';
+import userOrderReducer from './user-order';
 
 const rootReducer = {
   burgerIngredients: burgerIngredientsReducer,
@@ -19,7 +20,8 @@ const rootReducer = {
   resetPassword: resetPasswordPageReducer,
   profile: profilePageReducer,
   allOrdersFeed: allOrdersFeedReducer,
-  userOrdersFeed: userOrdersFeedReducer
+  userOrdersFeed: userOrdersFeedReducer,
+  userOrder: userOrderReducer
 };
 
 export default rootReducer;

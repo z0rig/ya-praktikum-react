@@ -1,65 +1,114 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import ScrolledContainer from '../scrolled-container/scrolled-container';
 import IngredientPreview from '../ingredient-preview/ingredient-preview';
 import Price from '../price/price';
 
+import Spinner from '../spinner/spinner';
+import Error from '../error/error';
+
+import { getOrderById } from '../../store/slices/user-order';
+
+import getNormalizedDateTimeString from '../../utils/getNormalizedDateTimeString';
+
 import styles from './order-info.module.css';
 
-const statuses = {
-  done: 'Выполнен',
-};
+import { ORDER_STATUSES } from '../../utils/constants';
 
-const OrderInfo = ( ) => {
+const OrderInfo = () => {
   const { id } = useParams();
-  const { orders } = useSelector( ( state ) => state.allOrdersFeed );
+  const dispatch = useDispatch();
+
   const allBurgerIngredients = useSelector( ( state ) => state.burgerIngredients.items );
 
-  const order = orders.find( ( order ) => order._id === id );
-  const { number ,name, createdAt, status, ingredients } = order;
+  const { orderData, loading, error } = useSelector( ( state ) => state.userOrder );
+
+  const order = orderData ? orderData.orders[ 0 ] : null;
+
+  useEffect( () => {
+    dispatch( getOrderById( id ) );
+  }, [ dispatch, id ] );
 
   const ingredientsData = useMemo( () => {
-    return allBurgerIngredients.filter( ( ingredient ) => ingredients.includes( ingredient._id ) );
-  }, [ allBurgerIngredients, ingredients ] );
+    if ( !order ) {
+      return;
+    }
+
+    const { ingredients } = order;
+
+    const ingredientsData = allBurgerIngredients.filter( ( ingredient ) => ingredients.includes( ingredient._id ) );
+
+    const normalizedData = {};
+
+    ingredientsData.forEach( ( ingredient ) => {
+      normalizedData[ ingredient._id ] = { ...ingredient };
+    } );
+
+    ingredients.forEach( ( ingredientId ) => {
+      if ( normalizedData[ ingredientId ].amount ) {
+        normalizedData[ ingredientId ].amount += 1;
+      } else {
+        normalizedData[ ingredientId ].amount = 1;
+      }
+    } );
+
+    return Object.values( normalizedData );
+  }, [ allBurgerIngredients, order ] );
 
   const price = useMemo( () => {
-    return ingredientsData.reduce( ( acc, current ) => acc + current.price, 0 );
+    if ( !ingredientsData ) {
+      return;
+    }
+
+    return ingredientsData.reduce( ( acc, current ) => acc + current.price * current.amount, 0 );
   }, [ ingredientsData ] );
 
+  const statusAddClassName =
+    order?.status === 'done' ? 'success' :
+    order?.status === 'cancel' ? 'error' :
+    '';
+
   return (
-    <article className={ styles.card }>
-      <header className={ styles.header }>
-        <p className={ styles.id }>#{ number }</p>
-        <h1 className={ styles.title }>{ name }</h1>
-        <p className={ styles.status }>{ statuses[status] }</p>
-      </header>
-      <h2 className={ styles['structure-title'] }>Состав:</h2>
-      <ScrolledContainer maxHeight='314px'>
-        <ul className={ styles.list }>
-          {
-            ingredientsData.map( ( ingredient ) => {
-              return (
-                <li className={ styles.item }>
-                  <article className={ styles.ingredient }>
-                    <IngredientPreview ingredient={ ingredient } />
-                    <h3 className={ styles['ingredient-name'] }>{ ingredient.name }</h3>
-                    <Price>{ 2 } x { ingredient.price }</Price>
-                  </article>
-                </li>
-              );
-            } )
-          }
-        </ul>
-      </ScrolledContainer>
-      <footer className={ styles.footer }>
-        <p className={ styles['time-wrapper'] }>
-          <time dateTime={ createdAt } className={ styles.time }>Вчера, 13:50 i-GMT+3</time>
-        </p>
-        <Price>{ price }</Price>
-      </footer>
-    </article>
+    <>
+      { loading && <Spinner /> }
+      { error && <Error /> }
+      { !loading && !error && order &&
+        (
+          <article className={ styles.card }>
+            <header className={ styles.header }>
+              <p className={ styles.id }>#{ order.number }</p>
+              <h1 className={ styles.title }>{ order.name }</h1>
+              <p className={ `${ styles.status } ${ statusAddClassName }` }>{ ORDER_STATUSES[ order.status ] }</p>
+            </header>
+            <h2 className={ styles[ 'structure-title' ] }>Состав:</h2>
+            <ScrolledContainer maxHeight='314px'>
+              <ul className={ styles.list }>
+                {
+                  ingredientsData.map( ( ingredient ) => {
+                    return (
+                      <li key={ ingredient._id } className={ styles.item }>
+                        <article className={ styles.ingredient }>
+                          <IngredientPreview ingredient={ ingredient } />
+                          <h3 className={ styles[ 'ingredient-name' ] }>{ ingredient.name }</h3>
+                          <Price>{ ingredient.amount } x { ingredient.price }</Price>
+                        </article>
+                      </li>
+                    );
+                  } )
+                }
+              </ul>
+            </ScrolledContainer>
+            <footer className={ styles.footer }>
+              <p className={ styles[ 'time-wrapper' ] }>
+                <time dateTime={ order.createdAt } className={ styles.time }>{ getNormalizedDateTimeString( order.createdAt ) }</time>
+              </p>
+              <Price>{ price }</Price>
+            </footer>
+          </article>
+        ) }
+    </>
  );
 };
 

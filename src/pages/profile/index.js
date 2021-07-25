@@ -4,7 +4,6 @@ import { NavLink, useRouteMatch, Route, Switch, useHistory } from 'react-router-
 
 import UserForm from '../../components/user-form/user-form';
 import UserOrdersFeed from '../../components/user-orders-feed/user-orders-feed';
-import OrderInfo from '../../components/order-info/order-info';
 import ScrolledContainer from '../../components/scrolled-container/scrolled-container';
 
 import { logout } from '../../store/slices/profile-page';
@@ -51,9 +50,6 @@ const ProfilePage = () => {
             <ScrolledContainer maxHeight='868px'>
               <UserOrdersFeed />
             </ScrolledContainer>
-          </Route>
-          <Route path={ `${ path }/orders/:id` }>
-            <OrderInfo/>
           </Route>
         </Switch>
       </div>

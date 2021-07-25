@@ -10,7 +10,7 @@ import styles from './modal.module.css';
 
 const modalRoot = document.getElementById( 'modal' );
 
-const Modal = ( { children, title, isOpen, onClose } ) => {
+const Modal = ( { children, title, onClose } ) => {
   const closeModal = useCallback( ( evt ) => {
     evt.preventDefault();
 
@@ -28,7 +28,7 @@ const Modal = ( { children, title, isOpen, onClose } ) => {
     return () => {
       window.removeEventListener( 'keydown', onDocumentKeyDown );
     };
-  }, [closeModal, isOpen] );
+  }, [closeModal] );
 
   return ( createPortal(
     <ModalOverlay onClick={ closeModal }>
@@ -49,7 +49,6 @@ export default Modal;
 
 Modal.propTypes = {
   title: PropTypes.string,
-  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired
 };

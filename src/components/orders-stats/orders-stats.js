@@ -37,8 +37,8 @@ const OrdersStats = ( { done, inWork, total, totalToday } ) => {
 export default OrdersStats;
 
 OrdersStats.propTypes = {
-  done: PropTypes.arrayOf( PropTypes.string ).isRequired,
-  inWork: PropTypes.arrayOf( PropTypes.string ).isRequired,
+  done: PropTypes.arrayOf( PropTypes.number ).isRequired,
+  inWork: PropTypes.arrayOf( PropTypes.number ).isRequired,
   total: PropTypes.number.isRequired,
   totalToday: PropTypes.number.isRequired,
 };

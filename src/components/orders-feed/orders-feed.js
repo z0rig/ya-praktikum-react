@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import OrderCard from '../order-card/order-card';
 
 import styles from './orders-feed.module.css';
 
 const OrdersFeed = ( { ordersData } ) => {
+  const location = useLocation();
   if ( !ordersData.length ) {
     return <p className={ styles.text }>Заказов нет</p>;
   }
@@ -17,7 +18,10 @@ const OrdersFeed = ( { ordersData } ) => {
         {
           ordersData.map( ( orderData ) => (
             <li key={ orderData._id } className={ styles.item }>
-              <Link to={ `feed/${ orderData._id }` } className={ styles.link }>
+              <Link to={ {
+                pathname: `${ location.pathname }/${ orderData.number }`,
+                state: { from: location.pathname, orderLocation: location }
+              } } className={ styles.link }>
                 <OrderCard orderData={ orderData } />
               </Link>
             </li>

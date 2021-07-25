@@ -76,3 +76,11 @@ video {
   background-color: transparent;
   border: 0;
 }
+
+.success {
+  color: var(--colors-interface-success);
+}
+
+.error {
+  color: var(--colors-interface-error);
+}

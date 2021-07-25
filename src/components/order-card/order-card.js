@@ -6,12 +6,11 @@ import IngredientPreview from '../ingredient-preview/ingredient-preview';
 import Price from '../price/price';
 
 import getId from '../../utils/getId';
+import getNormalizedDateTimeString from '../../utils/getNormalizedDateTimeString';
 
 import styles from './order-card.module.css';
 
-const statuses = {
-  done: 'Выполнен',
-};
+import { ORDER_STATUSES } from '../../utils/constants';
 
 const OrderCard = ( { orderData } ) => {
   const { number, createdAt, name, status, ingredients } = orderData;
@@ -26,17 +25,25 @@ const OrderCard = ( { orderData } ) => {
     return ingredientsData.reduce( ( acc, current ) => acc + current.price, 0 );
   }, [ ingredientsData ] );
 
+  const statusAddClassName =
+    status === 'done' ? 'success' :
+    status === 'cancel' ? 'error' :
+    '';
+
+  console.log( statusAddClassName );
+  console.log( status );
+
   return (
     <article className={ styles.card }>
       <header className={ styles.header }>
         <span className={ styles.id }>#{ number }</span>
-        <time dateTime={ createdAt } className={ styles.time }>Сегодня, 16:20 i-GMT+3</time>
+        <time dateTime={ createdAt } className={ styles.time }>{ getNormalizedDateTimeString( createdAt ) }</time>
       </header>
       <h2 className={ styles.title }>{ name }</h2>
       <p className={
-        `${ styles.status } ${ status === 'done' ? styles.status_done : '' }` }
+        `${ styles.status } ${ statusAddClassName }` }
       >
-        { statuses[ status ] }
+        { ORDER_STATUSES[ status ] }
       </p>
       <div className={ styles.main }>
         <ul className={ styles.ingredients }>
