@@ -33,6 +33,7 @@ const App = () => {
 
   const isPoP = history.action === 'POP';
   const ingredientLocation = !isPoP ? location.state?.ingredientLocation : null;
+  const orderLocation = !isPoP ? location.state?.orderLocation : null;
 
   useEffect( () => {
     dispatch( fetchIngredients() );
@@ -52,7 +53,7 @@ const App = () => {
       { error && ( <Error error={ error } /> ) }
       { ( !loading && !error && !!items.length ) && (
         <>
-          <Switch location={ ingredientLocation || location }>
+          <Switch location={ ingredientLocation || orderLocation || location }>
             <Route path='/' exact={ true } >
               <HomePage/>
             </Route>
@@ -74,7 +75,7 @@ const App = () => {
             <Route path='/feed' exact={ true }>
               <FeedPage/>
             </Route>
-            <Route path='/feed/:id' exact={ true }>
+            <Route path={ ['/feed/:id', '/profile/orders/:id'] }>
               <OrderInfo/>
             </Route>
             <ProtectedRoute path='/profile'>
@@ -88,6 +89,13 @@ const App = () => {
             <Route path='/ingredients/:id' >
               <Modal title='Детали ингредиента' onClose={ closeModal }>
                 <IngredientDetails/>
+              </Modal>
+            </Route>
+          ) }
+          { orderLocation && (
+            <Route path={ ['/feed/:id', '/profile/orders/:id'] } >
+              <Modal onClose={ closeModal }>
+                <OrderInfo/>
               </Modal>
             </Route>
           ) }

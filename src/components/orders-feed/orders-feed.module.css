@@ -13,3 +13,9 @@
 .link {
   color: inherit;
 }
+
+.text {
+  composes: text text_type_main-medium from global;
+
+  padding-top: 160px;
+}

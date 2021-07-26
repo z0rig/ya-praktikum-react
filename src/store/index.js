@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import ordersFeedSocketMiddleware from './middlewares/ordersFeedSocketMiddleware';
 import Api from '../services/api';
 
 import rootReducer from './slices/index';
@@ -10,7 +11,8 @@ const store = configureStore( {
       thunk: {
         extraArgument: Api,
       },
-    } ),
+    } )
+    .concat( ordersFeedSocketMiddleware() ),
 } );
 
 export default store;

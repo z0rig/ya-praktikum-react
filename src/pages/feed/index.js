@@ -1,25 +1,72 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import wsActions from '../../store/ws-actions.js';
 
 import ScrolledContainer from '../../components/scrolled-container/scrolled-container';
 import OrdersFeed from '../../components/orders-feed/orders-feed';
 import OrdersStats from '../../components/orders-stats/orders-stats';
+import Spinner from '../../components/spinner/spinner.js';
+import Error from '../../components/error/error.js';
 
 import styles from './feed.module.css';
 
 const FeedPage = () => {
+  const dispatch = useDispatch();
+  const {
+    orders,
+    total,
+    totalToday,
+    wsConnected,
+    error,
+  } = useSelector( ( state ) => state.allOrdersFeed );
+
+  useEffect( () => {
+    dispatch( wsActions.common.wsConnectionInit( 'allOrders' ) );
+
+    return () => {
+      dispatch( wsActions.common.wsConnectionClose() );
+    };
+  }, [ dispatch ] );
+
+  const groupedByType = useMemo( () => {
+    const groups = {
+      done: [],
+      inWork: []
+    };
+
+    orders.forEach( ( order ) => {
+    const { status } = order;
+      groups[status].push( order.number );
+    } );
+
+    return groups;
+  }, [ orders ] );
+
   return (
     <>
-      <h1 className={ styles.title }>Лента заказов</h1>
-      <div className={ styles.flex }>
-        <div className={ styles.column }>
-          <ScrolledContainer maxHeight='100%'>
-            <OrdersFeed/>
-          </ScrolledContainer>
-        </div>
-        <div className={ styles.column }>
-          <OrdersStats/>
-        </div>
-      </div>
+      { !wsConnected && !error && <Spinner/> }
+      { error && <Error /> }
+      { wsConnected && !error && total && (
+        <>
+          <h1 className={ styles.title }>Лента заказов</h1>
+          <div className={ styles.flex }>
+            <div className={ styles.column }>
+              <ScrolledContainer maxHeight='70vh'>
+                <OrdersFeed ordersData={ orders }/>
+              </ScrolledContainer>
+            </div>
+            <div className={ `${ styles.column } ${ styles['table-wrapper'] }` }>
+              <OrdersStats
+                done={ groupedByType.done }
+                inWork={ groupedByType.inWork }
+                total={ total }
+                totalToday={ totalToday }
+              />
+            </div>
+          </div>
+        </>
+      ) }
     </>
   );
 };

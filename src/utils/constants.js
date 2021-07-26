@@ -21,3 +21,16 @@ export const TOKEN_REFRESH_URL =
 
 export const USER_DATA_URL =
   'https://norma.nomoreparties.space/api/auth/user';
+
+export const WS_ALL_ORDERS_URL =
+  'wss://norma.nomoreparties.space/orders/all';
+
+export const WS_USER_ORDERS_URL =
+  'wss://norma.nomoreparties.space/orders';
+
+export const ORDER_STATUSES = {
+  done: 'Выполнен',
+  pending: 'Готовится',
+  created: 'Создан',
+  cancel: 'Отменен'
+};

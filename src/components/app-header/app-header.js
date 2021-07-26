@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import { Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 

@@ -3,8 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink, useRouteMatch, Route, Switch, useHistory } from 'react-router-dom';
 
 import UserForm from '../../components/user-form/user-form';
-import OrdersFeed from '../../components/orders-feed/orders-feed';
-import OrderInfo from '../../components/order-info/order-info';
+import UserOrdersFeed from '../../components/user-orders-feed/user-orders-feed';
 import ScrolledContainer from '../../components/scrolled-container/scrolled-container';
 
 import { logout } from '../../store/slices/profile-page';
@@ -49,11 +48,8 @@ const ProfilePage = () => {
           </Route>
           <Route exact={ true } path={ `${ path }/orders` }>
             <ScrolledContainer maxHeight='868px'>
-              <OrdersFeed />
+              <UserOrdersFeed />
             </ScrolledContainer>
-          </Route>
-          <Route path={ `${ path }/orders/:id` }>
-            <OrderInfo/>
           </Route>
         </Switch>
       </div>

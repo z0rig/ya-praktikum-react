@@ -3,15 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './orders-stats.module.css';
 
-const mockData = {
-  complete: ['034533', '034532', '034530', '034527', '034525'],
-  inWork: ['034538', '034541', '034542'],
-  todaycomplete: 123,
-  allTimecomplete: 1234
-};
-
-const OrdersStats = ( { ordersStat = mockData } ) => {
-  const { complete, inWork, todaycomplete, allTimecomplete } = ordersStat;
+const OrdersStats = ( { done, inWork, total, totalToday } ) => {
   return (
     <table className={ styles.table }>
       <caption className='visually-hidden'>Статистика заказов</caption>
@@ -22,20 +14,20 @@ const OrdersStats = ( { ordersStat = mockData } ) => {
         </tr>
       </thead>
       <tbody>
-        { renderTbodyRows( complete, inWork ) }
+        { renderTbodyRows( done, inWork ) }
       </tbody>
       <tfoot>
         <tr>
           <th className={ styles.th } colSpan='2'>Выполнено за все время:</th>
         </tr>
         <tr>
-          <td className={ styles.td_large } colSpan='2'>{ allTimecomplete }</td>
+          <td className={ styles.td_large } colSpan='2'>{ total }</td>
         </tr>
         <tr>
           <th className={ styles.th } colSpan='2'>Выполнено за сегодня:</th>
         </tr>
         <tr>
-          <td className={ styles.td_large } colSpan='2'>{ todaycomplete }</td>
+          <td className={ styles.td_large } colSpan='2'>{ totalToday }</td>
         </tr>
       </tfoot>
     </table>
@@ -45,24 +37,73 @@ const OrdersStats = ( { ordersStat = mockData } ) => {
 export default OrdersStats;
 
 OrdersStats.propTypes = {
-  complete: PropTypes.arrayOf( PropTypes.string ).isRequired,
-  inWork: PropTypes.arrayOf( PropTypes.string ).isRequired,
-  todaycomplete: PropTypes.number.isRequired,
-  allTimecomplete: PropTypes.number.isRequired,
+  done: PropTypes.arrayOf( PropTypes.number ).isRequired,
+  inWork: PropTypes.arrayOf( PropTypes.number ).isRequired,
+  total: PropTypes.number.isRequired,
+  totalToday: PropTypes.number.isRequired,
 };
 
-const renderTbodyRows = ( complete, inWork ) => {
+const renderTbodyRows = ( done, inWork ) => {
   const tbodyRows = [];
-  const arrForCycle = ( complete.length > inWork.length ) ? complete : inWork;
+  const arrForCycle = ( done.length > inWork.length ) ? done : inWork;
+
+  if ( arrForCycle.length >= 10 ) {
+    for ( let index = 0; index < arrForCycle.length; index += 2 ) {
+      if ( index >= 20 ) {
+        break;
+      }
+
+      const completeItem = done[index] || '';
+      const inWorkItem = inWork[ index ] || '';
+
+      const completeItemNext = done[index + 1] || '';
+      const inWorkItemNext = inWork[index + 1] || '';
+
+      tbodyRows.push(
+        <tr key={ index }>
+          <td
+            className={ `${ styles.td } ${ styles.quarter } ${ styles.done }` }
+          >
+            { completeItem }
+          </td>
+          <td
+            className={ `${ styles.td } ${ styles.quarter } ${ styles.done }` }
+          >
+            { completeItemNext }
+          </td>
+          <td
+            className={ `${ styles.td } ${ styles.quarter }` }>
+            { inWorkItem }
+          </td>
+          <td
+            className={ `${ styles.td } ${ styles.quarter }` }>
+            { inWorkItemNext }
+          </td>
+        </tr>
+      );
+    }
+
+    return tbodyRows;
+  }
 
   for ( let index = 0; index < arrForCycle.length; index++ ) {
-    const completeItem = complete[index] || '';
+    if ( index >= 20 ) {
+      break;
+    }
+
+    const completeItem = done[index] || '';
     const inWorkItem = inWork[index] || '';
 
     tbodyRows.push(
       <tr key={ index }>
-        <td className={ styles.td }>{ completeItem }</td>
-        <td className={ styles.td }>{ inWorkItem }</td>
+        <td
+          className={ `${ styles.td } ${ styles.done }` }>
+          { completeItem }
+        </td>
+        <td
+          className={ `${ styles.td } ${ styles.done }` }>
+          { inWorkItem }
+        </td>
       </tr>
     );
   }
