@@ -1,11 +1,11 @@
 import burgerIngredientsReducer from './burger-ingredients';
 import burgerConstructorReducer from './burger-constructor';
-import orderDetailsReducer from './order-details';
-import forgotPasswordPageReducer from './forgot-password-page';
+import postedOrderDetailsReducer from './posted-order-details';
+import forgotPasswordReducer from './forgot-password';
 import registrationPageReducer from './registration-page';
-import loginPagePageReducer from './login-page';
-import resetPasswordPageReducer from './reset-password-page';
-import profilePageReducer from './profile-page';
+import loginReducer from './login';
+import resetPasswordReducer from './reset-password';
+import profileReducer from './profile';
 import allOrdersFeedReducer from './all-orders-feed';
 import userOrdersFeedReducer from './user-orders-feed';
 import userOrderReducer from './user-order';
@@ -13,12 +13,12 @@ import userOrderReducer from './user-order';
 const rootReducer = {
   burgerIngredients: burgerIngredientsReducer,
   burgerConstructor: burgerConstructorReducer,
-  orderDetails: orderDetailsReducer,
-  forgotPassword: forgotPasswordPageReducer,
+  postedOrderDetails: postedOrderDetailsReducer,
+  forgotPassword: forgotPasswordReducer,
   registration: registrationPageReducer,
-  login: loginPagePageReducer,
-  resetPassword: resetPasswordPageReducer,
-  profile: profilePageReducer,
+  login: loginReducer,
+  resetPassword: resetPasswordReducer,
+  profile: profileReducer,
   allOrdersFeed: allOrdersFeedReducer,
   userOrdersFeed: userOrdersFeedReducer,
   userOrder: userOrderReducer

@@ -8,7 +8,7 @@ import FormPageTemplate from '../../components/form-page-template/form-page-temp
 import Note from '../../components/note/note';
 import Spinner from '../../components/spinner/spinner';
 
-import { login } from '../../store/slices/login-page';
+import { login } from '../../store/slices/login';
 
 const LoginPage = () => {
   const dispatch = useDispatch();

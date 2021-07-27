@@ -8,7 +8,7 @@ import FormPageTemplate from '../../components/form-page-template/form-page-temp
 import Note from '../../components/note/note';
 import Spinner from '../../components/spinner/spinner';
 
-import { resetPassword } from '../../store/slices/reset-password-page';
+import { resetPassword } from '../../store/slices/reset-password';
 
 const ResetPasswordPage = () => {
   const { state } = useLocation();

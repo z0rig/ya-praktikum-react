@@ -14,6 +14,7 @@ import ActiveBun from '../active-bun/active-bun';
 import Price from '../price/price';
 
 import { useToggle } from '../../hooks/customHoocs';
+import getId from '../../utils/getId';
 
 import styles from './burger-constructor.module.css';
 
@@ -28,7 +29,7 @@ const BurgerConstructor = () => {
       if ( item.type === 'bun' ) {
         dispatch( addBun( { bun: item, activeBun: bun } ) );
       } else {
-        dispatch( addItem( item ) );
+        dispatch( addItem( { ...item, constructorId: getId() } ) );
       }
     },
     collect: ( monitor ) => ( {

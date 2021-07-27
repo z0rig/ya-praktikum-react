@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { postOrder } from '../../store/slices/order-details';
+import { postOrder } from '../../store/slices/posted-order-details';
 
 import Spinner from '../spinner/spinner';
 import Error from '../error/error';
@@ -27,7 +27,7 @@ const OrderDetails = () => {
     orderDetails,
     loading,
     error
-  } = useSelector( ( state ) => state.orderDetails );
+  } = useSelector( ( state ) => state.postedOrderDetails );
 
   useEffect( () => {
     if( isUserLogin ){

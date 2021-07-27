@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   orders: [],
   total: null,
   totalToday: null,
@@ -16,9 +16,9 @@ const allOrdersFeedSlice = createSlice( {
       state.wsConnected = true;
       state.error = null;
     },
-    wsConnectionError: ( state, action ) => {
+    wsConnectionError: ( state ) => {
       state.wsConnected = false;
-      state.error = action.payload;
+      state.error = true;
     },
     wsConnectionClosed: ( state ) => {
       state.wsConnected = false;

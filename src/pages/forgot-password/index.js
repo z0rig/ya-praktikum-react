@@ -8,7 +8,7 @@ import FormPageTemplate from '../../components/form-page-template/form-page-temp
 import Note from '../../components/note/note';
 import Spinner from '../../components/spinner/spinner';
 
-import { checkEmailForPassReset } from '../../store/slices/forgot-password-page';
+import { checkEmailForPassReset } from '../../store/slices/forgot-password';
 
 const ForgotPasswordPage = () => {
   const location = useLocation();

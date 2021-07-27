@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   orderData: null,
   loading: false,
   error: null,
@@ -27,7 +27,7 @@ const userOrderSlice = createSlice( {
       } )
       .addCase( getOrderById.pending, ( state ) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       } )
       .addCase( getOrderById.rejected, ( state, action ) => {
         state.loading = false;

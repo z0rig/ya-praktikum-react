@@ -5,7 +5,7 @@ import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-de
 import Spinner from '../spinner/spinner';
 import Error from '../error/error';
 
-import { getUserData, setUserData } from '../../store/slices/profile-page';
+import { getUserData, setUserData } from '../../store/slices/profile';
 
 import styles from './user-form.module.css';
 
