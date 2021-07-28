@@ -6,7 +6,7 @@ import UserForm from '../../components/user-form/user-form';
 import UserOrdersFeed from '../../components/user-orders-feed/user-orders-feed';
 import ScrolledContainer from '../../components/scrolled-container/scrolled-container';
 
-import { logout } from '../../store/slices/profile-page';
+import { logout } from '../../store/slices/profile';
 
 import styles from './profile.module.css';
 

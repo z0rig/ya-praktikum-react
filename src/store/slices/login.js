@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { setCookie } from '../../utils/cookie';
 
-const initialState = {
+export const initialState = {
   loading: false,
   error: null,
 };
 
 const login = createAsyncThunk(
-  'loginPage/login',
+  'login/login',
   async ( userData, { extra } ) => {
     const response = await extra.login( userData );
     const json = await response.json();
@@ -25,12 +25,13 @@ const login = createAsyncThunk(
   }
 );
 
-const loginPageSlice = createSlice( {
-  name: 'loginPage',
+const loginSlice = createSlice( {
+  name: 'login',
   initialState,
   reducers: {},
   extraReducers: ( builder ) => {
-    builder.addCase( login.fulfilled, ( state ) => {
+    builder
+      .addCase( login.fulfilled, ( state ) => {
       state.loading = false;
       state.error = null;
     } )
@@ -46,4 +47,4 @@ const loginPageSlice = createSlice( {
 
 export { login };
 
-export default loginPageSlice.reducer;
+export default loginSlice.reducer;

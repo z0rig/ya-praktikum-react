@@ -30,9 +30,6 @@ const OrderCard = ( { orderData } ) => {
     status === 'cancel' ? 'error' :
     '';
 
-  console.log( statusAddClassName );
-  console.log( status );
-
   return (
     <article className={ styles.card }>
       <header className={ styles.header }>

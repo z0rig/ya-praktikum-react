@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   loading: false,
   error: null,
 };
 
 const resetPassword = createAsyncThunk(
-  'resetPasswordPage/reset',
+  'resetPassword/reset',
   async ( userData, { extra } ) => {
     const response = await extra.resetPassword( userData );
 
@@ -19,8 +19,8 @@ const resetPassword = createAsyncThunk(
   }
 );
 
-const resetPasswordPageSlice = createSlice( {
-  name: 'resetPasswordPage',
+const resetPasswordSlice = createSlice( {
+  name: 'resetPassword',
   initialState,
   reducers: {},
   extraReducers: ( builder ) => {
@@ -40,4 +40,4 @@ const resetPasswordPageSlice = createSlice( {
 
 export { resetPassword };
 
-export default resetPasswordPageSlice.reducer;
+export default resetPasswordSlice.reducer;

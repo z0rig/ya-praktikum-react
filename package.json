@@ -22,16 +22,26 @@
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
   },
+  "devDependencies": {
+    "cypress": "^8.0.0",
+    "eslint-plugin-cypress": "^2.11.3",
+    "redux-mock-store": "^1.5.4"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "cypress:open": "./node_modules/.bin/cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:cypress/recommended"
+    ],
+    "plugins": [
+      "cypress"
     ],
     "rules": {
       "object-curly-spacing": [
@@ -60,15 +70,22 @@
       ],
       "react/jsx-curly-spacing": [
         2,
-        {"when": "always", "children":true}
+        {
+          "when": "always",
+          "children": true
+        }
       ],
       "react/jsx-indent": [
         "error",
         2,
-        {"checkAttributes": true}
+        {
+          "checkAttributes": true
+        }
       ],
-      "react/jsx-wrap-multilines": ["error", {
-        "declaration": "parens-new-line",
+      "react/jsx-wrap-multilines": [
+        "error",
+        {
+          "declaration": "parens-new-line",
           "assignment": "parens-new-line",
           "return": "parens-new-line",
           "arrow": "parens-new-line",
@@ -77,11 +94,14 @@
           "prop": "parens-new-line"
         }
       ],
-      "react/jsx-boolean-value": [2, "always"],
+      "react/jsx-boolean-value": [
+        2,
+        "always"
+      ],
       "react/sort-comp": [
         2,
-        { "order":
-          [
+        {
+          "order": [
             "render",
             "static-methods",
             "lifecycle",
@@ -89,11 +109,14 @@
           ]
         }
       ],
-      "react/button-has-type": [2, {
-        "button": true,
-        "submit": true,
-        "reset": false
-      }],
+      "react/button-has-type": [
+        2,
+        {
+          "button": true,
+          "submit": true,
+          "reset": false
+        }
+      ],
       "react/destructuring-assignment": [
         2,
         "always"

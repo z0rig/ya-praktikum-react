@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { setCookie } from '../../utils/cookie';
 
-const initialState = {
+export const initialState = {
   loading: false,
   error: null,
 };

@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   orderDetails: null,
   loading: false,
   error: null,
 };
 
 const postOrder = createAsyncThunk(
-  'orderDetails/postOrder',
+  'postedOrderDetails/postOrder',
   async ( ingredientsIds, { extra } ) => {
     const response = await extra.getOrderDetails( ingredientsIds );
     const json = await response.json();
@@ -15,8 +15,8 @@ const postOrder = createAsyncThunk(
   }
 );
 
-const orderDetailsSlice = createSlice( {
-  name: 'orderDetails',
+const postedOrderDetailsSlice = createSlice( {
+  name: 'postedOrderDetails',
   initialState,
   reducers: {},
   extraReducers: ( builder ) => {
@@ -27,7 +27,7 @@ const orderDetailsSlice = createSlice( {
       } )
       .addCase( postOrder.pending, ( state ) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       } )
       .addCase( postOrder.rejected, ( state, action ) => {
         state.loading = false;
@@ -38,4 +38,4 @@ const orderDetailsSlice = createSlice( {
 } );
 
 export { postOrder };
-export default orderDetailsSlice.reducer;
+export default postedOrderDetailsSlice.reducer;

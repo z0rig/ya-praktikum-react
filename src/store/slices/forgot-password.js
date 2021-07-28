@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   emailChecked: false,
   loading: false,
   error: null,
 };
 
 const checkEmailForPassReset = createAsyncThunk(
-  'forgotPasswordPage/checkEmailForPassReset',
+  'forgotPassword/checkEmailForPassReset',
   async ( email, { extra } ) => {
     const response = await extra.checkEmailForPassReset( email );
     const json = await response.json();
@@ -20,18 +20,20 @@ const checkEmailForPassReset = createAsyncThunk(
   }
 );
 
-const forgotPasswordPageSlice = createSlice( {
-  name: 'forgotPasswordPage',
+const forgotPasswordSlice = createSlice( {
+  name: 'forgotPassword',
   initialState,
   reducers: {},
   extraReducers: ( builder ) => {
-    builder.addCase( checkEmailForPassReset.fulfilled, ( state ) => {
+    builder
+      .addCase( checkEmailForPassReset.fulfilled, ( state ) => {
       state.loading = false;
       state.error = null;
       state.emailChecked = true;
     } )
     .addCase( checkEmailForPassReset.pending, ( state ) => {
       state.loading = true;
+      state.error = false;
     } )
     .addCase( checkEmailForPassReset.rejected, ( state, action ) => {
       state.loading = false;
@@ -42,4 +44,4 @@ const forgotPasswordPageSlice = createSlice( {
 
 export { checkEmailForPassReset };
 
-export default forgotPasswordPageSlice.reducer;
+export default forgotPasswordSlice.reducer;

@@ -1,10 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { postOrder } from './order-details';
+import { postOrder } from './posted-order-details';
 
-import getId from '../../utils/getId';
-
-const initialState = {
+export const initialState = {
   items: [],
   bun: null
 };
@@ -14,7 +12,7 @@ const burgerConstructorSlice = createSlice( {
   initialState,
   reducers: {
     addItem: ( state, { payload } ) => {
-      state.items.push( { ...payload, constructorId: getId() } );
+      state.items.push( payload );
     },
     removeItem: ( state, { payload } ) => {
       const itemIndex = state.items.findIndex( ( item ) => item._id === payload );

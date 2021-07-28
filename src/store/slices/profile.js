@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice, isPending, isRejected, isFulfilled } from '@reduxjs/toolkit';
 
-import { login } from './login-page';
+import { login } from './login';
 import { register } from './registration-page';
 
 import { getCookie, deleteCookie } from '../../utils/cookie';
 
 const isLogin = !!getCookie( 'token' );
 
-const initialState = {
+export const initialState = {
   user: {
     email: '',
     name: '',
@@ -18,7 +18,7 @@ const initialState = {
 };
 
 const logout = createAsyncThunk(
-  'profilePage/logout',
+  'profile/logout',
   async ( _, { extra } ) => {
     const response = await extra.logout();
     const json = await response.json();
@@ -34,7 +34,7 @@ const logout = createAsyncThunk(
 );
 
 const getUserData = createAsyncThunk(
-  'profilePage/getUserData',
+  'profile/getUserData',
   async ( _, { extra } ) => {
     const response = await extra.getUserData();
     const json = await response.json();
@@ -48,7 +48,7 @@ const getUserData = createAsyncThunk(
 );
 
 const setUserData = createAsyncThunk(
-  'profilePage/setUserData',
+  'profile/setUserData',
   async ( userData, { extra } ) => {
     const response = await extra.setUserData( userData );
     const json = await response.json();
@@ -65,13 +65,15 @@ const isPendingAction = isPending( logout, getUserData, setUserData );
 const isRejectedAction = isRejected( logout, getUserData, setUserData );
 const isFulfilledAction = isFulfilled( register, login );
 
-const profilePageSlice = createSlice( {
-  name: 'profilePage',
+const profileSlice = createSlice( {
+  name: 'profile',
   initialState,
   reducers: {},
   extraReducers: ( builder ) => {
     builder
-      .addCase( logout.fulfilled, () => initialState )
+      .addCase( logout.fulfilled, ( state ) => {
+        state.user.isLogin = false;
+      } )
       .addCase( getUserData.fulfilled, ( state, { payload: { user } } ) => {
         state.user = user;
         state.user.isLogin = true;
@@ -111,4 +113,4 @@ const profilePageSlice = createSlice( {
 } );
 
 export { logout, getUserData, setUserData };
-export default profilePageSlice.reducer;
+export default profileSlice.reducer;

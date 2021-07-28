@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { addItem, removeItem, addBun } from './burger-constructor';
-import { postOrder } from './order-details';
+import { postOrder } from './posted-order-details';
 
-const initialState = {
+export const initialState = {
   items: [],
   loading: false,
   error: null,
@@ -69,5 +69,5 @@ const burgerIngredientsSlice = createSlice( {
 } );
 
 export { fetchIngredients };
-export const { incrementIngredient, decrementIngredient } = burgerIngredientsSlice.actions;
+
 export default burgerIngredientsSlice.reducer;
