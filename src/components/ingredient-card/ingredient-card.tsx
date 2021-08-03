@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import Price from '../price/price';
 
-import styles from './ingridient-card.module.css';
+import styles from './ingredient-card.module.css';
 import { useDrag } from 'react-dnd';
 
-const IngredientCard = ( { ingredient } ) => {
+import { TIngredient } from '../../types';
+
+const IngredientCard = ( { ingredient }: {ingredient: TIngredient} ) => {
   const location = useLocation();
 
   const { name, price, image, _id } = ingredient;
@@ -33,12 +34,3 @@ const IngredientCard = ( { ingredient } ) => {
 };
 
 export default IngredientCard;
-
-IngredientCard.propTypes = {
-  ingredient: PropTypes.shape( {
-    name: PropTypes.string,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    _id: PropTypes.string,
-  } ).isRequired
-};

@@ -1,11 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { MouseEvent } from 'react';
 
 import styles from './modal-overlay.module.css';
+import { ReactNode } from 'react';
 
-const ModalOverlay = ( { children, onClick } ) => {
-  const onOverlayClick = ( evt ) => {
-    if ( evt.target.classList.contains( 'js-overlay' ) ) {
+interface IModalOverlay {
+  children: ReactNode;
+  onClick: ( evt: MouseEvent<HTMLDivElement> ) => void;
+}
+
+const ModalOverlay = ( { children, onClick }: IModalOverlay ) => {
+  const onOverlayClick = ( evt: MouseEvent<HTMLDivElement> ) => {
+    const target = evt.target as HTMLDivElement;
+
+    if ( target.classList.contains( 'js-overlay' ) ) {
       onClick( evt );
     }
   };
@@ -18,8 +25,3 @@ const ModalOverlay = ( { children, onClick } ) => {
 };
 
 export default ModalOverlay;
-
-ModalOverlay.propTypes = {
-  onClick: PropTypes.func,
-  children: PropTypes.element.isRequired
-};

@@ -1,11 +1,12 @@
+import { AnyAction, MiddlewareAPI } from '@reduxjs/toolkit';
 import wsServices from '../../services/wsServices';
-import wsActions from '../ws-actions.js';
+import wsActions from '../ws-actions/index';
 
 export const socketMiddleware = () => {
-  return ( store ) => {
-    let socket = null;
+  return ( store: MiddlewareAPI ) => {
+    let socket: WebSocket | null = null;
     let socketName = '';
-    return ( next ) => ( action ) => {
+    return ( next: ( a: AnyAction ) => void ) => ( action: AnyAction ) => {
       const { dispatch } = store;
       const { type, payload } = action;
       if ( type === wsActions.common.wsConnectionInit.toString() ) {
@@ -14,7 +15,7 @@ export const socketMiddleware = () => {
       }
 
       if ( type === wsActions.common.wsConnectionClose.toString() ) {
-        socket.close();
+        socket && socket.close();
       }
 
       if ( socket ) {

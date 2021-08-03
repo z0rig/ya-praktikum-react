@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks';
 
-import OrdersFeed from '../orders-feed/orders-feed.js';
-import ScrolledContainer from '../scrolled-container/scrolled-container.js';
-import Spinner from '../../components/spinner/spinner.js';
-import Error from '../../components/error/error.js';
+import OrdersFeed from '../orders-feed/orders-feed';
+import ScrolledContainer from '../scrolled-container/scrolled-container';
+import Spinner from '../../components/spinner/spinner';
+import Error from '../../components/error/error';
 
-import wsActions from '../../store/ws-actions.js';
+import wsActions from '../../store/ws-actions';
 
 const UserOrdersFeed = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const UserOrdersFeed = () => {
   return (
     <>
       { !wsConnected && !error && <Spinner/> }
-      { error && <Error /> }
+      { error && <Error error={ { message: 'Соединение прервано' } } /> }
       { wsConnected && !error && (
         <ScrolledContainer maxHeight='70vh'>
           <OrdersFeed ordersData={ orders } />

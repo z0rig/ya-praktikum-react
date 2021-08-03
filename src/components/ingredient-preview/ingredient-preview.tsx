@@ -1,9 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import styles from './ingredient-preview.module.css';
 
-const IngredientPreview = ( { ingredient: { name, image_mobile }, more } ) => (
+import { TIngredient } from '../../types';
+
+interface IIngredientPreview {
+  ingredient: TIngredient,
+  more: number | null
+}
+
+const IngredientPreview = (
+  { ingredient: { name, image_mobile }, more }: IIngredientPreview
+) => (
   <div className={ styles.ingredient }>
     { more && <span className={ styles.more }>+{ more }</span> }
     <picture>
@@ -13,11 +21,3 @@ const IngredientPreview = ( { ingredient: { name, image_mobile }, more } ) => (
 );
 
 export default IngredientPreview;
-
-IngredientPreview.propTypes = {
-  ingredient: PropTypes.shape( {
-    name: PropTypes.string,
-    image: PropTypes.string
-  } ).isRequired,
-  more: PropTypes.number
-};

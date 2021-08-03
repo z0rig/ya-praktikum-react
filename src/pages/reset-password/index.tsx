@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -11,7 +11,7 @@ import Spinner from '../../components/spinner/spinner';
 import { resetPassword } from '../../store/slices/reset-password';
 
 const ResetPasswordPage = () => {
-  const { state } = useLocation();
+  const { state } = useLocation<{from?: string}>();
   const dispatch = useDispatch();
 
   const [ inputsData, setInputsData ] = useState( {
@@ -60,7 +60,6 @@ const ResetPasswordPage = () => {
       value={ inputsData.password }
       onChange={ onInputChange }
       key='1'
-      placeholder='Введите'
       name='password'
     />,
     <Input

@@ -1,10 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import styles from './note.module.css';
+import { ReactNode } from 'react';
 
-const Note = ( { link: { text, href }, children } ) => {
+interface INote {
+  link: {
+    text: string
+    href: string
+  },
+  children: ReactNode
+}
+
+const Note = ( { link: { text, href }, children }: INote ) => {
   return (
     <p className={ styles.note }>
       { children } <Link to={ href } className={ styles.link }>{ text }</Link>
@@ -13,13 +21,3 @@ const Note = ( { link: { text, href }, children } ) => {
 };
 
 export default Note;
-
-Note.propTypes = {
-  link: PropTypes.shape( {
-    text: PropTypes.string,
-    href: PropTypes.string,
-  } ).isRequired,
-  children: PropTypes.oneOfType(
-    [ PropTypes.element, PropTypes.string ]
-  ).isRequired
-};

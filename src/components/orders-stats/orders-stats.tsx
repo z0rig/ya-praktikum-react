@@ -1,9 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import styles from './orders-stats.module.css';
 
-const OrdersStats = ( { done, inWork, total, totalToday } ) => {
+interface IOrdersStats {
+  done: Array<number>,
+  inWork: Array<number>,
+  total: number,
+  totalToday: number;
+}
+
+const OrdersStats = ( { done, inWork, total, totalToday }: IOrdersStats ) => {
   return (
     <table className={ styles.table }>
       <caption className='visually-hidden'>Статистика заказов</caption>
@@ -18,16 +24,16 @@ const OrdersStats = ( { done, inWork, total, totalToday } ) => {
       </tbody>
       <tfoot>
         <tr>
-          <th className={ styles.th } colSpan='2'>Выполнено за все время:</th>
+          <th className={ styles.th } colSpan={ 2 }>Выполнено за все время:</th>
         </tr>
         <tr>
-          <td className={ styles.td_large } colSpan='2'>{ total }</td>
+          <td className={ styles.td_large } colSpan={ 2 }>{ total }</td>
         </tr>
         <tr>
-          <th className={ styles.th } colSpan='2'>Выполнено за сегодня:</th>
+          <th className={ styles.th } colSpan={ 2 }>Выполнено за сегодня:</th>
         </tr>
         <tr>
-          <td className={ styles.td_large } colSpan='2'>{ totalToday }</td>
+          <td className={ styles.td_large } colSpan={ 2 }>{ totalToday }</td>
         </tr>
       </tfoot>
     </table>
@@ -36,14 +42,7 @@ const OrdersStats = ( { done, inWork, total, totalToday } ) => {
 
 export default OrdersStats;
 
-OrdersStats.propTypes = {
-  done: PropTypes.arrayOf( PropTypes.number ).isRequired,
-  inWork: PropTypes.arrayOf( PropTypes.number ).isRequired,
-  total: PropTypes.number.isRequired,
-  totalToday: PropTypes.number.isRequired,
-};
-
-const renderTbodyRows = ( done, inWork ) => {
+const renderTbodyRows = ( done:Array<number>, inWork:Array<number> ) => {
   const tbodyRows = [];
   const arrForCycle = ( done.length > inWork.length ) ? done : inWork;
 

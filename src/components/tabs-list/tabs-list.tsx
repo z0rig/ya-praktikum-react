@@ -1,11 +1,18 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
+import React, { Ref, useMemo } from 'react';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './tabs-list.module.css';
+import { IAdaptedIngredientsData } from '../burger-ingredients/utils';
 
-const TabsList = ( { tabsData, activeTab, onClick, tabListRef } ) => {
+interface ITabsList {
+  tabsData: IAdaptedIngredientsData,
+  activeTab: string,
+  onClick: ( value:string ) => void,
+  tabListRef: Ref<HTMLUListElement>
+}
+
+const TabsList = ( { tabsData, activeTab, onClick, tabListRef }: ITabsList ) => {
   const listItems = useMemo( () => ( Object.keys( tabsData )
     .map( ( key, idx ) => (
       <li key={ idx } className={ styles.item }>
@@ -21,12 +28,3 @@ const TabsList = ( { tabsData, activeTab, onClick, tabListRef } ) => {
 };
 
 export default TabsList;
-
-TabsList.propTypes = {
-  tabsData: PropTypes.objectOf( PropTypes.shape( {
-    title: PropTypes.string
-  } ) ).isRequired,
-  activeTab: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  tabListRef: PropTypes.shape( { current: PropTypes.instanceOf( HTMLUListElement ) } ).isRequired
-};

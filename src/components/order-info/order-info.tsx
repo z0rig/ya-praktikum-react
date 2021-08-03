@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks';
 
 import ScrolledContainer from '../scrolled-container/scrolled-container';
 import IngredientPreview from '../ingredient-preview/ingredient-preview';
@@ -16,9 +16,10 @@ import getNormalizedDateTimeString from '../../utils/getNormalizedDateTimeString
 import styles from './order-info.module.css';
 
 import { ORDER_STATUSES } from '../../utils/constants';
+import { TIngredient } from '../../types';
 
 const OrderInfo = () => {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const dispatch = useDispatch();
 
   const allBurgerIngredients = useSelector( ( state ) => state.burgerIngredients.items );
@@ -40,18 +41,19 @@ const OrderInfo = () => {
 
     const ingredientsData = allBurgerIngredients.filter( ( ingredient ) => ingredients.includes( ingredient._id ) );
 
-    const normalizedData = {};
+    const normalizedData:
+      {
+        [k: string]: TIngredient & {
+          amount: number
+        }
+      } = {};
 
     ingredientsData.forEach( ( ingredient ) => {
-      normalizedData[ ingredient._id ] = { ...ingredient };
+      normalizedData[ ingredient._id ] = { ...ingredient, amount: 1 };
     } );
 
     ingredients.forEach( ( ingredientId ) => {
-      if ( normalizedData[ ingredientId ].amount ) {
-        normalizedData[ ingredientId ].amount += 1;
-      } else {
-        normalizedData[ ingredientId ].amount = 1;
-      }
+      normalizedData[ ingredientId ].amount += 1;
     } );
 
     return Object.values( normalizedData );
@@ -73,7 +75,7 @@ const OrderInfo = () => {
   return (
     <>
       { loading && <Spinner /> }
-      { error && <Error /> }
+      { error && <Error error={ error } /> }
       { !loading && !error && order &&
         (
           <article className={ styles.card }>
@@ -86,11 +88,11 @@ const OrderInfo = () => {
             <ScrolledContainer maxHeight='314px'>
               <ul className={ styles.list }>
                 {
-                  ingredientsData.map( ( ingredient ) => {
+                  ingredientsData?.map( ( ingredient ) => {
                     return (
                       <li key={ ingredient._id } className={ styles.item }>
                         <article className={ styles.ingredient }>
-                          <IngredientPreview ingredient={ ingredient } />
+                          <IngredientPreview ingredient={ ingredient } more={ null } />
                           <h3 className={ styles[ 'ingredient-name' ] }>{ ingredient.name }</h3>
                           <Price>{ ingredient.amount } x { ingredient.price }</Price>
                         </article>

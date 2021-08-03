@@ -1,6 +1,11 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction, PayloadActionCreator } from '@reduxjs/toolkit';
 
-const wsCommonActions = {
+interface IWsCommonActions {
+  wsConnectionInit: PayloadActionCreator<string>;
+  wsConnectionClose: PayloadActionCreator
+}
+
+const wsCommonActions: IWsCommonActions = {
   wsConnectionInit: createAction( 'WS_CONNECTION_INIT' ),
   wsConnectionClose: createAction( 'WS_CONNECTION_CLOSE' )
 };

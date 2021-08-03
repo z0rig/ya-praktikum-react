@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks';
 import { NavLink, useRouteMatch, Route, Switch, useHistory } from 'react-router-dom';
 
 import UserForm from '../../components/user-form/user-form';
@@ -18,7 +18,7 @@ const ProfilePage = () => {
     evt.preventDefault();
 
     dispatch( logout() );
-    history.push( { pathName: '/login', state: { from: '/login' } } );
+    history.push( { pathname: '/login', state: { from: '/login' } } );
   }, [dispatch, history] );
 
   const { path, url } = useRouteMatch();

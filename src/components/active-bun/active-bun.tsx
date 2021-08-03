@@ -1,13 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './active-bun.module.css';
 
-const ActiveBun = ( { children } ) => {
-  const { bun } = useSelector( state => state.burgerConstructor );
+const ActiveBun = ( { children }: { children: React.ReactNode } ) => {
+  const { bun } = useSelector( ( state ) => state.burgerConstructor );
 
   if ( !bun ) {
     return (
@@ -17,6 +16,7 @@ const ActiveBun = ( { children } ) => {
       </div>
     );
   }
+
   return (
     <>
       <ConstructorElement
@@ -39,7 +39,3 @@ const ActiveBun = ( { children } ) => {
 };
 
 export default ActiveBun;
-
-ActiveBun.propTypes = {
-  children: PropTypes.element
-};

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks';
 import { Redirect } from 'react-router-dom';
 
 import { PasswordInput, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,7 +8,7 @@ import FormPageTemplate from '../../components/form-page-template/form-page-temp
 import Note from '../../components/note/note';
 import Spinner from '../../components/spinner/spinner';
 
-import { register } from '../../store/slices/registration-page';
+import { register } from '../../store/slices/registration';
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();

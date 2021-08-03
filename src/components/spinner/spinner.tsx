@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import styles from './spinner.module.css';
 
@@ -36,11 +35,6 @@ const Spinner = ( { width = '232', height = '232' } ) => {
       </g>
     </svg>
   );
-};
-
-Spinner.propTypes = {
-  width: PropTypes.string,
-  height: PropTypes.string,
 };
 
 export default Spinner;

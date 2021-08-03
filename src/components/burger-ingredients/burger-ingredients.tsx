@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -15,11 +15,11 @@ function BurgerIngredients () {
   const ingredientsData = useSelector( state => state.burgerIngredients.items );
   const [ activeTab, setActiveTab ] = useState( 'bun' );
 
-  const bunIngredientsRef = useRef( null );
-  const sauceIngredientsRef = useRef( null );
-  const mainIngredientsRef = useRef( null );
+  const bunIngredientsRef = useRef<HTMLElement>( null );
+  const sauceIngredientsRef = useRef<HTMLElement>( null );
+  const mainIngredientsRef = useRef<HTMLElement>( null );
 
-  const tabListRef = useRef( null );
+  const tabListRef = useRef<HTMLUListElement>( null );
 
   const refsMap = useMemo( () => ( {
     bun: bunIngredientsRef,
@@ -56,10 +56,11 @@ function BurgerIngredients () {
   }, [adaptedIngredientsData] );
 
   const onTabClick = useCallback(
-    ( value ) => {
+    ( value:string  ) => {
       setActiveTab( value );
+
       adaptedIngredientsData[value]
-        .ref.current.scrollIntoView( {
+        .ref.current?.scrollIntoView( {
           behavior: 'smooth'
         } );
     },
@@ -71,10 +72,10 @@ function BurgerIngredients () {
       const name = Object.values( adaptedIngredientsData )
         .find( ( { ref } ) => {
           return (
-            ref.current.getBoundingClientRect().top -
-            tabListRef.current.getBoundingClientRect().bottom +
-            ( ref.current.getBoundingClientRect().height / 1.3 ) ) > 0;
-        } ).name;
+            ref.current!.getBoundingClientRect().top -
+            tabListRef.current!.getBoundingClientRect().bottom +
+            ( ref.current!.getBoundingClientRect().height / 1.3 ) ) > 0;
+        } )!.name;
       setActiveTab( name );
     },
     [adaptedIngredientsData],

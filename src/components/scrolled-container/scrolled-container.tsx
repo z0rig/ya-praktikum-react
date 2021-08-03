@@ -2,8 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './scrolled-container.module.css';
+import { ReactNode } from 'react';
 
-const ScrolledContainer = ( { maxHeight, children, onScroll } ) => (
+interface IScrolledContainer {
+  maxHeight: string,
+  children: ReactNode,
+  onScroll?: () => void;
+}
+
+const ScrolledContainer = ( { maxHeight, children, onScroll }: IScrolledContainer ) => (
   <div
     style={ { maxHeight } }
     className={ styles.scroll }

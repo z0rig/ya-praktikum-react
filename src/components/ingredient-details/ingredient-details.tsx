@@ -1,17 +1,25 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
 
 import styles from './ingredient-details.module.css';
 
+interface IIngredientDetails {
+  id: string
+}
+
 const IngredientDetails = () => {
-  const { id } = useParams();
+  const { id } = useParams<IIngredientDetails>();
 
   const ingredient = useSelector(
     ( state ) => state.burgerIngredients.items
       .find( ( { _id } ) => _id === id )
   );
+
+  if ( !ingredient ) {
+    return <p>Ингредиент не найден</p>;
+  }
 
   const {
     name,

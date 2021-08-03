@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks';
 import { postOrder } from '../../store/slices/posted-order-details';
 
 import Spinner from '../spinner/spinner';

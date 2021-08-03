@@ -1,9 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import React, { ReactNode } from 'react';
+import { useSelector } from '../../hooks';
 import { Route, Redirect } from 'react-router-dom';
 
-const ProtectedRoute = ( { children, ...rest } ) => {
+const ProtectedRoute = ( { children, ...rest }: { children: ReactNode; path: string} ) => {
   const isLogin = useSelector( ( state ) => state.profile.user.isLogin );
 
   return (
@@ -24,7 +23,3 @@ const ProtectedRoute = ( { children, ...rest } ) => {
 };
 
 export default ProtectedRoute;
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.element.isRequired
-};

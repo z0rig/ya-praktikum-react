@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useMemo, useCallback } from 'react';
+import { useSelector, useDispatch } from '../../hooks';
 import { addItem, addBun } from '../../store/slices/burger-constructor';
 
 import { useDrop } from 'react-dnd';
@@ -18,14 +18,28 @@ import getId from '../../utils/getId';
 
 import styles from './burger-constructor.module.css';
 
+import { TBurgerConstructorIgredient } from '../../types';
+
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const { bun, items } = useSelector( ( state ) => state.burgerConstructor );
-  const [isModalOpen, toggleModalActive] = useToggle( false );
+  const [isModalOpen, toggleModalActive] = useToggle();
+
+  const orderBtnClickHandler = useCallback( () => {
+    if( typeof toggleModalActive === 'function' ){
+      toggleModalActive();
+    }
+  }, [toggleModalActive] );
+
+  const closeModal = useCallback( () => {
+    if( typeof toggleModalActive === 'function' ){
+      toggleModalActive();
+    }
+  }, [toggleModalActive] );
 
   const [{ isOver, canDrop }, dropTarget] = useDrop( {
     accept: 'ingredients',
-    drop ( item ) {
+    drop ( item: TBurgerConstructorIgredient ) {
       if ( item.type === 'bun' ) {
         dispatch( addBun( { bun: item, activeBun: bun } ) );
       } else {
@@ -101,20 +115,20 @@ const BurgerConstructor = () => {
         <div className={ styles.helper }>
           <Price>{ totalPrice }</Price>
 
-          <Button type='primary' size='large' onClick={ toggleModalActive }>
+          <Button type='primary' size='large' onClick={ orderBtnClickHandler }>
             Оформить заказ
           </Button>
         </div>
       );
     }
-  }, [bun, items, toggleModalActive, totalPrice] );
+  }, [bun, items, totalPrice, orderBtnClickHandler] );
 
   return (
     <>
       {
         isModalOpen &&
         (
-          <Modal isOpen={ isModalOpen } onClose={ toggleModalActive } >
+          <Modal onClose={ closeModal } >
             <OrderDetails />
           </Modal>
         )

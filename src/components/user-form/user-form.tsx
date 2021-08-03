@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import Spinner from '../spinner/spinner';
@@ -28,11 +28,14 @@ const UserForm = () => {
 
   useEffect( () => {
     const { name, email } = userData;
-    setInputsData( {
-      name,
-      email,
-      password: ''
-    } );
+
+    if( name && email ) {
+      setInputsData( {
+        name,
+        email,
+        password: ''
+      } );
+    }
   }, [userData] );
 
   const onInputChange = useCallback( ( evt ) => {
@@ -51,15 +54,15 @@ const UserForm = () => {
     dispatch( setUserData( inputsData ) );
   }, [ dispatch, inputsData ] );
 
-  const onCancelBtnClick = useCallback( ( evt ) => {
-    evt.preventDefault();
-
-    setInputsData( {
-      name: userData.name,
-      email: userData.email,
-      password: ''
-    } );
-  }, [ userData ] );
+  const onCancelBtnClick = useCallback( () => {
+    if ( userData.name && userData.email ) {
+      setInputsData( {
+        name: userData.name,
+        email: userData.email,
+        password: ''
+      } );
+    }
+  }, [userData] );
 
   return (
     <>

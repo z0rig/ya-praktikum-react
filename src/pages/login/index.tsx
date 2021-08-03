@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import { PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,7 +12,7 @@ import { login } from '../../store/slices/login';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const { state } = useLocation();
+  const { state } = useLocation<{from?: string}>();
 
   const [ inputsData, setInputsData ] = useState( {
     email: '',

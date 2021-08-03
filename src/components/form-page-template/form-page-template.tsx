@@ -1,9 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FormEventHandler, ReactNode } from 'react';
 
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './form-page-template.module.css';
+
+import { SerializedError } from '@reduxjs/toolkit';
+
+interface IFormPageTemplate {
+  inputs: Array<ReactNode>,
+  notes: Array<ReactNode>,
+  title: string,
+  submitButtonText: string,
+  onFormSubmit: FormEventHandler<HTMLFormElement>,
+  reqError: SerializedError | null
+}
 
 const FormPageTemplate = ( {
   inputs,
@@ -12,7 +22,7 @@ const FormPageTemplate = ( {
   submitButtonText,
   onFormSubmit,
   reqError
-} ) => {
+}: IFormPageTemplate ) => {
   return (
     <div className={ styles.wrapper }>
       <h1 className={ styles.title }>{ title }</h1>
@@ -32,14 +42,3 @@ const FormPageTemplate = ( {
 };
 
 export default FormPageTemplate;
-
-FormPageTemplate.propTypes = {
-  inputs: PropTypes.arrayOf( PropTypes.element ).isRequired,
-  notes: PropTypes.arrayOf( PropTypes.element ),
-  title: PropTypes.string,
-  submitButtonText: PropTypes.string.isRequired,
-  onFormSubmit: PropTypes.func.isRequired,
-  reqError: PropTypes.shape( {
-    message: PropTypes.string
-  } )
-};

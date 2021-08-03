@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';

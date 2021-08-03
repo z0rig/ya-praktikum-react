@@ -1,9 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode } from 'react';
 
 import AppHeader from '../app-header/app-header';
 
-const Layout = ( { children } ) => {
+const Layout = ( { children }: {children: ReactNode } ) => {
   return (
     <>
       <AppHeader />
@@ -14,11 +13,6 @@ const Layout = ( { children } ) => {
       </main>
     </>
   );
-};
-Layout.propTypes = {
-  children: PropTypes.oneOfType(
-    [ PropTypes.element, PropTypes.array ]
-  ).isRequired,
 };
 
 export default Layout;

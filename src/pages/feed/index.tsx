@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks';
 
-import wsActions from '../../store/ws-actions.js';
+import wsActions from '../../store/ws-actions/index';
 
 import ScrolledContainer from '../../components/scrolled-container/scrolled-container';
 import OrdersFeed from '../../components/orders-feed/orders-feed';
 import OrdersStats from '../../components/orders-stats/orders-stats';
-import Spinner from '../../components/spinner/spinner.js';
-import Error from '../../components/error/error.js';
+import Spinner from '../../components/spinner/spinner';
+import Error from '../../components/error/error';
 
 import styles from './feed.module.css';
 
@@ -30,13 +30,13 @@ const FeedPage = () => {
   }, [ dispatch ] );
 
   const groupedByType = useMemo( () => {
-    const groups = {
+    const groups: {[k: string]: Array<number>} = {
       done: [],
       inWork: []
     };
 
     orders.forEach( ( order ) => {
-    const { status } = order;
+      const { status } = order;
       groups[status].push( order.number );
     } );
 
@@ -46,7 +46,7 @@ const FeedPage = () => {
   return (
     <>
       { !wsConnected && !error && <Spinner/> }
-      { error && <Error /> }
+      { error && <Error error={ { message: 'Соединение прервано' } } /> }
       { wsConnected && !error && total && (
         <>
           <h1 className={ styles.title }>Лента заказов</h1>

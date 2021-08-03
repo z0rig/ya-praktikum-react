@@ -1,5 +1,4 @@
 import React, { useCallback, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { removeItem, swapItems } from '../../store/slices/burger-constructor';
 
@@ -9,7 +8,14 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 
 import styles from './constructor-item.module.css';
 
-const ConstructorItem = ( { ingredient, idx } ) => {
+import { TIngredient } from '../../types';
+
+interface IConstructorItem {
+  ingredient: TIngredient,
+  idx: number
+}
+
+const ConstructorItem = ( { ingredient, idx }: IConstructorItem ) => {
   const dispatch = useDispatch();
   const ref = useRef( null );
 
@@ -23,7 +29,7 @@ const ConstructorItem = ( { ingredient, idx } ) => {
 
   const [, drop] = useDrop( {
     accept: 'constructorItem',
-    hover: ( item ) => {
+    hover: ( item: { idx: number } ) => {
       if ( !ref.current ) {
         return;
       }
@@ -64,13 +70,3 @@ const ConstructorItem = ( { ingredient, idx } ) => {
 };
 
 export default ConstructorItem;
-
-ConstructorItem.propTypes = {
-  ingredient: PropTypes.shape( {
-    _id: PropTypes.string,
-    image: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
-  } ).isRequired,
-  idx: PropTypes.number.isRequired
-};

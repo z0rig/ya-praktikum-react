@@ -1,7 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import ProtectedRoute from '../protected-route/protected-route';
+import { TLocationState } from '../../types';
 
 import {
   HomePage,
@@ -27,7 +28,7 @@ import Spinner from '../spinner/spinner';
 import { fetchIngredients } from '../../store/slices/burger-ingredients';
 
 const App = () => {
-  const location = useLocation();
+  const location = useLocation<TLocationState>();
   const history = useHistory();
   const dispatch = useDispatch();
 

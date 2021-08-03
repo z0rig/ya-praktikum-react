@@ -1,5 +1,23 @@
-const getAdaptedIngredientsData = ( ingredientsData, refs ) => {
-  const ingredientSectionsData = {
+import { RefObject } from 'react';
+import { TIngredient } from '../../types';
+
+interface IRefsObj {
+  [i: string]: RefObject<HTMLElement>,
+}
+
+interface IAdaptedIngredientsDataItem {
+  title:  string,
+  ref: RefObject<HTMLElement>,
+  items: TIngredient[],
+  name: string
+}
+
+export interface IAdaptedIngredientsData {
+  [i: string]: IAdaptedIngredientsDataItem
+}
+
+const getAdaptedIngredientsData = ( ingredientsData: TIngredient[], refs: IRefsObj ) => {
+  const ingredientSectionsData: IAdaptedIngredientsData = {
     bun: {
       title: 'Булки',
       ref: refs['bun'],

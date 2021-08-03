@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 
 import OrderCard from '../order-card/order-card';
 
 import styles from './orders-feed.module.css';
+import { TUserOrderData } from '../../types';
 
-const OrdersFeed = ( { ordersData } ) => {
+const OrdersFeed = ( { ordersData }: {ordersData: Array<TUserOrderData>} ) => {
   const location = useLocation();
   if ( !ordersData.length ) {
     return <p className={ styles.text }>Заказов нет</p>;
@@ -33,15 +33,3 @@ const OrdersFeed = ( { ordersData } ) => {
 };
 
 export default OrdersFeed;
-
-OrdersFeed.propTypes = {
-  ordersData: PropTypes.arrayOf(
-    PropTypes.shape( {
-      number: PropTypes.number,
-      createdAt: PropTypes.string,
-      name: PropTypes.string,
-      status: PropTypes.string,
-      ingredients: PropTypes.arrayOf( PropTypes.string ),
-    } )
-  ).isRequired
-};

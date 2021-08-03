@@ -1,9 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
+import { SerializedError } from '@reduxjs/toolkit';
 import styles from './error.module.css';
 
-const Error = ( { width = '232', height = '232', error } ) => {
+interface IError {
+  width?: string;
+  height?: string;
+  error: SerializedError | null
+};
+
+const Error = ( { width = '232', height = '232', error }: IError ) => {
   return (
     <div className={ styles.error }>
       <svg width={ width } height={ height } viewBox='0 0 512 512'>
@@ -24,14 +29,6 @@ const Error = ( { width = '232', height = '232', error } ) => {
       { error && <p className={ styles.text }>{ error.message }</p> }
     </div>
   );
-};
-
-Error.propTypes = {
-  width: PropTypes.string,
-  height: PropTypes.string,
-  error: PropTypes.shape( {
-  message: PropTypes.string
-  } )
 };
 
 export default Error;

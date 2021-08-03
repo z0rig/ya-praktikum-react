@@ -11,31 +11,39 @@ import {
 
 import { getCookie } from '../utils/cookie';
 
-class Api {
-  static instance () {
+import { IApi, TUserData } from '../types';
+
+class Api implements IApi{
+  private static _instance: Api;
+
+  public static instance() {
     if ( !this._instance ) {
       this._instance = new Api();
     }
     return this._instance;
   }
 
-  getIngredienst = async () => await fetch( new URL( INGREDIENTS_ULR ) );
+  getIngredienst = async () => await fetch(
+    String(
+      new URL( INGREDIENTS_ULR )
+    )
+  );
 
-  getOrderDetails = async ( ingredientsIds ) => {
-    const url = new URL( ORDERS_URL );
+  getOrderDetails = async ( ingredientsIds: Array<string> ) => {
+    const url: URL = new URL( ORDERS_URL );
 
-    return await fetch( url, {
+    return await fetch( String( url ), {
       'method': 'POST',
       'headers': {
         'Content-Type': 'application/json',
-        'Authorization': getCookie( 'token' )
+        'Authorization': String( getCookie( 'token' ) )
       },
       'body': JSON.stringify( { 'ingredients': ingredientsIds } )
     } );
   };
 
-  getOrderById = async ( id ) => {
-    const url = new URL( ORDERS_URL + '/' + id );
+  getOrderById = async ( id: string ) => {
+    const url = String( new URL( ORDERS_URL + '/' + id ) );
 
     return await fetch( url, {
       'method': 'GET',
@@ -46,32 +54,32 @@ class Api {
   }
 
   getUserData = async () => {
-    const url = new URL( USER_DATA_URL );
+    const url = String( new URL( USER_DATA_URL ) );
 
     return await fetch( url, {
       'method': 'GET',
       'headers': {
         'Content-Type': 'application/json',
-        'Authorization': getCookie( 'token' )
+        'Authorization': String( getCookie( 'token' ) )
       }
     } );
   }
 
-  setUserData = async ( userData ) => {
-    const url = new URL( USER_DATA_URL );
+  setUserData = async ( userData: TUserData ) => {
+    const url = String( new URL( USER_DATA_URL ) );
 
     return await fetch( url, {
       'method': 'PATCH',
       'headers': {
         'Content-Type': 'application/json',
-        'authorization': getCookie( 'token' )
+        'authorization': String( getCookie( 'token' ) )
       },
       'body': JSON.stringify( userData )
     } );
   }
 
-  login = async ( userData ) => {
-    const url = new URL( LOGIN_URL );
+  login = async ( userData: TUserData ) => {
+    const url = String( new URL( LOGIN_URL ) );
 
     return await fetch( url, {
       'method': 'POST',
@@ -83,7 +91,7 @@ class Api {
   }
 
   logout = async () => {
-    const url = new URL( LOGOUT_URL );
+    const url = String( new URL( LOGOUT_URL ) );
 
     return await fetch( url, {
       'method': 'POST',
@@ -94,8 +102,8 @@ class Api {
     } );
   }
 
-  register = async ( userData ) => {
-    const url = new URL( REGISTER_URL );
+  register = async ( userData: TUserData ) => {
+    const url = String( new URL( REGISTER_URL ) );
 
     return await fetch( url, {
       'method': 'POST',
@@ -106,8 +114,8 @@ class Api {
     } );
   }
 
-  checkEmailForPassReset = async ( email ) => {
-    const url = new URL( PASSWORD_RESET_URL );
+  checkEmailForPassReset = async ( email: string ) => {
+    const url = String( new URL( PASSWORD_RESET_URL ) );
 
     return await fetch( url, {
       'method': 'POST',
@@ -118,8 +126,8 @@ class Api {
     } );
   }
 
-  resetPassword = async ( userData ) => {
-    const url = new URL( PASSWORD_RESET_URL + '/reset' );
+  resetPassword = async ( userData: TUserData ) => {
+    const url =  String( new URL( PASSWORD_RESET_URL + '/reset' ) );
 
     return await fetch( url, {
       'method': 'POST',
@@ -131,13 +139,13 @@ class Api {
   }
 
   refreshToken = async () => {
-    const url = new URL( TOKEN_REFRESH_URL );
+    const url =  String( new URL( TOKEN_REFRESH_URL ) );
 
     return await fetch( url, {
       'method': 'POST',
       'headers': {
         'Content-Type': 'application/json',
-        'authorization': getCookie( 'refreshToken' )
+        'authorization':  String( getCookie( 'refreshToken' ) )
       },
       'body': JSON.stringify( { 'token': getCookie( 'refreshToken' ) } )
     } );

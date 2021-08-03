@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 
 import IngredientPreview from '../ingredient-preview/ingredient-preview';
 import Price from '../price/price';
@@ -12,7 +11,9 @@ import styles from './order-card.module.css';
 
 import { ORDER_STATUSES } from '../../utils/constants';
 
-const OrderCard = ( { orderData } ) => {
+import { TOrderData, TIngredient } from '../../types';
+
+const OrderCard = ( { orderData }: { orderData: TOrderData } ) => {
   const { number, createdAt, name, status, ingredients } = orderData;
 
   const allBurgerIngredients = useSelector( ( state ) => state.burgerIngredients.items );
@@ -28,7 +29,9 @@ const OrderCard = ( { orderData } ) => {
   const statusAddClassName =
     status === 'done' ? 'success' :
     status === 'cancel' ? 'error' :
-    '';
+        '';
+
+  const statusText = ORDER_STATUSES[ status ];
 
   return (
     <article className={ styles.card }>
@@ -40,7 +43,7 @@ const OrderCard = ( { orderData } ) => {
       <p className={
         `${ styles.status } ${ statusAddClassName }` }
       >
-        { ORDER_STATUSES[ status ] }
+        { statusText }
       </p>
       <div className={ styles.main }>
         <ul className={ styles.ingredients }>
@@ -56,17 +59,7 @@ const OrderCard = ( { orderData } ) => {
 
 export default OrderCard;
 
-OrderCard.propTypes = {
-  orderData: PropTypes.shape( {
-    number: PropTypes.number,
-    createdAt: PropTypes.string,
-    name: PropTypes.string,
-    status: PropTypes.string,
-    ingredients: PropTypes.arrayOf( PropTypes.string ),
-  } ).isRequired
-};
-
-const renderPreviews = ( ingredients ) => {
+const renderPreviews = ( ingredients: TIngredient[] ) => {
   const previews = [];
 
   for ( let index = 0; index < ingredients.length; index++ ) {
