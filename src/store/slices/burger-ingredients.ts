@@ -1,15 +1,28 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, SerializedError } from '@reduxjs/toolkit';
 
 import { addItem, removeItem, addBun } from './burger-constructor';
 import { postOrder } from './posted-order-details';
 
-export const initialState = {
+import { IAsyncThunkExtraArgument, TIngredient } from '../../types';
+
+interface IBurgerIngredientsState {
+  items: Array<TIngredient>;
+  loading: boolean;
+  error: SerializedError | null;
+}
+
+export const initialState: IBurgerIngredientsState = {
   items: [],
   loading: false,
   error: null,
 };
 
-const fetchIngredients = createAsyncThunk(
+const fetchIngredients = createAsyncThunk <
+    Array<TIngredient>,
+    void,
+    IAsyncThunkExtraArgument
+  >
+  (
   'burgerIngredients/fetchData',
   async ( _, { extra } ) => {
     const response = await extra.getIngredienst();
@@ -39,25 +52,29 @@ const burgerIngredientsSlice = createSlice( {
       .addCase( addItem, ( state, { payload } ) => {
         const ingredient = state.items.find( ( item ) => item._id === payload._id );
 
-        if ( ingredient.quantity ) {
-          ++ingredient.quantity;
-        } else {
-          ingredient.quantity = 1;
+        if ( ingredient ){
+          if ( ingredient.quantity ) {
+            ++ingredient.quantity;
+          } else {
+            ingredient.quantity = 1;
+          }
         }
       } )
       .addCase( removeItem, ( state, { payload } ) => {
         const item = state.items.find( ( item ) => item._id === payload );
-        --item.quantity;
+        item?.quantity && --item.quantity;
       } )
       .addCase( addBun, ( state, { payload: { bun, activeBun } } ) => {
         if ( activeBun !== null ) {
           const pastBun = state.items
             .find( ( item ) => item._id === activeBun._id );
-          pastBun.quantity = 0;
+          if ( pastBun !== undefined ) {
+           pastBun.quantity = 0;
+          }
         }
 
         const currentBun = state.items.find( ( item ) => item._id === bun._id );
-        currentBun.quantity = 1;
+        if( currentBun ) currentBun.quantity = 1;
       } )
       .addCase( postOrder.fulfilled, ( state ) => {
         state.items.forEach( ( ingredient ) => {

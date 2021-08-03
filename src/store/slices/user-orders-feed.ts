@@ -1,9 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { TUserOrderData } from '../../types';
 
-export const initialState = {
+interface IUserOrdersFeedState {
+  orders: TUserOrderData[];
+  wsConnected: boolean;
+  error: boolean;
+}
+
+export const initialState: IUserOrdersFeedState = {
   orders: [],
   wsConnected: false,
-  error: null,
+  error: false,
 };
 
 const userOrdersFeedSlice = createSlice( {
@@ -12,9 +19,9 @@ const userOrdersFeedSlice = createSlice( {
   reducers: {
     wsConnectionSuccess: ( state ) => {
       state.wsConnected = true;
-      state.error = null;
+      state.error = false;
     },
-    wsConnectionError: ( state, action ) => {
+    wsConnectionError: ( state ) => {
       state.wsConnected = false;
       state.error = true;
     },

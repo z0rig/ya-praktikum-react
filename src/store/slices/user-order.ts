@@ -1,12 +1,25 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, SerializedError } from '@reduxjs/toolkit';
 
-export const initialState = {
+import { IAsyncThunkExtraArgument, TUserOrder } from '../../types';
+
+interface IUserOrderState {
+  orderData: TUserOrder | null;
+  loading: boolean;
+  error: SerializedError | null;
+}
+
+export const initialState: IUserOrderState = {
   orderData: null,
   loading: false,
   error: null,
 };
 
-const getOrderById = createAsyncThunk(
+const getOrderById = createAsyncThunk<
+  TUserOrder,
+  string,
+  IAsyncThunkExtraArgument
+>
+(
   'userOrder',
   async ( id, { extra } ) => {
     const response = await extra.getOrderById( id );

@@ -1,13 +1,24 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, SerializedError } from '@reduxjs/toolkit';
+import { IAsyncThunkExtraArgument, TUserData } from '../../types';
 import { setCookie } from '../../utils/cookie';
 
-export const initialState = {
+interface IRegistrationState {
+  loading: boolean;
+  error: SerializedError | null;
+}
+
+export const initialState: IRegistrationState = {
   loading: false,
   error: null,
 };
 
-const register = createAsyncThunk(
-  'registrationPage/register',
+const register = createAsyncThunk<
+  TUserData,
+  TUserData,
+  IAsyncThunkExtraArgument
+>
+(
+  'registration/register',
   async ( userData, { extra } ) => {
     const response = await extra.register( userData );
     const json = await response.json();
@@ -25,8 +36,8 @@ const register = createAsyncThunk(
   }
 );
 
-const registrationPageSlice = createSlice( {
-  name: 'registrationPage',
+const registrationSlice = createSlice( {
+  name: 'registration',
   initialState,
   reducers: {},
   extraReducers: ( builder ) => {
@@ -45,5 +56,4 @@ const registrationPageSlice = createSlice( {
 } );
 
 export { register };
-
-export default registrationPageSlice.reducer;
+export default registrationSlice.reducer;

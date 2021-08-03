@@ -1,12 +1,24 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, SerializedError } from '@reduxjs/toolkit';
+import { IAsyncThunkExtraArgument, TPostedOrderDetails } from '../../types';
 
-export const initialState = {
+interface IPostedOrderDetailsState {
+  orderDetails: null | TPostedOrderDetails;
+  loading: boolean;
+  error: SerializedError | null;
+}
+
+export const initialState: IPostedOrderDetailsState = {
   orderDetails: null,
   loading: false,
   error: null,
 };
 
-const postOrder = createAsyncThunk(
+const postOrder = createAsyncThunk<
+  TPostedOrderDetails,
+  Array<string>,
+  IAsyncThunkExtraArgument
+>
+(
   'postedOrderDetails/postOrder',
   async ( ingredientsIds, { extra } ) => {
     const response = await extra.getOrderDetails( ingredientsIds );

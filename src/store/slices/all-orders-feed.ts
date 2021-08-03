@@ -1,11 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { TUserOrderData } from '../../types';
 
-export const initialState = {
+interface IAllOrdersFeedState {
+  orders: TUserOrderData[];
+  total: number;
+  totalToday: number;
+  wsConnected: boolean;
+  error: boolean;
+}
+
+export const initialState: IAllOrdersFeedState = {
   orders: [],
-  total: null,
-  totalToday: null,
+  total: 0,
+  totalToday: 0,
   wsConnected: false,
-  error: null,
+  error: false,
 };
 
 const allOrdersFeedSlice = createSlice( {
@@ -14,11 +23,11 @@ const allOrdersFeedSlice = createSlice( {
   reducers: {
     wsConnectionSuccess: ( state ) => {
       state.wsConnected = true;
-      state.error = null;
+      state.error = false;
     },
     wsConnectionError: ( state ) => {
       state.wsConnected = false;
-      state.error = true;
+      state.error = true ;
     },
     wsConnectionClosed: ( state ) => {
       state.wsConnected = false;

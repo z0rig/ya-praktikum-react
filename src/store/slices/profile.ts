@@ -1,13 +1,21 @@
-import { createAsyncThunk, createSlice, isPending, isRejected, isFulfilled } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isPending, isRejected, isFulfilled, SerializedError } from '@reduxjs/toolkit';
 
 import { login } from './login';
-import { register } from './registration-page';
+import { register } from './registration';
 
 import { getCookie, deleteCookie } from '../../utils/cookie';
 
+import { IAsyncThunkExtraArgument, TUserData } from '../../types';
+
 const isLogin = !!getCookie( 'token' );
 
-export const initialState = {
+interface IProfileState {
+  user: TUserData & { isLogin: boolean },
+  loading: boolean
+  error: SerializedError | null
+}
+
+export const initialState: IProfileState = {
   user: {
     email: '',
     name: '',
@@ -17,7 +25,12 @@ export const initialState = {
   error: null,
 };
 
-const logout = createAsyncThunk(
+const logout = createAsyncThunk<
+  {},
+  void,
+  IAsyncThunkExtraArgument
+>
+(
   'profile/logout',
   async ( _, { extra } ) => {
     const response = await extra.logout();
@@ -33,7 +46,12 @@ const logout = createAsyncThunk(
   }
 );
 
-const getUserData = createAsyncThunk(
+const getUserData = createAsyncThunk<
+  {user: TUserData & { isLogin?: boolean } },
+  void,
+  IAsyncThunkExtraArgument
+>
+(
   'profile/getUserData',
   async ( _, { extra } ) => {
     const response = await extra.getUserData();
@@ -47,7 +65,12 @@ const getUserData = createAsyncThunk(
   }
 );
 
-const setUserData = createAsyncThunk(
+const setUserData = createAsyncThunk<
+  {user: TUserData & { isLogin?: boolean } },
+  TUserData,
+  IAsyncThunkExtraArgument
+>
+(
   'profile/setUserData',
   async ( userData, { extra } ) => {
     const response = await extra.setUserData( userData );
@@ -75,21 +98,19 @@ const profileSlice = createSlice( {
         state.user.isLogin = false;
       } )
       .addCase( getUserData.fulfilled, ( state, { payload: { user } } ) => {
-        state.user = user;
-        state.user.isLogin = true;
+        state.user = { ...user, isLogin: true };
         state.loading = false;
         state.error = null;
       } )
       .addCase( setUserData.fulfilled, ( state, { payload: { user } } ) => {
-        state.user = user;
-        state.user.isLogin = true;
+        state.user = { ...user, isLogin: true };
         state.loading = false;
         state.error = null;
       } )
       .addMatcher(
         isFulfilledAction,
-        ( state, { payload: { user } } ) => {
-          state.user = { ...user, isLogin: true };
+        ( state, payload ) => {
+          state.user = { ...payload, isLogin: true };
         } )
       .addMatcher(
         isPendingAction,

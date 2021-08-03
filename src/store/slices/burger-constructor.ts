@@ -1,8 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { postOrder } from './posted-order-details';
+import { TBurgerConstructorIgredient } from '../../types';
 
-export const initialState = {
+interface IBurgerConstructorState {
+  items: Array<TBurgerConstructorIgredient>;
+  bun: TBurgerConstructorIgredient | null;
+}
+
+export const initialState: IBurgerConstructorState = {
   items: [],
   bun: null
 };

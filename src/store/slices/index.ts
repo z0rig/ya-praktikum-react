@@ -2,7 +2,7 @@ import burgerIngredientsReducer from './burger-ingredients';
 import burgerConstructorReducer from './burger-constructor';
 import postedOrderDetailsReducer from './posted-order-details';
 import forgotPasswordReducer from './forgot-password';
-import registrationPageReducer from './registration-page';
+import registrationPageReducer from './registration';
 import loginReducer from './login';
 import resetPasswordReducer from './reset-password';
 import profileReducer from './profile';

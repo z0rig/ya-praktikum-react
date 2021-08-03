@@ -1,11 +1,22 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, SerializedError } from '@reduxjs/toolkit';
+import { IAsyncThunkExtraArgument, TUserData } from '../../types';
 
-export const initialState = {
+interface IResetPasswordState {
+  loading: boolean;
+  error: SerializedError | null;
+}
+
+export const initialState: IResetPasswordState = {
   loading: false,
   error: null,
 };
 
-const resetPassword = createAsyncThunk(
+const resetPassword = createAsyncThunk<
+  void,
+  TUserData,
+  IAsyncThunkExtraArgument
+>
+(
   'resetPassword/reset',
   async ( userData, { extra } ) => {
     const response = await extra.resetPassword( userData );

@@ -1,12 +1,23 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, SerializedError } from '@reduxjs/toolkit';
+import { IAsyncThunkExtraArgument, TUserData } from '../../types';
 import { setCookie } from '../../utils/cookie';
 
-export const initialState = {
+interface ILoginState {
+  loading: boolean;
+  error: SerializedError | null;
+}
+
+export const initialState: ILoginState = {
   loading: false,
   error: null,
 };
 
-const login = createAsyncThunk(
+const login = createAsyncThunk<
+  void,
+  TUserData,
+  IAsyncThunkExtraArgument
+>
+(
   'login/login',
   async ( userData, { extra } ) => {
     const response = await extra.login( userData );

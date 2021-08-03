@@ -1,12 +1,24 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, SerializedError } from '@reduxjs/toolkit';
+import { IAsyncThunkExtraArgument } from '../../types';
 
-export const initialState = {
+interface IForgotPasswordState {
+  emailChecked: boolean;
+  loading: boolean;
+  error: SerializedError | null;
+}
+
+export const initialState: IForgotPasswordState = {
   emailChecked: false,
   loading: false,
   error: null,
 };
 
-const checkEmailForPassReset = createAsyncThunk(
+const checkEmailForPassReset = createAsyncThunk<
+  void,
+  string,
+  IAsyncThunkExtraArgument
+>
+(
   'forgotPassword/checkEmailForPassReset',
   async ( email, { extra } ) => {
     const response = await extra.checkEmailForPassReset( email );
@@ -33,7 +45,7 @@ const forgotPasswordSlice = createSlice( {
     } )
     .addCase( checkEmailForPassReset.pending, ( state ) => {
       state.loading = true;
-      state.error = false;
+      state.error = null;
     } )
     .addCase( checkEmailForPassReset.rejected, ( state, action ) => {
       state.loading = false;
