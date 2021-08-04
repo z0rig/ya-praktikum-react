@@ -13,7 +13,7 @@ import { postOrder } from './posted-order-details';
 
 describe( 'burger constructor reducer', () => {
   it( 'should return the initial state', () => {
-    expect( burgerConstructorReducer( undefined, {} ) )
+    expect( burgerConstructorReducer( undefined, { type: '' } ) )
       .toEqual( initialState );
   } );
 

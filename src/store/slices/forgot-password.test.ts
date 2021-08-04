@@ -21,7 +21,7 @@ describe( 'forgot password reducer', () => {
       initialState,
       checkEmailForPassReset.pending()
     ) )
-    .toEqual( { ...initialState, loading: true, error: false } );
+    .toEqual( { ...initialState, loading: true, error: null } );
   } );
 
   it( 'should handle checkEmailForPassReset rejected', () => {

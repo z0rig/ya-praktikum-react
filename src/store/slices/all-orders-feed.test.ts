@@ -11,7 +11,7 @@ import { initialState } from './all-orders-feed';
 
 describe( 'all orders reducer', () => {
   it( 'should return the initial state', () => {
-    expect( allOrdersFeedReducer( undefined, {} ) )
+    expect( allOrdersFeedReducer( undefined, { type: '' } ) )
       .toEqual( initialState );
   } );
 

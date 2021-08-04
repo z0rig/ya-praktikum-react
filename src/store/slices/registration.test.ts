@@ -1,6 +1,6 @@
-import registrationPageReducer from './registration-page';
-import { register } from './registration-page';
-import { initialState } from './registration-page';
+import registrationPageReducer from './registration';
+import { register } from './registration';
+import { initialState } from './registration';
 
 describe( 'registration reducer', () => {
   it( 'should return the initial state', () => {
