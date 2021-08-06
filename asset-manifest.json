@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/ya-praktikum-react/static/css/main.1f57dd41.chunk.css",
-    "main.js": "/ya-praktikum-react/static/js/main.2465a23e.chunk.js",
-    "main.js.map": "/ya-praktikum-react/static/js/main.2465a23e.chunk.js.map",
+    "main.js": "/ya-praktikum-react/static/js/main.e4bcf454.chunk.js",
+    "main.js.map": "/ya-praktikum-react/static/js/main.e4bcf454.chunk.js.map",
     "runtime-main.js": "/ya-praktikum-react/static/js/runtime-main.b3a58e9d.js",
     "runtime-main.js.map": "/ya-praktikum-react/static/js/runtime-main.b3a58e9d.js.map",
     "static/css/2.3875019e.chunk.css": "/ya-praktikum-react/static/css/2.3875019e.chunk.css",
@@ -21,6 +21,6 @@
     "static/css/2.3875019e.chunk.css",
     "static/js/2.deb24881.chunk.js",
     "static/css/main.1f57dd41.chunk.css",
-    "static/js/main.2465a23e.chunk.js"
+    "static/js/main.e4bcf454.chunk.js"
   ]
 }
