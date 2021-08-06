@@ -11,7 +11,7 @@ import store from './store/index';
 ReactDOM.render(
   <Provider store={ store }>
     <React.StrictMode>
-      <Router>
+      <Router basename='/ya-praktikum-react/'>
         <App />
       </Router>
     </React.StrictMode>
